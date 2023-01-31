@@ -14,12 +14,6 @@ export default makeStyles(() => ({
     dialog: {
         cursor: 'default',
     },
-    titleItems: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
     content: {
         display: 'flex',
         flexDirection: 'column',
@@ -30,7 +24,6 @@ export default makeStyles(() => ({
     input: {
         '&&': {
             width: '100%',
-            marginTop: 10,
             marginBottom: 10
         }
     },

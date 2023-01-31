@@ -3,25 +3,28 @@ import { v4 as uuidv4 } from 'uuid';
 import { useDispatch } from 'react-redux';
 import { useAuth } from '../../utils/context';
 import { addNewJob } from '../../store/actions/jobs';
+import { statuses } from '../../utils/constants';
 import useStyles from './styles.js';
+import './insertionDialog.sass';
 
 // Material ui components
 import {
     Button, Dialog, DialogContent, DialogTitle,
     TextField, Typography, FormControl,
-    Select, MenuItem, InputLabel, IconButton
+    Select, MenuItem, IconButton
 } from '@mui/material';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
 // Firebase
 import { db } from '../../utils/firebase';
 import { doc, setDoc } from 'firebase/firestore/lite';
+import { useEffect } from 'react';
 
 const InsertionDialog = ({ open, setOpen }) => {
     const { user } = useAuth();
     const [title, setTitle] = useState('');
-    const [company, setCompany] = useState('');
-    const [status, setStatus] = useState('');
+    const [company, setCompany] = useState();
+    const [status, setStatus] = useState(null);
     const dispatch = useDispatch();
     const classes = useStyles();
 
@@ -29,14 +32,13 @@ const InsertionDialog = ({ open, setOpen }) => {
         setOpen(false);
         setTitle('');
         setCompany('');
-        setStatus('');
     }
 
     const handleStatusChange = (event) => {
         setStatus(event.target.value);
     }
 
-    const onAddNewJob= async (event) => {
+    const onAddNewJob = async (event) => {
         event.preventDefault();
         const job = {
             id: uuidv4(),
@@ -64,6 +66,12 @@ const InsertionDialog = ({ open, setOpen }) => {
         }
     }
 
+    useEffect(() => {
+        setTimeout(() => {
+            setStatus(statuses[0].name);
+        }, 100);
+    }, [open]);
+
     return (
         <Dialog
             open={open}
@@ -72,7 +80,7 @@ const InsertionDialog = ({ open, setOpen }) => {
             className={classes.dialog}
         >
             <DialogTitle className={classes.title}>
-                <div className={classes.titleItems}>
+                <div className="title-items">
                     <Typography variant="h6">Add New Job</Typography>
                     <IconButton
                         onClick={handleClose}
@@ -85,43 +93,56 @@ const InsertionDialog = ({ open, setOpen }) => {
             </DialogTitle>
             <DialogContent>
                 <form onSubmit={onAddNewJob}>
+                    <div className="input-title">
+                        <Typography variant="subtitle1">Job Title</Typography>
+                        <Typography variant="caption">Required</Typography>
+                    </div>
                     <TextField
                         required
                         autoFocus
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                         variant="outlined"
-                        label="Job title"
                         className={classes.input}
                         autoComplete="off"
+                        placeholder="Job Title"
                     />
+                    <div className="input-title">
+                        <Typography variant="subtitle1">Company</Typography>
+                        <Typography variant="caption">Required</Typography>
+                    </div>
                     <TextField
                         required
                         value={company}
                         onChange={(e) => setCompany(e.target.value)}
                         variant="outlined"
-                        label="Company"
                         className={classes.input}
                         autoComplete="off"
+                        placeholder="Company"
                     />
+                    <div className="input-title">
+                        <Typography variant="subtitle1">Job Status</Typography>
+                        <Typography variant="caption">Required</Typography>
+                    </div>
                     <FormControl
                         variant="outlined"
                         className={classes.input}
                     >
-                        <InputLabel id="status-label">Status</InputLabel>
                         <Select
                             required
-                            labelId="status-label"
-                            label="Status"
                             value={status}
                             onChange={handleStatusChange}
                         >
-                            <MenuItem value={'Wishlist'}>Wishlist</MenuItem>
-                            <MenuItem value={'Applied'}>Applied</MenuItem>
-                            <MenuItem value={'In Progress'}>In Progress</MenuItem>
-                            <MenuItem value={'Rejected'}>Rejected</MenuItem>
-                            <MenuItem value={'Accepted'}>Accepted</MenuItem>
-                            <MenuItem value={'Not Answered'}>Not Answered</MenuItem>
+                            {statuses.map((status) => {
+                                return (
+                                    <MenuItem
+                                        key={status.id}
+                                        value={status.name}
+                                    >
+                                        {status.name}
+                                    </MenuItem>
+                                )
+                            })}
                         </Select>
                     </FormControl>
                     <Button
@@ -129,7 +150,7 @@ const InsertionDialog = ({ open, setOpen }) => {
                         variant="contained"
                         className={classes.button}
                     >
-                        Add Position
+                        Save Job
                     </Button>
                 </form>
             </DialogContent>

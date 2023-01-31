@@ -6,7 +6,7 @@ const jobsReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case 'SET_JOBS':
             return action.jobs;
-        case 'ADD_NEW_JOB   ':
+        case 'ADD_NEW_JOB':
             return update(state, {
                 [action.payload.status]: {
                     items: {
