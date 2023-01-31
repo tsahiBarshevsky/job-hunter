@@ -1,32 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { Dialog, TextField, Typography, Divider, Button, IconButton } from '@mui/material';
+import React, { useState } from 'react';
+import { Dialog, Typography, Divider, IconButton } from '@mui/material';
 import { Timeline } from 'rsuite';
-import { useDispatch, useSelector } from 'react-redux';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 // import CheckIcon from '@rsuite/icons/Check';
 // import CloseIcon from '@rsuite/icons/Close';
 import moment from 'moment';
-import { removeJob, updateJob } from '../../store/actions/jobs';
 import Tabs from '../Tabs';
+import JobInfo from '../Job Info';
 import useStyles from './styles';
 import "rsuite/dist/rsuite.min.css";
 
-// Firebase
-import { db } from '../../utils/firebase';
-import { doc, updateDoc, deleteDoc } from 'firebase/firestore/lite';
-
 const JobDialog = ({ job, setJob, open, setOpen }) => {
     const [activeTab, setActiveTab] = useState('tab1');
-    const [title, setTitle] = useState('');
-    const [company, setCompany] = useState('');
-    const [location, setLocation] = useState('');
-    const [salary, setSalary] = useState('');
-    const [contact, setContact] = useState('');
-    const [notes, setNotes] = useState('');
-    const [url, setUrl] = useState('');
-    const jobs = useSelector(state => state.jobs);
     const classes = useStyles();
-    const dispatch = useDispatch();
 
     const handleClose = () => {
         setOpen(false);
@@ -35,58 +21,6 @@ const JobDialog = ({ job, setJob, open, setOpen }) => {
             setActiveTab("tab1");
         }, 100);
     }
-
-    const onEditJob = async (event) => {
-        event.preventDefault();
-        const jobRef = doc(db, "jobs", job.id);
-        try {
-            // Update document on Firestore
-            await updateDoc(jobRef, {
-                company: company,
-                contact: contact,
-                location: location,
-                salary: salary,
-                title: title,
-                url: url
-            });
-            const index = jobs[job.status].items.findIndex((item) => item.id === job.id);
-            const editedJob = {
-                company: company,
-                contact: contact,
-                location: location,
-                salary: salary,
-                title: title,
-                url: url
-            };
-            dispatch(updateJob(job.status, index, editedJob)); // Update store
-            handleClose();
-        }
-        catch (error) {
-            console.log(error.message)
-        }
-    }
-
-    const onRemoveJob = async () => {
-        try {
-            await deleteDoc(doc(db, "jobs", job.id));
-            const index = jobs[job.status].items.findIndex((item) => item.id === job.id);
-            dispatch(removeJob(job.status, index));
-            handleClose();
-        }
-        catch (error) {
-            console.log(error.message)
-        }
-    }
-
-    useEffect(() => {
-        setTitle(job.title);
-        setCompany(job.company);
-        setLocation(job.location);
-        setSalary(job.salary);
-        setContact(job.contact);
-        setNotes(job.notes);
-        setUrl(job.url);
-    }, [job]);
 
     return (
         <Dialog
@@ -113,6 +47,10 @@ const JobDialog = ({ job, setJob, open, setOpen }) => {
                     <Tabs
                         activeTab={activeTab}
                         setActiveTab={setActiveTab}
+                    />
+                    <JobInfo
+                        job={job}
+                        handleClose={handleClose}
                     />
                     {/*<form className={classes.form} onSubmit={onEditJob}>
                         <TextField

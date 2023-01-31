@@ -33,12 +33,12 @@ const jobsReducer = (state = INITIAL_STATE, action) => {
                     items: {
                         [action.payload.index]: {
                             $merge: {
+                                title: job.title,
                                 company: job.company,
-                                contact: job.contact,
                                 location: job.location,
                                 salary: job.salary,
-                                title: job.title,
-                                url: job.url
+                                url: job.url,
+                                description: job.description
                             }
                         }
                     }

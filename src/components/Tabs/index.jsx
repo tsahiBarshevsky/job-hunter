@@ -14,21 +14,21 @@ const Tabs = ({ activeTab, setActiveTab }) => {
             <ul className="tabs-links">
                 <li
                     onClick={() => onChangeTab('tab1')}
-                    className={activeTab === 'tab1' && "active"}
+                    className={activeTab === 'tab1' ? "active" : undefined}
                 >
                     <GoInfo size={22} />
                     <Typography variant="subtitle2">Job Info</Typography>
                 </li>
                 <li
                     onClick={() => onChangeTab('tab2')}
-                    className={activeTab === 'tab2' && "active"}
+                    className={activeTab === 'tab2' ? "active" : undefined}
                 >
                     <GoListUnordered size={20} />
                     <Typography variant="subtitle2">Activity</Typography>
                 </li>
                 <li
                     onClick={() => onChangeTab('tab3')}
-                    className={activeTab === 'tab3' && "active"}
+                    className={activeTab === 'tab3' ? "active" : undefined}
                 >
                     <SlNotebook size={20} />
                     <Typography variant="subtitle2">Notes</Typography>

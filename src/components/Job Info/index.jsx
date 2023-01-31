@@ -1,0 +1,173 @@
+import React, { useState, useEffect } from 'react';
+import { TextField, Typography, Button } from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux';
+import { removeJob, updateJob } from '../../store/actions/jobs';
+import useStyles from './styles';
+import './jobInfo.sass';
+
+// Firebase
+import { db } from '../../utils/firebase';
+import { doc, updateDoc, deleteDoc } from 'firebase/firestore/lite';
+
+const JobInfo = ({ job, handleClose }) => {
+    const [title, setTitle] = useState('');
+    const [company, setCompany] = useState('');
+    const [location, setLocation] = useState('');
+    const [salary, setSalary] = useState('');
+    const [url, setUrl] = useState('');
+    const [description, setDescription] = useState('');
+    const jobs = useSelector(state => state.jobs);
+    const dispatch = useDispatch();
+    const classes = useStyles();
+
+    const onEditJob = async (event) => {
+        event.preventDefault();
+        const jobRef = doc(db, "jobs", job.id);
+        try {
+            // Update document on Firestore
+            await updateDoc(jobRef, {
+                title: title,
+                company: company,
+                location: location,
+                salary: salary,
+                url: url,
+                description: description
+            });
+            const index = jobs[job.status].items.findIndex((item) => item.id === job.id);
+            const editedJob = {
+                title: title,
+                company: company,
+                location: location,
+                salary: salary,
+                url: url,
+                description: description
+            };
+            dispatch(updateJob(job.status, index, editedJob)); // Update store
+            handleClose();
+        }
+        catch (error) {
+            console.log(error.message)
+        }
+    }
+
+    const onRemoveJob = async () => {
+        try {
+            await deleteDoc(doc(db, "jobs", job.id));
+            const index = jobs[job.status].items.findIndex((item) => item.id === job.id);
+            dispatch(removeJob(job.status, index));
+            handleClose();
+        }
+        catch (error) {
+            console.log(error.message)
+        }
+    }
+
+    useEffect(() => {
+        setTitle(job.title);
+        setCompany(job.company);
+        setLocation(job.location);
+        setSalary(job.salary);
+        setDescription(job.description);
+        setUrl(job.url);
+    }, [job]);
+
+    return (
+        <div className="job-info-container">
+            <form
+                className="job-info-form"
+                onSubmit={onEditJob}
+            >
+                <div className="input-wrapper space-right">
+                    <div className="input-title">
+                        <Typography variant="subtitle1">Job Title</Typography>
+                    </div>
+                    <TextField
+                        required
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        variant="outlined"
+                        autoComplete="off"
+                        placeholder="Job Title"
+                        className={classes.input}
+                    />
+                </div>
+                <div className="input-wrapper space-left">
+                    <div className="input-title">
+                        <Typography variant="subtitle1">Company</Typography>
+                    </div>
+                    <TextField
+                        required
+                        value={company}
+                        onChange={(e) => setCompany(e.target.value)}
+                        variant="outlined"
+                        autoComplete="off"
+                        placeholder="Company"
+                        className={classes.input}
+                    />
+                </div>
+                <div className="input-wrapper space-right">
+                    <div className="input-title">
+                        <Typography variant="subtitle1">Location</Typography>
+                    </div>
+                    <TextField
+                        value={location}
+                        onChange={(e) => setLocation(e.target.value)}
+                        variant="outlined"
+                        autoComplete="off"
+                        placeholder="Location"
+                        className={classes.input}
+                    />
+                </div>
+                <div className="input-wrapper space-left">
+                    <div className="input-title">
+                        <Typography variant="subtitle1">Salary</Typography>
+                    </div>
+                    <TextField
+                        value={salary}
+                        onChange={(e) => setSalary(e.target.value)}
+                        variant="outlined"
+                        type="number"
+                        inputProps={{ min: 1 }}
+                        autoComplete="off"
+                        placeholder="Salary"
+                        className={classes.input}
+                    />
+                </div>
+                <div className="input-wrapper space-right">
+                    <div className="input-title">
+                        <Typography variant="subtitle1">URL</Typography>
+                    </div>
+                    <TextField
+                        value={url}
+                        onChange={(e) => setUrl(e.target.value)}
+                        variant="outlined"
+                        autoComplete="off"
+                        placeholder="URL"
+                        className={classes.input}
+                    />
+                </div>
+                <div className="input-wrapper space-left">
+                    <div className="input-title">
+                        <Typography variant="subtitle1">Deadline</Typography>
+                    </div>
+                    <TextField
+                        variant="outlined"
+                        autoComplete="off"
+                        placeholder="Deadline"
+                        className={classes.input}
+                    />
+                </div>
+                <div className="text-editor">
+                    <Typography variant="subtitle1">Description</Typography>
+                    <h3>Here will be text editor</h3>
+                </div>
+                <div>
+                    <Button variant="contained" onClick={onRemoveJob}>Delete job</Button>
+                    <Button type="submit" variant="contained">Save changes</Button>
+                </div>
+            </form>
+        </div>
+    )
+}
+
+export default JobInfo;
