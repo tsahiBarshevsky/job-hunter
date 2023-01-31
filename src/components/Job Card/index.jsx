@@ -11,7 +11,7 @@ const JobCard = ({ position, provided, onOpenPosition, index }) => {
     return (
         <div
             // onClick={() => onOpenPosition(position)}
-            className={(length - 1) === index ? "job-card-container" : "position-box-container position-box-container-margin"}
+            className={(length - 1) === index ? "job-card-container" : "job-card-container job-card-container-margin"}
             ref={provided.innerRef}
             style={{ ...provided.draggableProps.style }}
             {...provided.draggableProps}

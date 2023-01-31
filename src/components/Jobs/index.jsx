@@ -1,9 +1,11 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import update from 'immutability-helper';
+import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Button } from '@mui/material';
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useAuth } from '../../utils/context';
 import JobCard from '../Job Card';
+import { changeStatus } from '../../store/actions/jobs';
 import './jobs.sass';
 
 // Icons
@@ -20,6 +22,7 @@ import { db } from '../../utils/firebase';
 const Jobs = ({ setOpenInsertionDialog }) => {
     const { user } = useAuth();
     const jobs = useSelector(state => state.jobs);
+    const dispatch = useDispatch();
 
     const renderIcon = (columnName) => {
         switch (columnName) {
@@ -41,7 +44,81 @@ const Jobs = ({ setOpenInsertionDialog }) => {
         }
     }
 
-    const onDragEnd = async (result, columns) => { }
+    const timelineUpdate = (status) => {
+        switch (status) {
+            case 'Accepted':
+                return "Accepted!";
+            case 'Rejected':
+                return "Rejected";
+            case 'Offered':
+                return "Got an offer";
+            default: return `Moved to ${status}`;
+        }
+    }
+
+    const onDragEnd = async (result, columns) => {
+        if (!result.destination)
+            return;
+        const { source, destination, draggableId } = result; // draggableId is job id also
+        if (source.droppableId !== destination.droppableId) { // Move to other list
+            const dup = JSON.parse(JSON.stringify(jobs)); // Duplicate of jobs in case of firestore update failed
+            const sourceColumn = columns[source.droppableId];
+            const destColumn = columns[destination.droppableId];
+            const sourceItems = [...sourceColumn.items];
+            const destItems = [...destColumn.items];
+            const [removed] = sourceItems.splice(source.index, 1);
+            destItems.splice(destination.index, 0, removed);
+            const newColumns = {
+                ...columns,
+                [source.droppableId]: {
+                    ...sourceColumn,
+                    items: sourceItems
+                },
+                [destination.droppableId]: {
+                    ...destColumn,
+                    items: destItems
+                }
+            };
+            var job = newColumns[destination.droppableId].items.find((item) => item.id === draggableId);
+            const index = newColumns[destination.droppableId].items.findIndex((item) => item.id === draggableId);
+            // Update timeline
+            const step = {
+                action: timelineUpdate(destination.droppableId),
+                date: new Date()
+            };
+            job = update(job, {
+                timeline: { $push: [step] }
+            });
+            dispatch({ type: 'SET_JOBS', jobs: newColumns }); // Update store
+            dispatch(changeStatus(destination.droppableId, index, step));
+            // Update firestore
+            const jobRef = doc(db, "jobs", job.id);
+            try {
+                await updateDoc(jobRef, {
+                    status: destination.droppableId,
+                    timeline: job.timeline
+                });
+            }
+            catch (error) {
+                alert(error.message);
+                dispatch({ type: 'SET_JOBS', jobs: dup });
+            }
+        }
+        else {
+            const column = columns[source.droppableId];
+            const copiedItems = [...column.items];
+            const [removed] = copiedItems.splice(source.index, 1);
+            copiedItems.splice(destination.index, 0, removed);
+            const newColumns = {
+                ...columns,
+                [source.droppableId]: {
+                    ...column,
+                    items: copiedItems
+                }
+            };
+            dispatch({ type: 'SET_JOBS', jobs: newColumns });
+        }
+    }
 
     return (
         <div className="jobs-container">
