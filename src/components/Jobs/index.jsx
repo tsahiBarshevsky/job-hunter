@@ -16,7 +16,7 @@ import WorkOutlineOutlinedIcon from '@mui/icons-material/WorkOutlineOutlined';
 import { doc, updateDoc } from 'firebase/firestore/lite';
 import { db } from '../../utils/firebase';
 
-const Jobs = () => {
+const Jobs = ({ setOpenInsertionDialog }) => {
     const { user } = useAuth();
     const jobs = useSelector(state => state.jobs);
 
@@ -46,7 +46,12 @@ const Jobs = () => {
         <div className="jobs-container">
             <div className="jobs-header">
                 <Typography variant="h6">Hey, {user.displayName ? user.displayName : user.email}!</Typography>
-                <Button variant="contained">Add job</Button>
+                <Button
+                    variant="contained"
+                    onClick={() => setOpenInsertionDialog(true)}
+                >
+                    Add job
+                </Button>
             </div>
             <div className="dnd-container">
                 <DragDropContext onDragEnd={(result) => onDragEnd(result, jobs)}>
