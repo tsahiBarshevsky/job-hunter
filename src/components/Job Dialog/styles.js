@@ -22,8 +22,7 @@ export default makeStyles(() => ({
         '&&': {
             width: '65%',
             minHeight: '85vh',
-            padding: 20,
-            position: 'relative',
+            padding: 20
         }
         // [theme.breakpoints.down('sm')]:
         // {
@@ -34,13 +33,14 @@ export default makeStyles(() => ({
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'baseline',
-        marginBottom: 20
+        marginBottom: 10,
+        backgroundColor: 'pink'
     },
-    inputs: {
+    form: {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-start',
-        alignItems: 'flex-start',
+        alignItems: 'flex-start'
     },
     actions: {
         display: 'flex',

@@ -7,6 +7,7 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 // import CloseIcon from '@rsuite/icons/Close';
 import moment from 'moment';
 import { removeJob, updateJob } from '../../store/actions/jobs';
+import Tabs from '../Tabs';
 import useStyles from './styles';
 import "rsuite/dist/rsuite.min.css";
 
@@ -15,6 +16,7 @@ import { db } from '../../utils/firebase';
 import { doc, updateDoc, deleteDoc } from 'firebase/firestore/lite';
 
 const JobDialog = ({ job, setJob, open, setOpen }) => {
+    const [activeTab, setActiveTab] = useState('tab1');
     const [title, setTitle] = useState('');
     const [company, setCompany] = useState('');
     const [location, setLocation] = useState('');
@@ -30,6 +32,7 @@ const JobDialog = ({ job, setJob, open, setOpen }) => {
         setOpen(false);
         setTimeout(() => {
             setJob({});
+            setActiveTab("tab1");
         }, 100);
     }
 
@@ -107,7 +110,11 @@ const JobDialog = ({ job, setJob, open, setOpen }) => {
                             <CloseRoundedIcon />
                         </IconButton>
                     </div>
-                    <form className={classes.inputs} onSubmit={onEditJob}>
+                    <Tabs
+                        activeTab={activeTab}
+                        setActiveTab={setActiveTab}
+                    />
+                    {/*<form className={classes.form} onSubmit={onEditJob}>
                         <TextField
                             required
                             value={title}
@@ -172,7 +179,7 @@ const JobDialog = ({ job, setJob, open, setOpen }) => {
                             <Button variant="contained" onClick={onRemoveJob}>Delete job</Button>
                             <Button type="submit" variant="contained">Save changes</Button>
                         </div>
-                    </form>
+                    </form> */}
                 </div>
                 <div className={classes.timelineContainer}>
                     <Typography className={classes.text} variant="h6">Timeline</Typography>

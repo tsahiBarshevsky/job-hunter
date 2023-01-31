@@ -41,20 +41,23 @@ const InsertionDialog = ({ open, setOpen }) => {
     const onAddNewJob = async (event) => {
         event.preventDefault();
         const job = {
-            id: uuidv4(),
-            owner: user.uid,
-            title: title,
+            activity: [],
             company: company,
+            contact: '',
+            deadline: null,
+            description: '',
+            id: uuidv4(),
+            location: '',
+            notes: '',
+            owner: user.uid,
+            salary: '',
             status: status,
-            location: null,
-            salary: null,
-            contact: null,
-            url: null,
-            notes: null,
             timeline: [{
                 action: 'Job created',
                 date: new Date()
-            }]
+            }],
+            title: title,
+            url: ''
         };
         try {
             await setDoc(doc(db, 'jobs', job.id), job); // Add new doc
@@ -149,6 +152,7 @@ const InsertionDialog = ({ open, setOpen }) => {
                         type="submit"
                         variant="contained"
                         className={classes.button}
+                        disabled={title === '' || company === ''}
                     >
                         Save Job
                     </Button>
