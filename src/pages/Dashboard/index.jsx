@@ -2,6 +2,8 @@ import React, { useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useAuth } from '../../utils/context';
+import { Jobs, Sidebar } from '../../components';
+import './dashboard.sass';
 
 // Firebase
 import { collection, query, where, getDocs } from 'firebase/firestore/lite';
@@ -64,11 +66,14 @@ const DashbaordPage = () => {
             navigate('/');
             return;
         }
-        // fetchData();
+        fetchData();
     }, [navigate, user, fetchData]);
 
     return user && (
-        <div>{user.displayName}</div>
+        <div className="dashboard-container">
+            <Sidebar />
+            <Jobs />
+        </div>
     )
 }
 

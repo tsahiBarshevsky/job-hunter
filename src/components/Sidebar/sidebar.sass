@@ -1,0 +1,18 @@
+@import '../../styles/_variables'
+
+.sidebar-container
+    display: flex
+    flex-direction: column
+    justify-content: flex-start
+    align-items: center
+    width: $sidebar-width
+    height: 100vh
+    color: white
+    background-color: black
+    padding: 15px 0
+    cursor: default
+
+    @media screen and ( max-width: $sm )
+        flex-direction: row
+        width: 100%
+        height: $sidebar-mobile-height
