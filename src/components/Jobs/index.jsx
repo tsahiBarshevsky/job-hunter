@@ -19,10 +19,15 @@ import WorkOutlineOutlinedIcon from '@mui/icons-material/WorkOutlineOutlined';
 import { doc, updateDoc } from 'firebase/firestore/lite';
 import { db } from '../../utils/firebase';
 
-const Jobs = ({ setOpenInsertionDialog }) => {
+const Jobs = ({ setJob, setOpenInsertionDialog, setOpenJobDialog }) => {
     const { user } = useAuth();
     const jobs = useSelector(state => state.jobs);
     const dispatch = useDispatch();
+
+    const onOpenJob = (item) => {
+        setJob(item);
+        setOpenJobDialog(true);
+    }
 
     const renderIcon = (columnName) => {
         switch (columnName) {
@@ -173,9 +178,9 @@ const Jobs = ({ setOpenInsertionDialog }) => {
                                                             {(provided, snapshot) => {
                                                                 return (
                                                                     <JobCard
-                                                                        position={item}
+                                                                        job={item}
                                                                         provided={provided}
-                                                                        // onOpenPosition={onOpenPosition}
+                                                                        onOpenJob={onOpenJob}
                                                                         index={index}
                                                                     />
                                                                 );

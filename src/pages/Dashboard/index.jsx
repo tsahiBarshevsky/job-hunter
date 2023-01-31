@@ -2,7 +2,7 @@ import React, { useEffect, useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useAuth } from '../../utils/context';
-import { InsertionDialog, Jobs, Sidebar } from '../../components';
+import { InsertionDialog, JobDialog, Jobs, Sidebar } from '../../components';
 import './dashboard.sass';
 
 // Firebase
@@ -11,7 +11,9 @@ import { db } from '../../utils/firebase';
 
 const DashbaordPage = () => {
     const { user } = useAuth();
+    const [job, setJob] = useState({});
     const [openInsertionDialog, setOpenInsertionDialog] = useState(false);
+    const [openJobDialog, setOpenJobDialog] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -75,12 +77,20 @@ const DashbaordPage = () => {
             <div className="dashboard-container">
                 <Sidebar />
                 <Jobs
+                    setJob={setJob}
                     setOpenInsertionDialog={setOpenInsertionDialog}
+                    setOpenJobDialog={setOpenJobDialog}
                 />
             </div>
             <InsertionDialog
                 open={openInsertionDialog}
                 setOpen={setOpenInsertionDialog}
+            />
+            <JobDialog
+                job={job}
+                setJob={setJob}
+                open={openJobDialog}
+                setOpen={setOpenJobDialog}
             />
         </>
     )

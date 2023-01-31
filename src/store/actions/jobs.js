@@ -1,9 +1,9 @@
-const addNewPosition = (status, position) => {
+const addNewJob = (status, job) => {
     return {
-        type: 'ADD_NEW_POSITION',
+        type: 'ADD_NEW_JOB',
         payload: {
             status: status,
-            position: position
+            job: job
         }
     }
 };
@@ -20,21 +20,21 @@ const changeStatus = (status, index, step) => {
     }
 };
 
-const updatePosition = (status, index, position) => {
-    // status: current status, index: location in the array, position: new position's values
+const updateJob = (status, index, job) => {
+    // status: current status, index: location in the array, job: new job's values
     return {
-        type: 'UPDATE_POSITION',
+        type: 'UPDATE_JOB',
         payload: {
             status: status,
             index: index,
-            position: position
+            job: job
         }
     }
 };
 
-const removePosition = (status, index) => {
+const removeJob = (status, index) => {
     return {
-        type: 'REMOVE_POSITION',
+        type: 'REMOVE_JOB',
         payload: {
             index: index,
             status: status
@@ -43,8 +43,8 @@ const removePosition = (status, index) => {
 };
 
 export {
-    addNewPosition,
+    addNewJob,
     changeStatus,
-    updatePosition,
-    removePosition
+    updateJob,
+    removeJob
 };

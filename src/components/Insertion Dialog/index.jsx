@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch } from 'react-redux';
 import { useAuth } from '../../utils/context';
-import { addNewPosition } from '../../store/actions/jobs';
+import { addNewJob } from '../../store/actions/jobs';
 import useStyles from './styles.js';
 
 // Material ui components
@@ -36,9 +36,9 @@ const InsertionDialog = ({ open, setOpen }) => {
         setStatus(event.target.value);
     }
 
-    const onAddNewPosition = async (event) => {
+    const onAddNewJob= async (event) => {
         event.preventDefault();
-        const position = {
+        const job = {
             id: uuidv4(),
             owner: user.uid,
             title: title,
@@ -55,8 +55,8 @@ const InsertionDialog = ({ open, setOpen }) => {
             }]
         };
         try {
-            await setDoc(doc(db, 'jobs', position.id), position); // Add new doc
-            dispatch(addNewPosition(status, position)); // Update store
+            await setDoc(doc(db, 'jobs', job.id), job); // Add new doc
+            dispatch(addNewJob(status, job)); // Update store
             handleClose();
         }
         catch (error) {
@@ -73,7 +73,7 @@ const InsertionDialog = ({ open, setOpen }) => {
         >
             <DialogTitle className={classes.title}>
                 <div className={classes.titleItems}>
-                    <Typography variant="h6">Add New Position</Typography>
+                    <Typography variant="h6">Add New Job</Typography>
                     <IconButton
                         onClick={handleClose}
                         size="small"
@@ -84,14 +84,14 @@ const InsertionDialog = ({ open, setOpen }) => {
                 </div>
             </DialogTitle>
             <DialogContent>
-                <form onSubmit={onAddNewPosition}>
+                <form onSubmit={onAddNewJob}>
                     <TextField
                         required
                         autoFocus
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                         variant="outlined"
-                        label="Position title"
+                        label="Job title"
                         className={classes.input}
                         autoComplete="off"
                     />
