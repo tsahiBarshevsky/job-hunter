@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, Typography, Button } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
+import { CKEditor as TextEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { removeJob, updateJob } from '../../store/actions/jobs';
+import { toolbar } from '../../utils/constants';
 import useStyles from './styles';
 import './jobInfo.sass';
 
@@ -159,7 +162,15 @@ const JobInfo = ({ job, handleClose }) => {
                 </div>
                 <div className="text-editor">
                     <Typography variant="subtitle1">Description</Typography>
-                    <h3>Here will be text editor</h3>
+                    <TextEditor
+                        editor={ClassicEditor}
+                        data={description ? description : ''}
+                        config={{ toolbar: toolbar }}
+                        onChange={(event, editor) => {
+                            const data = editor.getData();
+                            setDescription(data);
+                        }}
+                    />
                 </div>
                 <div>
                     <Button variant="contained" onClick={onRemoveJob}>Delete job</Button>
