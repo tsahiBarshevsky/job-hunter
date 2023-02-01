@@ -33,6 +33,7 @@ const updateJob = (status, index, job) => {
 };
 
 const removeJob = (status, index) => {
+    // status: current status, index: location in the array
     return {
         type: 'REMOVE_JOB',
         payload: {
@@ -42,9 +43,35 @@ const removeJob = (status, index) => {
     }
 };
 
+const addNewNote = (status, index, note) => {
+    // status: current status, index: location in the array
+    return {
+        type: 'ADD_NEW_NOTE',
+        payload: {
+            status: status,
+            index: index,
+            note: note
+        }
+    }
+};
+
+const removeNote = (status, index, noteIndex) => {
+    // status: current status, index: location in the array, noteIndex: note's location in array
+    return {
+        type: 'REMOVE_NOTE',
+        payload: {
+            status: status,
+            index: index,
+            noteIndex: noteIndex
+        }
+    }
+};
+
 export {
     addNewJob,
     changeStatus,
     updateJob,
-    removeJob
+    removeJob,
+    addNewNote,
+    removeNote
 };

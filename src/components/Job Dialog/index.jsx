@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { Dialog, Typography, Divider, IconButton } from '@mui/material';
-import { Timeline } from 'rsuite';
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-// import CheckIcon from '@rsuite/icons/Check';
-// import CloseIcon from '@rsuite/icons/Close';
 import moment from 'moment';
-import Tabs from '../Tabs';
-import JobInfo from '../Job Info';
+import { Timeline } from 'rsuite';
+import { Dialog, Typography, Divider, IconButton } from '@mui/material';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import useStyles from './styles';
 import "rsuite/dist/rsuite.min.css";
+
+// Components
+import Tabs from '../Tabs';
+import JobInfo from '../Job Info';
+import Notes from '../Notes';
 
 const JobDialog = ({ job, setJob, open, setOpen }) => {
     const [activeTab, setActiveTab] = useState('tab1');
@@ -20,6 +21,27 @@ const JobDialog = ({ job, setJob, open, setOpen }) => {
             setJob({});
             setActiveTab("tab1");
         }, 100);
+    }
+
+    const renderTab = () => {
+        switch (activeTab) {
+            case 'tab1':
+                return (
+                    <JobInfo
+                        job={job}
+                        handleClose={handleClose}
+                    />
+                );
+            case 'tab3':
+                return (
+                    <Notes
+                        job={job}
+                        setJob={setJob}
+                    />
+                );
+            default:
+                return null;
+        }
     }
 
     return (
@@ -48,10 +70,7 @@ const JobDialog = ({ job, setJob, open, setOpen }) => {
                         activeTab={activeTab}
                         setActiveTab={setActiveTab}
                     />
-                    <JobInfo
-                        job={job}
-                        handleClose={handleClose}
-                    />
+                    <div>{renderTab()}</div>
                 </div>
                 <div className={classes.timelineContainer}>
                     <Typography className={classes.text} variant="h6">Timeline</Typography>

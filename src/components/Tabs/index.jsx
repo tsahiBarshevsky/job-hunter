@@ -2,6 +2,7 @@ import { Typography } from '@mui/material';
 import React from 'react';
 import { GoInfo, GoListUnordered } from 'react-icons/go';
 import { SlNotebook } from 'react-icons/sl';
+import { FiUsers } from 'react-icons/fi';
 import './tabs.sass';
 
 const Tabs = ({ activeTab, setActiveTab }) => {
@@ -32,6 +33,13 @@ const Tabs = ({ activeTab, setActiveTab }) => {
                 >
                     <SlNotebook size={20} />
                     <Typography variant="subtitle2">Notes</Typography>
+                </li>
+                <li
+                    onClick={() => onChangeTab('tab4')}
+                    className={activeTab === 'tab4' ? "active" : undefined}
+                >
+                    <FiUsers size={20} />
+                    <Typography variant="subtitle2">Contacts</Typography>
                 </li>
             </ul>
         </div>

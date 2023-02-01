@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import moment from 'moment';
 import { TextField, Typography, Button } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -14,7 +15,6 @@ import './jobInfo.sass';
 // Firebase
 import { db } from '../../utils/firebase';
 import { doc, updateDoc, deleteDoc } from 'firebase/firestore/lite';
-import moment from 'moment';
 
 const JobInfo = ({ job, handleClose }) => {
     const [title, setTitle] = useState('');
@@ -27,7 +27,6 @@ const JobInfo = ({ job, handleClose }) => {
     const jobs = useSelector(state => state.jobs);
     const dispatch = useDispatch();
     const classes = useStyles();
-    // deadline && console.log('deadline', deadline?._d)
 
     const onEditJob = async (event) => {
         event.preventDefault();

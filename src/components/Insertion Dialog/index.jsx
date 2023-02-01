@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch } from 'react-redux';
 import { useAuth } from '../../utils/context';
@@ -18,7 +18,6 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 // Firebase
 import { db } from '../../utils/firebase';
 import { doc, setDoc } from 'firebase/firestore/lite';
-import { useEffect } from 'react';
 
 const InsertionDialog = ({ open, setOpen }) => {
     const { user } = useAuth();
@@ -48,7 +47,7 @@ const InsertionDialog = ({ open, setOpen }) => {
             description: '',
             id: uuidv4(),
             location: '',
-            notes: '',
+            notes: [],
             owner: user.uid,
             salary: '',
             status: status,

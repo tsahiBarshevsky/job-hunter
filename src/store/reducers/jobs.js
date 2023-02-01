@@ -53,6 +53,30 @@ const jobsReducer = (state = INITIAL_STATE, action) => {
                     }
                 }
             });
+        case 'ADD_NEW_NOTE':
+            return update(state, {
+                [action.payload.status]: {
+                    items: {
+                        [action.payload.index]: {
+                            notes: {
+                                $push: [action.payload.note]
+                            }
+                        }
+                    }
+                }
+            });
+        case 'REMOVE_NOTE':
+            return update(state, {
+                [action.payload.status]: {
+                    items: {
+                        [action.payload.index]: {
+                            notes: {
+                                $splice: [[action.payload.noteIndex, 1]]
+                            }
+                        }
+                    }
+                }
+            });
         default:
             return state;
     }
