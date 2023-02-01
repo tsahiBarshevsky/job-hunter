@@ -38,7 +38,8 @@ const jobsReducer = (state = INITIAL_STATE, action) => {
                                 location: job.location,
                                 salary: job.salary,
                                 url: job.url,
-                                description: job.description
+                                description: job.description,
+                                deadline: job.deadline
                             }
                         }
                     }

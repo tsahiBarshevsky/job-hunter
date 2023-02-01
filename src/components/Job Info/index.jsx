@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, Typography, Button } from '@mui/material';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { useSelector, useDispatch } from 'react-redux';
 import { CKEditor as TextEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -11,6 +14,7 @@ import './jobInfo.sass';
 // Firebase
 import { db } from '../../utils/firebase';
 import { doc, updateDoc, deleteDoc } from 'firebase/firestore/lite';
+import moment from 'moment';
 
 const JobInfo = ({ job, handleClose }) => {
     const [title, setTitle] = useState('');
@@ -19,9 +23,11 @@ const JobInfo = ({ job, handleClose }) => {
     const [salary, setSalary] = useState('');
     const [url, setUrl] = useState('');
     const [description, setDescription] = useState('');
+    const [deadline, setDeadline] = useState(null);
     const jobs = useSelector(state => state.jobs);
     const dispatch = useDispatch();
     const classes = useStyles();
+    // deadline && console.log('deadline', deadline?._d)
 
     const onEditJob = async (event) => {
         event.preventDefault();
@@ -34,7 +40,8 @@ const JobInfo = ({ job, handleClose }) => {
                 location: location,
                 salary: salary,
                 url: url,
-                description: description
+                description: description,
+                deadline: new Date(deadline)
             });
             const index = jobs[job.status].items.findIndex((item) => item.id === job.id);
             const editedJob = {
@@ -43,7 +50,8 @@ const JobInfo = ({ job, handleClose }) => {
                 location: location,
                 salary: salary,
                 url: url,
-                description: description
+                description: description,
+                deadline: new Date(deadline)
             };
             dispatch(updateJob(job.status, index, editedJob)); // Update store
             handleClose();
@@ -72,6 +80,12 @@ const JobInfo = ({ job, handleClose }) => {
         setSalary(job.salary);
         setDescription(job.description);
         setUrl(job.url);
+        if (job.deadline) {
+            if (Object.keys(job.deadline).length === 0)
+                setDeadline(moment(job.deadline)); // From store
+            else
+                setDeadline(moment.unix(job.deadline.seconds)); // From firebase
+        }
     }, [job]);
 
     return (
@@ -153,19 +167,31 @@ const JobInfo = ({ job, handleClose }) => {
                     <div className="input-title">
                         <Typography variant="subtitle1">Deadline</Typography>
                     </div>
-                    <TextField
-                        variant="outlined"
-                        autoComplete="off"
-                        placeholder="Deadline"
-                        className={classes.input}
-                    />
+                    <LocalizationProvider dateAdapter={AdapterMoment}>
+                        <DatePicker
+                            value={deadline}
+                            inputFormat="DD/MM/YYYY"
+                            onChange={(value) => setDeadline(moment(value))}
+                            renderInput={(params) => {
+                                return (
+                                    <TextField
+                                        {...params}
+                                        inputProps={{
+                                            ...params.inputProps,
+                                            placeholder: "DD/MM/YYYY"
+                                        }}
+                                    />
+                                )
+                            }}
+                        />
+                    </LocalizationProvider>
                 </div>
                 <div className="text-editor">
                     <Typography variant="subtitle1">Description</Typography>
                     <TextEditor
                         editor={ClassicEditor}
                         data={description ? description : ''}
-                        config={{ toolbar: toolbar }}
+                        config={{ toolbar: toolbar, placeholder: 'Description' }}
                         onChange={(event, editor) => {
                             const data = editor.getData();
                             setDescription(data);

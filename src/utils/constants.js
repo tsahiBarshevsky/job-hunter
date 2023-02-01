@@ -8,6 +8,6 @@ const statuses = [
     { id: 6, name: 'Not Answered' }
 ];
 
-const toolbar = ['bold', 'italic', 'underline', '|', 'link', 'bulletedList', 'numberedList', '|', 'undo', 'redo'];
+const toolbar = ['bold', 'italic', '|', 'link', 'bulletedList', 'numberedList', '|', 'undo', 'redo'];
 
 export { statuses, toolbar };
