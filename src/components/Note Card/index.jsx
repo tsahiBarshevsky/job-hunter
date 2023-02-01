@@ -4,13 +4,23 @@ import { MdEdit, MdDelete } from 'react-icons/md'
 import parse from 'html-react-parser';
 import './noteCard.sass';
 
-const NoteCard = ({ note, onRemoveNote }) => {
+const NoteCard = ({ note, setMode, setTitle, setText, setNoteID, onRemoveNote }) => {
+    const onSwitchToEditMode = () => {
+        setMode('editing');
+        setNoteID(note.id);
+        setTitle(note.title);
+        setText(note.text);
+    }
+
     return (
         <div className="note-card-container">
             <div className="note-card-header">
                 <Typography variant="h6">{note.title}</Typography>
                 <div className="actions">
-                    <IconButton size="small">
+                    <IconButton
+                        onClick={onSwitchToEditMode}
+                        size="small"
+                    >
                         <MdEdit />
                     </IconButton>
                     <IconButton

@@ -65,6 +65,24 @@ const jobsReducer = (state = INITIAL_STATE, action) => {
                     }
                 }
             });
+        case 'UPDATE_NOTE':
+            const note = action.payload.note;
+            return update(state, {
+                [action.payload.status]: {
+                    items: {
+                        [action.payload.index]: {
+                            notes: {
+                                [action.payload.noteIndex]: {
+                                    $merge: {
+                                        title: note.title,
+                                        text: note.text
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            });
         case 'REMOVE_NOTE':
             return update(state, {
                 [action.payload.status]: {

@@ -55,6 +55,18 @@ const addNewNote = (status, index, note) => {
     }
 };
 
+const updateNote = (status, index, note, noteIndex) => {
+    return {
+        type: 'UPDATE_NOTE',
+        payload: {
+            status: status,
+            index: index,
+            note: note,
+            noteIndex: noteIndex
+        }
+    }
+};
+
 const removeNote = (status, index, noteIndex) => {
     // status: current status, index: location in the array, noteIndex: note's location in array
     return {
@@ -73,5 +85,6 @@ export {
     updateJob,
     removeJob,
     addNewNote,
+    updateNote,
     removeNote
 };

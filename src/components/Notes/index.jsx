@@ -7,7 +7,7 @@ import { CKEditor as TextEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { toolbar } from '../../utils/constants';
 import NoteCard from '../Note Card';
-import { addNewNote, removeNote } from '../../store/actions/jobs';
+import { addNewNote, removeNote, updateNote } from '../../store/actions/jobs';
 import './notes.sass';
 
 // Firebase
@@ -15,10 +15,22 @@ import { db } from '../../utils/firebase';
 import { doc, updateDoc } from 'firebase/firestore/lite';
 
 const Notes = ({ job, setJob }) => {
+    const [mode, setMode] = useState('insertion');
     const [title, setTitle] = useState('');
     const [text, setText] = useState('');
+    const [noteID, setNoteID] = useState('');
     const jobs = useSelector(state => state.jobs);
     const dispatch = useDispatch();
+
+    const resetForm = () => {
+        setTitle('');
+        setText('');
+    }
+
+    const onCancelEditMode = () => {
+        setMode('insertion');
+        resetForm();
+    }
 
     const onAddNewNote = async () => {
         const jobRef = doc(db, "jobs", job.id);
@@ -33,12 +45,33 @@ const Notes = ({ job, setJob }) => {
             await updateDoc(jobRef, { notes: updatedJob.notes });
             dispatch(addNewNote(job.status, index, note));
             setJob(updatedJob);
-            setTitle('');
-            setText('');
+            resetForm();
         }
         catch (error) {
             console.log(error.message);
         }
+    }
+
+    const onEditNote = () => {
+        const note = {
+            title: title,
+            text: text
+        };
+        const index = jobs[job.status].items.findIndex((item) => item.id === job.id);
+        const noteIndex = job.notes.findIndex((item) => item.id === noteID);
+        const updatedJob = update(job, {
+            notes: {
+                [noteIndex]: {
+                    $merge: {
+                        title: title,
+                        text: text
+                    }
+                }
+            }
+        });
+        dispatch(updateNote(job.status, index, note, noteIndex));
+        setJob(updatedJob);
+        onCancelEditMode();
     }
 
     const onRemoveNote = async (id) => {
@@ -76,7 +109,14 @@ const Notes = ({ job, setJob }) => {
                     setText(data);
                 }}
             />
-            <Button variant="contained" onClick={onAddNewNote}>Add note</Button>
+            {mode === 'insertion' ?
+                <Button variant="contained" onClick={onAddNewNote}>Add note</Button>
+                :
+                <div>
+                    <Button variant="contained" onClick={onCancelEditMode}>Cancel</Button>
+                    <Button variant="contained" onClick={onEditNote}>Save changes</Button>
+                </div>
+            }
             <div className="notes">
                 {Object.keys(job).length > 0 &&
                     job.notes.map((note) => {
@@ -84,6 +124,10 @@ const Notes = ({ job, setJob }) => {
                             <NoteCard
                                 key={note.id}
                                 note={note}
+                                setMode={setMode}
+                                setTitle={setTitle}
+                                setText={setText}
+                                setNoteID={setNoteID}
                                 onRemoveNote={onRemoveNote}
                             />
                         )
