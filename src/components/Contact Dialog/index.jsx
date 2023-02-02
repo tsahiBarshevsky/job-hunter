@@ -24,9 +24,20 @@ const ContactDialog = ({ job, setJob, open, setOpen, setOpenJobDialog }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
+    const resetForm = () => {
+        setFirstName('');
+        setLastName('');
+        setPhone('');
+        setEmail('');
+        setLinkedin('');
+        setFacebook('');
+        handleClose();
+    }
+
     const handleClose = () => {
         setOpen(false);
         setOpenJobDialog(true);
+        resetForm();
     }
 
     const onAddNewContact = async (event) => {
@@ -47,7 +58,7 @@ const ContactDialog = ({ job, setJob, open, setOpen, setOpenJobDialog }) => {
             await updateDoc(jobRef, { contacts: updatedJob.contacts });
             dispatch(addNewContact(job.status, index, contact));
             setJob(updatedJob);
-            handleClose();
+            resetForm();
         }
         catch (error) {
             console.log(error.message);

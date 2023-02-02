@@ -1,6 +1,6 @@
 import React from 'react';
 import { IconButton, Typography } from '@mui/material';
-import { MdEdit, MdDelete } from 'react-icons/md'
+import { MdEdit, MdDelete } from 'react-icons/md';
 import parse from 'html-react-parser';
 import './noteCard.sass';
 

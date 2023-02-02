@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Typography } from '@mui/material';
 import './contacts.sass';
+import ContactCard from '../Contact Card';
 
 const Contacts = ({ job, setOpenJobDialog, setOpenContactDialog }) => {
     const onOpenContactDialog = () => {
@@ -17,11 +18,13 @@ const Contacts = ({ job, setOpenJobDialog, setOpenContactDialog }) => {
                 </div>
                 :
                 <div>
+                    <Button variant="contained" onClick={onOpenContactDialog}>Create contact</Button>
                     {job.contacts.map((contact) => {
                         return (
-                            <div key={contact.id}>
-                                <Typography>{contact.firstName} {contact.lastName}</Typography>
-                            </div>
+                            <ContactCard
+                                key={contact.id}
+                                contact={contact}
+                            />
                         )
                     })}
                 </div>
