@@ -104,7 +104,7 @@ export default makeStyles(() => ({
         transform: 'translateX(-12%)'
     },
     dialog: {
-        cursor: 'default',
+        // cursor: 'default',
     },
     input: {
         '&&': {

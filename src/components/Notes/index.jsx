@@ -6,8 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CKEditor as TextEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { toolbar } from '../../utils/constants';
-import NoteCard from '../Note Card';
 import { addNewNote, removeNote, updateNote } from '../../store/actions/jobs';
+import NoteCard from '../Note Card';
 import './notes.sass';
 
 // Firebase
@@ -52,26 +52,33 @@ const Notes = ({ job, setJob }) => {
         }
     }
 
-    const onEditNote = () => {
+    const onEditNote = async () => {
+        const jobRef = doc(db, "jobs", job.id);
         const note = {
             title: title,
             text: text
         };
-        const index = jobs[job.status].items.findIndex((item) => item.id === job.id);
-        const noteIndex = job.notes.findIndex((item) => item.id === noteID);
-        const updatedJob = update(job, {
-            notes: {
-                [noteIndex]: {
-                    $merge: {
-                        title: title,
-                        text: text
+        try {
+            const index = jobs[job.status].items.findIndex((item) => item.id === job.id);
+            const noteIndex = job.notes.findIndex((item) => item.id === noteID);
+            const updatedJob = update(job, {
+                notes: {
+                    [noteIndex]: {
+                        $merge: {
+                            title: title,
+                            text: text
+                        }
                     }
                 }
-            }
-        });
-        dispatch(updateNote(job.status, index, note, noteIndex));
-        setJob(updatedJob);
-        onCancelEditMode();
+            });
+            await updateDoc(jobRef, { notes: updatedJob.notes });
+            dispatch(updateNote(job.status, index, note, noteIndex));
+            setJob(updatedJob);
+            onCancelEditMode();
+        }
+        catch (error) {
+            console.log(error.message)
+        }
     }
 
     const onRemoveNote = async (id) => {
