@@ -1,11 +1,14 @@
-import { Typography } from '@mui/material';
 import React from 'react';
+import { Typography, Badge } from '@mui/material';
 import { GoInfo, GoListUnordered } from 'react-icons/go';
 import { SlNotebook } from 'react-icons/sl';
 import { FiUsers } from 'react-icons/fi';
 import './tabs.sass';
 
-const Tabs = ({ activeTab, setActiveTab }) => {
+const Tabs = ({ activeTab, setActiveTab, job }) => {
+    const notes = job.notes.length;
+    const contacts = job.contacts.length;
+
     const onChangeTab = (tab) => {
         setActiveTab(tab);
     }
@@ -31,15 +34,25 @@ const Tabs = ({ activeTab, setActiveTab }) => {
                     onClick={() => onChangeTab('tab3')}
                     className={activeTab === 'tab3' ? "active" : undefined}
                 >
-                    <SlNotebook size={20} />
-                    <Typography variant="subtitle2">Notes</Typography>
+                    <Badge
+                        badgeContent={notes}
+                        color="primary"
+                    >
+                        <SlNotebook size={20} />
+                        <Typography variant="subtitle2">Notes</Typography>
+                    </Badge>
                 </li>
                 <li
                     onClick={() => onChangeTab('tab4')}
                     className={activeTab === 'tab4' ? "active" : undefined}
                 >
-                    <FiUsers size={20} />
-                    <Typography variant="subtitle2">Contacts</Typography>
+                    <Badge
+                        badgeContent={contacts}
+                        color="primary"
+                    >
+                        <FiUsers size={20} />
+                        <Typography variant="subtitle2">Contacts</Typography>
+                    </Badge>
                 </li>
             </ul>
         </div>

@@ -5,7 +5,7 @@ import { Typography, Button } from '@mui/material';
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useAuth } from '../../utils/context';
 import JobCard from '../Job Card';
-import { changeStatus } from '../../store/actions/jobs';
+import { addStepToTimeline } from '../../store/actions/jobs';
 import './jobs.sass';
 
 // Icons
@@ -86,16 +86,29 @@ const Jobs = ({ setJob, setOpenInsertionDialog, setOpenJobDialog }) => {
             };
             var job = newColumns[destination.droppableId].items.find((item) => item.id === draggableId);
             const index = newColumns[destination.droppableId].items.findIndex((item) => item.id === draggableId);
+            // Update job's status on new columns object
+            const updatedColumns = update(newColumns, {
+                [destination.droppableId]: {
+                    items: {
+                        [index]: {
+                            status: {
+                                $set: destination.droppableId
+                            }
+                        }
+                    }
+                }
+            });
             // Update timeline
             const step = {
                 action: timelineUpdate(destination.droppableId),
                 date: new Date()
             };
             job = update(job, {
+                status: { $set: destination.droppableId },
                 timeline: { $push: [step] }
             });
-            dispatch({ type: 'SET_JOBS', jobs: newColumns }); // Update store
-            dispatch(changeStatus(destination.droppableId, index, step));
+            dispatch({ type: 'SET_JOBS', jobs: updatedColumns }); // Update store
+            dispatch(addStepToTimeline(destination.droppableId, index, step));
             // Update firestore
             const jobRef = doc(db, "jobs", job.id);
             try {

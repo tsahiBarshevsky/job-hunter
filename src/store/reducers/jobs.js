@@ -14,7 +14,7 @@ const jobsReducer = (state = INITIAL_STATE, action) => {
                     }
                 }
             });
-        case 'CHANGE_STATUS':
+        case 'ADD_STEP_TO_TIMELINE':
             return update(state, {
                 [action.payload.status]: {
                     items: {

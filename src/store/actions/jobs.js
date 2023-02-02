@@ -8,10 +8,10 @@ const addNewJob = (status, job) => {
     }
 };
 
-const changeStatus = (status, index, step) => {
+const addStepToTimeline = (status, index, step) => {
     // status: the new status, index: location in the array, step: the new step
     return {
-        type: 'CHANGE_STATUS',
+        type: 'ADD_STEP_TO_TIMELINE',
         payload: {
             status: status,
             index: index,
@@ -117,7 +117,7 @@ const removeContact = (status, index, contactIndex) => {
 
 export {
     addNewJob,
-    changeStatus,
+    addStepToTimeline,
     updateJob,
     removeJob,
     addNewNote,

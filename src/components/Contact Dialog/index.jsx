@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Dialog, DialogTitle, DialogContent, Button, IconButton, TextField, Typography } from '@mui/material';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { FaLinkedinIn, FaFacebookF } from 'react-icons/fa';
-import { addNewContact, updateContact } from '../../store/actions/jobs';
+import { addNewContact, addStepToTimeline, updateContact } from '../../store/actions/jobs';
 import useStyles from './styles';
 import './contactDialog.sass';
 
@@ -53,10 +53,21 @@ const ContactDialog = ({ mode, selectedContact, job, setJob, open, setOpen, setO
             facebook: facebook
         };
         try {
+            const step = {
+                action: `Contact added: ${firstName} ${lastName}`,
+                date: new Date()
+            };
             const index = jobs[job.status].items.findIndex((item) => item.id === job.id);
-            const updatedJob = update(job, { contacts: { $push: [contact] } });
-            await updateDoc(jobRef, { contacts: updatedJob.contacts });
+            const updatedJob = update(job, {
+                contacts: { $push: [contact] },
+                timeline: { $push: [step] }
+            });
+            await updateDoc(jobRef, {
+                contacts: updatedJob.contacts,
+                timeline: updatedJob.timeline
+            });
             dispatch(addNewContact(job.status, index, contact));
+            dispatch(addStepToTimeline(job.status, index, step));
             setJob(updatedJob);
             resetForm();
         }

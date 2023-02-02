@@ -40,9 +40,19 @@ const Notes = ({ job, setJob }) => {
             text: text
         };
         try {
+            const step = {
+                action: `Note added: ${title}`,
+                date: new Date()
+            };
             const index = jobs[job.status].items.findIndex((item) => item.id === job.id);
-            const updatedJob = update(job, { notes: { $push: [note] } });
-            await updateDoc(jobRef, { notes: updatedJob.notes });
+            const updatedJob = update(job, {
+                notes: { $push: [note] },
+                timeline: { $push: [step] }
+            });
+            await updateDoc(jobRef, {
+                notes: updatedJob.notes,
+                timeline: updatedJob.timeline
+            });
             dispatch(addNewNote(job.status, index, note));
             setJob(updatedJob);
             resetForm();
@@ -84,10 +94,20 @@ const Notes = ({ job, setJob }) => {
     const onRemoveNote = async (id) => {
         const jobRef = doc(db, "jobs", job.id);
         try {
+            const step = {
+                action: `Note deleted`,
+                date: new Date()
+            };
             const index = jobs[job.status].items.findIndex((item) => item.id === job.id);
             const noteIndex = job.notes.findIndex((item) => item.id === id);
-            const updatedJob = update(job, { notes: { $splice: [[noteIndex, 1]] } });
-            await updateDoc(jobRef, { notes: updatedJob.notes });
+            const updatedJob = update(job, {
+                notes: { $splice: [[noteIndex, 1]] },
+                timeline: { $push: [step] }
+            });
+            await updateDoc(jobRef, {
+                notes: updatedJob.notes,
+                timeline: updatedJob.timeline
+            });
             dispatch(removeNote(job.status, index, noteIndex));
             setJob(updatedJob);
         }

@@ -56,7 +56,7 @@ const JobDialog = ({ job, setJob, setMode, setSelectedContact, open, setOpen, se
         }
     }
 
-    return (
+    return Object.keys(job).length > 0 && (
         <Dialog
             open={open}
             onClose={handleClose}
@@ -69,6 +69,7 @@ const JobDialog = ({ job, setJob, setMode, setSelectedContact, open, setOpen, se
                         <div>
                             <Typography variant="h5">{job.title}</Typography>
                             <Typography variant="subtitle2" color="textSecondary">At {job.company}</Typography>
+                            <Typography variant="subtitle2" color="textSecondary">Status: {job.status}</Typography>
                         </div>
                         <IconButton
                             onClick={handleClose}
@@ -79,6 +80,7 @@ const JobDialog = ({ job, setJob, setMode, setSelectedContact, open, setOpen, se
                         </IconButton>
                     </div>
                     <Tabs
+                        job={job}
                         activeTab={activeTab}
                         setActiveTab={setActiveTab}
                     />
