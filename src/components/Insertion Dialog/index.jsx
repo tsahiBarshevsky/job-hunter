@@ -42,7 +42,7 @@ const InsertionDialog = ({ open, setOpen }) => {
         const job = {
             activity: [],
             company: company,
-            contact: '',
+            contacts: [],
             deadline: null,
             description: '',
             id: uuidv4(),

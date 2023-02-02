@@ -10,8 +10,9 @@ import "rsuite/dist/rsuite.min.css";
 import Tabs from '../Tabs';
 import JobInfo from '../Job Info';
 import Notes from '../Notes';
+import Contacts from '../Contacts';
 
-const JobDialog = ({ job, setJob, open, setOpen }) => {
+const JobDialog = ({ job, setJob, open, setOpen, setOpenContactDialog }) => {
     const [activeTab, setActiveTab] = useState('tab1');
     const classes = useStyles();
 
@@ -37,6 +38,14 @@ const JobDialog = ({ job, setJob, open, setOpen }) => {
                     <Notes
                         job={job}
                         setJob={setJob}
+                    />
+                );
+            case 'tab4':
+                return (
+                    <Contacts
+                        job={job}
+                        setOpenJobDialog={setOpen}
+                        setOpenContactDialog={setOpenContactDialog}
                     />
                 );
             default:
@@ -95,7 +104,7 @@ const JobDialog = ({ job, setJob, open, setOpen }) => {
                     </Timeline>
                 </div>
             </div>
-        </Dialog >
+        </Dialog>
     )
 }
 

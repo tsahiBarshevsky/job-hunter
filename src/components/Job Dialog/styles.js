@@ -20,7 +20,7 @@ export default makeStyles(() => ({
     },
     details: {
         '&&': {
-            width: '65%',
+            width: '75%',
             minHeight: '85vh',
             padding: 20
         }
@@ -78,7 +78,7 @@ export default makeStyles(() => ({
         }
     },
     timelineContainer: {
-        width: '35%',
+        width: '25%',
         height: '85vh',
         color: 'white',
         backgroundColor: '#1d5692',

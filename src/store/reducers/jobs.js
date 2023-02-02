@@ -95,6 +95,18 @@ const jobsReducer = (state = INITIAL_STATE, action) => {
                     }
                 }
             });
+        case 'ADD_NEW_CONTACT':
+            return update(state, {
+                [action.payload.status]: {
+                    items: {
+                        [action.payload.index]: {
+                            contacts: {
+                                $push: [action.payload.contact]
+                            }
+                        }
+                    }
+                }
+            });
         default:
             return state;
     }
