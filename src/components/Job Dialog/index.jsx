@@ -12,7 +12,7 @@ import JobInfo from '../Job Info';
 import Notes from '../Notes';
 import Contacts from '../Contacts';
 
-const JobDialog = ({ job, setJob, open, setOpen, setOpenContactDialog }) => {
+const JobDialog = ({ job, setJob, setMode, setSelectedContact, open, setOpen, setOpenContactDialog }) => {
     const [activeTab, setActiveTab] = useState('tab1');
     const classes = useStyles();
 
@@ -45,6 +45,8 @@ const JobDialog = ({ job, setJob, open, setOpen, setOpenContactDialog }) => {
                     <Contacts
                         job={job}
                         setJob={setJob}
+                        setMode={setMode}
+                        setSelectedContact={setSelectedContact}
                         setOpenJobDialog={setOpen}
                         setOpenContactDialog={setOpenContactDialog}
                     />

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import update from 'immutability-helper';
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dialog, DialogTitle, DialogContent, Button, IconButton, TextField, Typography } from '@mui/material';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { FaLinkedinIn, FaFacebookF } from 'react-icons/fa';
-import { addNewContact } from '../../store/actions/jobs';
+import { addNewContact, updateContact } from '../../store/actions/jobs';
 import useStyles from './styles';
 import './contactDialog.sass';
 
@@ -13,7 +13,7 @@ import './contactDialog.sass';
 import { db } from '../../utils/firebase';
 import { doc, updateDoc } from 'firebase/firestore/lite';
 
-const ContactDialog = ({ job, setJob, open, setOpen, setOpenJobDialog }) => {
+const ContactDialog = ({ mode, selectedContact, job, setJob, open, setOpen, setOpenJobDialog }) => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [phone, setPhone] = useState('');
@@ -65,6 +65,55 @@ const ContactDialog = ({ job, setJob, open, setOpen, setOpenJobDialog }) => {
         }
     }
 
+    const onEditContact = async (event) => {
+        event.preventDefault();
+        const jobRef = doc(db, "jobs", job.id);
+        const contact = {
+            firstName: firstName,
+            lastName: lastName,
+            phone: phone,
+            email: email,
+            linkedin: linkedin,
+            facebook: facebook
+        };
+        try {
+            const index = jobs[job.status].items.findIndex((item) => item.id === job.id);
+            const contactIndex = job.contacts.findIndex((item) => item.id === selectedContact.id);
+            const updatedJob = update(job, {
+                contacts: {
+                    [contactIndex]: {
+                        $merge: {
+                            firstName: firstName,
+                            lastName: lastName,
+                            phone: phone,
+                            email: email,
+                            linkedin: linkedin,
+                            facebook: facebook
+                        }
+                    }
+                }
+            });
+            await updateDoc(jobRef, { contacts: updatedJob.contacts });
+            dispatch(updateContact(job.status, index, contact, contactIndex));
+            setJob(updatedJob);
+            resetForm();
+        }
+        catch (error) {
+            console.log(error.message)
+        }
+    }
+
+    useEffect(() => {
+        if (mode === 'editing') {
+            setFirstName(selectedContact.firstName);
+            setLastName(selectedContact.lastName);
+            setPhone(selectedContact.phone);
+            setEmail(selectedContact.email);
+            setLinkedin(selectedContact.linkedin);
+            setFacebook(selectedContact.facebook);
+        }
+    }, [mode, selectedContact]);
+
     return Object.keys(job).length > 0 && (
         <Dialog
             open={open}
@@ -74,7 +123,11 @@ const ContactDialog = ({ job, setJob, open, setOpen, setOpenJobDialog }) => {
         >
             <DialogTitle className={classes.title}>
                 <div className="title-items">
-                    <Typography variant="h6">Add contact for {job.title}</Typography>
+                    {mode === 'insertion' ?
+                        <Typography variant="h6">Add contact for {job.title}</Typography>
+                        :
+                        <Typography variant="h6">Edit contact for {job.title}</Typography>
+                    }
                     <IconButton
                         onClick={handleClose}
                         size="small"
@@ -85,7 +138,7 @@ const ContactDialog = ({ job, setJob, open, setOpen, setOpenJobDialog }) => {
                 </div>
             </DialogTitle>
             <DialogContent>
-                <form onSubmit={onAddNewContact}>
+                <form onSubmit={mode === 'insertion' ? onAddNewContact : onEditContact}>
                     <div className="input-title">
                         <Typography variant="subtitle1">First Name</Typography>
                         <Typography variant="caption">Required</Typography>
@@ -123,6 +176,7 @@ const ContactDialog = ({ job, setJob, open, setOpen, setOpenJobDialog }) => {
                         className={classes.input}
                         autoComplete="off"
                         placeholder="Phone"
+                        inputProps={{ maxLength: 10 }}
                     />
                     <div className="input-title">
                         <Typography variant="subtitle1">Email</Typography>
@@ -161,11 +215,15 @@ const ContactDialog = ({ job, setJob, open, setOpen, setOpenJobDialog }) => {
                         variant="contained"
                         className={classes.button}
                     >
-                        Add Contact
+                        {mode === 'insertion' ?
+                            'Add Contact'
+                            :
+                            'Save Changes'
+                        }
                     </Button>
                 </form>
             </DialogContent>
-        </Dialog>
+        </Dialog >
     )
 }
 

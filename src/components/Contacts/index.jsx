@@ -10,11 +10,13 @@ import { removeContact } from '../../store/actions/jobs';
 import { db } from '../../utils/firebase';
 import { doc, updateDoc } from 'firebase/firestore/lite';
 
-const Contacts = ({ job, setJob, setOpenJobDialog, setOpenContactDialog }) => {
+const Contacts = ({ job, setJob, setMode, setSelectedContact, setOpenJobDialog, setOpenContactDialog }) => {
     const jobs = useSelector(state => state.jobs);
     const dispatch = useDispatch();
 
-    const onOpenContactDialog = () => {
+    const onOpenContactDialog = (mode, contact) => {
+        setMode(mode);
+        setSelectedContact(contact)
         setOpenJobDialog(false);
         setOpenContactDialog(true);
     }
@@ -39,17 +41,18 @@ const Contacts = ({ job, setJob, setOpenJobDialog, setOpenContactDialog }) => {
             {job.contacts.length === 0 ?
                 <div>
                     <Typography>You have not added any contacts to this job yet.</Typography>
-                    <Button variant="contained" onClick={onOpenContactDialog}>Create contact</Button>
+                    <Button variant="contained" onClick={() => onOpenContactDialog('insertion', {})}>Create contact</Button>
                 </div>
                 :
                 <div>
-                    <Button variant="contained" onClick={onOpenContactDialog}>Create contact</Button>
+                    <Button variant="contained" onClick={() => onOpenContactDialog('insertion', {})}>Create contact</Button>
                     {job.contacts.map((contact) => {
                         return (
                             <ContactCard
                                 key={contact.id}
                                 contact={contact}
                                 onRemoveContact={onRemoveContact}
+                                onOpenContactDialog={onOpenContactDialog}
                             />
                         )
                     })}

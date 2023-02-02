@@ -12,6 +12,8 @@ import { db } from '../../utils/firebase';
 const DashbaordPage = () => {
     const { user } = useAuth();
     const [job, setJob] = useState({});
+    const [mode, setMode] = useState('');
+    const [selectedContact, setSelectedContact] = useState({});
     const [openInsertionDialog, setOpenInsertionDialog] = useState(false);
     const [openJobDialog, setOpenJobDialog] = useState(false);
     const [openContactDialog, setOpenContactDialog] = useState(false);
@@ -90,11 +92,15 @@ const DashbaordPage = () => {
             <JobDialog
                 job={job}
                 setJob={setJob}
+                setMode={setMode}
+                setSelectedContact={setSelectedContact}
                 open={openJobDialog}
                 setOpen={setOpenJobDialog}
                 setOpenContactDialog={setOpenContactDialog}
             />
             <ContactDialog
+                mode={mode}
+                selectedContact={selectedContact}
                 job={job}
                 setJob={setJob}
                 open={openContactDialog}

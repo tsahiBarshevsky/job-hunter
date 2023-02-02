@@ -107,6 +107,28 @@ const jobsReducer = (state = INITIAL_STATE, action) => {
                     }
                 }
             });
+        case 'UPDATE_CONTACT':
+            const contact = action.payload.contact;
+            return update(state, {
+                [action.payload.status]: {
+                    items: {
+                        [action.payload.index]: {
+                            contacts: {
+                                [action.payload.contactIndex]: {
+                                    $merge: {
+                                        firstName: contact.firstName,
+                                        lastName: contact.lastName,
+                                        phone: contact.phone,
+                                        email: contact.email,
+                                        linkedin: contact.linkedin,
+                                        facebook: contact.facebook
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            });
         case 'REMOVE_CONTACT':
             return update(state, {
                 [action.payload.status]: {

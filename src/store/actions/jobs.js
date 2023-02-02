@@ -90,6 +90,19 @@ const addNewContact = (status, index, contact) => {
     }
 };
 
+const updateContact = (status, index, contact, contactIndex) => {
+    return {
+        type: 'UPDATE_CONTACT',
+        payload: {
+            status: status,
+            index: index,
+            contact: contact,
+            contactIndex: contactIndex
+        }
+    }
+};
+
+
 const removeContact = (status, index, contactIndex) => {
     // status: current status, index: location in the array, contactIndex: contact's location in array
     return {
@@ -111,5 +124,6 @@ export {
     updateNote,
     removeNote,
     addNewContact,
+    updateContact,
     removeContact
 };
