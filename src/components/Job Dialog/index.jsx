@@ -44,6 +44,7 @@ const JobDialog = ({ job, setJob, open, setOpen, setOpenContactDialog }) => {
                 return (
                     <Contacts
                         job={job}
+                        setJob={setJob}
                         setOpenJobDialog={setOpen}
                         setOpenContactDialog={setOpenContactDialog}
                     />

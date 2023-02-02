@@ -90,6 +90,18 @@ const addNewContact = (status, index, contact) => {
     }
 };
 
+const removeContact = (status, index, contactIndex) => {
+    // status: current status, index: location in the array, contactIndex: contact's location in array
+    return {
+        type: 'REMOVE_CONTACT',
+        payload: {
+            status: status,
+            index: index,
+            contactIndex: contactIndex
+        }
+    }
+};
+
 export {
     addNewJob,
     changeStatus,
@@ -98,5 +110,6 @@ export {
     addNewNote,
     updateNote,
     removeNote,
-    addNewContact
+    addNewContact,
+    removeContact
 };

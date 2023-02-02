@@ -6,7 +6,7 @@ import { BsTelephoneFill } from 'react-icons/bs';
 import { HiMail } from 'react-icons/hi';
 import './contactCard.sass';
 
-const ContactCard = ({ contact }) => {
+const ContactCard = ({ contact, onRemoveContact }) => {
     return (
         <div className="contact-card-container">
             <div className="contact-card-header">
@@ -21,6 +21,7 @@ const ContactCard = ({ contact }) => {
                         <MdEdit />
                     </IconButton>
                     <IconButton
+                        onClick={() => onRemoveContact(contact.id)}
                         size="small"
                     >
                         <MdDelete />

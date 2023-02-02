@@ -1,12 +1,37 @@
 import React from 'react';
+import update from 'immutability-helper';
 import { Button, Typography } from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux';
 import './contacts.sass';
 import ContactCard from '../Contact Card';
+import { removeContact } from '../../store/actions/jobs';
 
-const Contacts = ({ job, setOpenJobDialog, setOpenContactDialog }) => {
+// Firebase
+import { db } from '../../utils/firebase';
+import { doc, updateDoc } from 'firebase/firestore/lite';
+
+const Contacts = ({ job, setJob, setOpenJobDialog, setOpenContactDialog }) => {
+    const jobs = useSelector(state => state.jobs);
+    const dispatch = useDispatch();
+
     const onOpenContactDialog = () => {
         setOpenJobDialog(false);
         setOpenContactDialog(true);
+    }
+
+    const onRemoveContact = async (id) => {
+        const jobRef = doc(db, "jobs", job.id);
+        try {
+            const index = jobs[job.status].items.findIndex((item) => item.id === job.id);
+            const contactIndex = job.contacts.findIndex((item) => item.id === id);
+            const updatedJob = update(job, { contacts: { $splice: [[contactIndex, 1]] } });
+            await updateDoc(jobRef, { contacts: updatedJob.contacts });
+            dispatch(removeContact(job.status, index, contactIndex));
+            setJob(updatedJob);
+        }
+        catch (error) {
+            console.log(error.message)
+        }
     }
 
     return Object.keys(job).length > 0 && (
@@ -24,6 +49,7 @@ const Contacts = ({ job, setOpenJobDialog, setOpenContactDialog }) => {
                             <ContactCard
                                 key={contact.id}
                                 contact={contact}
+                                onRemoveContact={onRemoveContact}
                             />
                         )
                     })}

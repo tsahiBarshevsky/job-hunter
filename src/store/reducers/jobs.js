@@ -107,6 +107,18 @@ const jobsReducer = (state = INITIAL_STATE, action) => {
                     }
                 }
             });
+        case 'REMOVE_CONTACT':
+            return update(state, {
+                [action.payload.status]: {
+                    items: {
+                        [action.payload.index]: {
+                            contacts: {
+                                $splice: [[action.payload.contactIndex, 1]]
+                            }
+                        }
+                    }
+                }
+            });
         default:
             return state;
     }
