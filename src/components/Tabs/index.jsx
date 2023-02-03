@@ -28,7 +28,7 @@ const Tabs = ({ activeTab, setActiveTab, job }) => {
                     className={activeTab === 'tab2' ? "active" : undefined}
                 >
                     <GoListUnordered size={20} />
-                    <Typography variant="subtitle2">Activity</Typography>
+                    <Typography variant="subtitle2">Activities</Typography>
                 </li>
                 <li
                     onClick={() => onChangeTab('tab3')}

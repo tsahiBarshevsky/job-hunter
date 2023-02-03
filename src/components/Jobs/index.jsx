@@ -4,8 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Button } from '@mui/material';
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useAuth } from '../../utils/context';
-import JobCard from '../Job Card';
 import { addStepToTimeline } from '../../store/actions/jobs';
+import JobCard from '../Job Card';
 import './jobs.sass';
 
 // Icons

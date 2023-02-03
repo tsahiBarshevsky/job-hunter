@@ -1,0 +1,30 @@
+@import '../../styles/_variables'
+
+.stats-container
+    display: flex
+    flex-direction: column
+    justify-content: flex-start
+    align-items: flex-start
+    width: calc( 100% - #{$sidebar-width} )
+    height: 100vh
+    padding: 0 20px
+    overflow-y: auto
+
+    @media screen and ( max-width: $sm )
+        width: 100%
+        height: calc( 100vh - #{sidebar-mobile-height} )
+
+    .stats-header
+        display: flex
+        justify-content: space-between
+        align-items: center
+        width: 100%
+        padding: 15px 0
+        cursor: default
+        background-color: royalblue
+
+    .statistics
+        display: flex
+        align-items: center
+        justify-content: space-between
+        width: 100%

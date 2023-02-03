@@ -1,8 +1,9 @@
 import React, { useEffect, useCallback, useState } from 'react';
+import moment from 'moment/moment';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useAuth } from '../../utils/context';
-import { ContactDialog, InsertionDialog, JobDialog, Jobs, Sidebar } from '../../components';
+import { ContactDialog, InsertionDialog, JobDialog, Jobs, Sidebar, Stats } from '../../components';
 import './dashboard.sass';
 
 // Firebase
@@ -17,6 +18,8 @@ const DashbaordPage = () => {
     const [openInsertionDialog, setOpenInsertionDialog] = useState(false);
     const [openJobDialog, setOpenJobDialog] = useState(false);
     const [openContactDialog, setOpenContactDialog] = useState(false);
+    const jobs = useSelector(state => state.jobs);
+    const week = useSelector(state => state.week);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -61,6 +64,12 @@ const DashbaordPage = () => {
                 }
             };
             dispatch({ type: 'SET_JOBS', jobs: columns });
+
+            // Get current week
+            const now = moment();
+            const weekStart = now.clone().startOf('week');
+            const weekEnd = now.clone().endOf('week');
+            dispatch({ type: 'SET_WEEK', week: { start: weekStart, end: weekEnd } });
         }
         catch (error) {
             console.log(error.message);
@@ -75,15 +84,16 @@ const DashbaordPage = () => {
         fetchData();
     }, [navigate, user, fetchData]);
 
-    return user && (
+    return user && Object.keys(jobs).length > 0 && Object.keys(week).length > 0 && (
         <>
             <div className="dashboard-container">
                 <Sidebar />
-                <Jobs
+                <Stats />
+                {/* <Jobs
                     setJob={setJob}
                     setOpenInsertionDialog={setOpenInsertionDialog}
                     setOpenJobDialog={setOpenJobDialog}
-                />
+                /> */}
             </div>
             <InsertionDialog
                 open={openInsertionDialog}
