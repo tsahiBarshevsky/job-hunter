@@ -32,7 +32,7 @@ const Stats = () => {
             const items = jobs[status].items;
             counter += items.filter((job) => {
                 if (Object.keys(job.timeline[0].date).length === 0)
-                    return moment(job.timeline[0]).isoWeek() === week;
+                    return moment(job.timeline[0].date).isoWeek() === week;
                 return moment.unix(job.timeline[0].date.seconds).isoWeek() === week;
             }).length;
         });
@@ -47,8 +47,8 @@ const Stats = () => {
             items.forEach((job) => {
                 counter += job.timeline.filter((step) => {
                     if (Object.keys(step.date).length === 0)
-                        return step.action === 'Moved to In Progress' && moment(step.date).isoWeek() === week;
-                    return step.action === 'Moved to In Progress' && moment.unix(step.date.seconds).isoWeek() === week
+                        return step.action.includes('In Progress') && moment(step.date).isoWeek() === week;
+                    return step.action.includes('In Progress') && moment.unix(step.date.seconds).isoWeek() === week
                 }).length;
             });
         });
@@ -63,8 +63,8 @@ const Stats = () => {
             items.forEach((job) => {
                 counter += job.timeline.filter((step) => {
                     if (Object.keys(step.date).length === 0)
-                        return step.action === 'Got an offer' && moment(step.date).isoWeek() === week;
-                    return step.action === 'Got an offer' && moment.unix(step.date.seconds).isoWeek() === week
+                        return step.action.includes('offer') && moment(step.date).isoWeek() === week;
+                    return step.action.includes('offer') && moment.unix(step.date.seconds).isoWeek() === week
                 }).length;
             });
         });

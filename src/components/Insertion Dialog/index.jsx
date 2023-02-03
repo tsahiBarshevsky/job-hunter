@@ -39,6 +39,14 @@ const InsertionDialog = ({ open, setOpen }) => {
 
     const onAddNewJob = async (event) => {
         event.preventDefault();
+        var action = '';
+        if (status === 'In Progress')
+            action = 'Job created at In Progress';
+        else
+            if (status === 'Offered')
+                action = 'Job created with an offer';
+            else
+                action = 'Job created';
         const job = {
             activity: [],
             company: company,
@@ -52,7 +60,7 @@ const InsertionDialog = ({ open, setOpen }) => {
             salary: '',
             status: status,
             timeline: [{
-                action: 'Job created',
+                action: action,
                 date: new Date()
             }],
             title: title,
