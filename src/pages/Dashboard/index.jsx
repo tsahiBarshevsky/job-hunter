@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAuth } from '../../utils/context';
 import { ContactDialog, InsertionDialog, JobDialog, Jobs, Sidebar, Stats } from '../../components';
+import { renderProgressLine } from '../../utils/constants';
 import './dashboard.sass';
 
 // Firebase
@@ -14,6 +15,7 @@ const DashbaordPage = () => {
     const { user } = useAuth();
     const [activeTab, setActiveTab] = useState('tab1');
     const [job, setJob] = useState({});
+    const [jobsArray, setJobsArray] = useState([]);
     const [mode, setMode] = useState('');
     const [selectedContact, setSelectedContact] = useState({});
     const [openInsertionDialog, setOpenInsertionDialog] = useState(false);
@@ -66,6 +68,20 @@ const DashbaordPage = () => {
             };
             dispatch({ type: 'SET_JOBS', jobs: columns });
 
+            // Build jobs array for data table
+            const arr = [];
+            querySnapshot.docs.forEach((doc) => {
+                const data = doc.data();
+                arr.push({
+                    title: data.title,
+                    company: data.company,
+                    status: data.status,
+                    progress: <div style={{ width: 250 }}>{renderProgressLine(data.status)}</div>,
+                    link: data.url && <a href={data.url} target="_blank" rel="noreferrer">{data.url}</a>
+                });
+            });
+            setJobsArray(arr);
+
             // Get current week
             const now = moment();
             const weekStart = now.clone().startOf('week');
@@ -99,7 +115,10 @@ const DashbaordPage = () => {
                         setOpenJobDialog={setOpenJobDialog}
                     />
                     :
-                    <Stats />
+                    <Stats
+                        jobsArray={jobsArray}
+                        setJobsArray={setJobsArray}
+                    />
                 }
             </div>
             <InsertionDialog

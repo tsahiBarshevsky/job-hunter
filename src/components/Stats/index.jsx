@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import moment from 'moment';
+import DataTable from 'react-data-table-component';
 import { Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useAuth } from '../../utils/context';
+import { tableColumns } from './tableColumns';
+import { renderProgressLine } from '../../utils/constants';
 import StatBox from '../Stat Box';
 import './stats.sass';
 
@@ -12,7 +15,7 @@ import Stat2 from '../../assets/interview.png';
 import Stat3 from '../../assets/contract.png';
 import Stat4 from '../../assets/weekly-calendar.png';
 
-const Stats = () => {
+const Stats = ({ jobsArray, setJobsArray }) => {
     const { user } = useAuth();
     const jobs = useSelector(state => state.jobs);
     const week = useSelector(state => state.week);
@@ -71,6 +74,20 @@ const Stats = () => {
         return counter;
     }
 
+    useEffect(() => {
+        const arr = [];
+        Object.keys(jobs).forEach((status) => {
+            jobs[status].items.forEach((job) => arr.push({
+                title: job.title,
+                company: job.company,
+                status: job.status,
+                progress: <div style={{ width: 250 }}>{renderProgressLine(job.status)}</div>,
+                link: job.url && <a href={job.url} target="_blank" rel="noreferrer">{job.url}</a>
+            }));
+        });
+        setJobsArray(arr);
+    }, [jobs, setJobsArray]);
+
     return (
         <div className="stats-container">
             <div className="stats-header">
@@ -100,6 +117,16 @@ const Stats = () => {
                     subtitle={`${calculateJobsOffered()} added this week`}
                     value={jobs["Offered"].items.length}
                     image={Stat2}
+                />
+            </div>
+            <div className="box">
+                <Typography variant="subtitle1">Jobs Overview</Typography>
+                <DataTable
+                    columns={tableColumns}
+                    data={jobsArray}
+                    pagination
+                    pointerOnHover
+                    theme="solarized"
                 />
             </div>
         </div>
