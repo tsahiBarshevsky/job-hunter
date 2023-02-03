@@ -8,7 +8,7 @@
     width: $sidebar-width
     height: 100vh
     color: white
-    background-color: black
+    background-color: $primary-color
     padding: 15px 0
     cursor: default
 
@@ -16,3 +16,88 @@
         flex-direction: row
         width: 100%
         height: $sidebar-mobile-height
+
+    .links
+        width: 100%
+        display: flex
+        flex-direction: column
+        align-items: center
+        justify-content: flex-start
+        width: 100%
+        margin: 0
+        padding: 0
+
+        @media screen and ( max-width: $sm )
+            display: none
+
+        .link
+            display: flex
+            align-items: center
+            justify-content: flex-start
+            width: 100%
+            padding: 10px 25px
+            list-style: none
+            text-align: center
+            cursor: pointer
+            transition: all 0.5s
+            margin: 5px 0
+
+            .icon
+                font-size: 20px
+                margin-right: 20px
+
+            &:hover
+                background-color: #043a71
+
+        .link.active
+            cursor: default
+            background-color: #043a71
+
+    .user
+        position: absolute
+        bottom: 0
+        margin-bottom: 10px
+
+        @media screen and ( max-width: $sm )
+            display: none
+
+        .user-image
+            width: 25px
+            height: 25px
+            border-radius: 7px
+            margin-right: 10px
+
+    .mobile-links
+        display: none
+
+        @media screen and ( max-width: $sm )
+            display: flex
+            justify-content: center
+            align-items: center
+            width: 100%
+            margin: 0
+            padding: 0
+
+        .mobile-link
+            display: flex
+            flex-direction: column
+            justify-content: center
+            align-items: center
+            color: white
+            width: 100%
+            height: $sidebar-mobile-height
+            user-select: none
+            padding: 0 10px
+            cursor: pointer
+            transition: all 0.5s
+
+            &:hover
+                background-color: #043a71
+
+            .mobile-icon
+                font-size: 20px
+                margin-bottom: 5px
+
+        .mobile-link.active
+            cursor: default
+            background-color: #043a71

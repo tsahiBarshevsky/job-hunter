@@ -12,6 +12,7 @@ import { db } from '../../utils/firebase';
 
 const DashbaordPage = () => {
     const { user } = useAuth();
+    const [activeTab, setActiveTab] = useState('tab1');
     const [job, setJob] = useState({});
     const [mode, setMode] = useState('');
     const [selectedContact, setSelectedContact] = useState({});
@@ -87,13 +88,19 @@ const DashbaordPage = () => {
     return user && Object.keys(jobs).length > 0 && Object.keys(week).length > 0 && (
         <>
             <div className="dashboard-container">
-                <Sidebar />
-                <Stats />
-                {/* <Jobs
-                    setJob={setJob}
-                    setOpenInsertionDialog={setOpenInsertionDialog}
-                    setOpenJobDialog={setOpenJobDialog}
-                /> */}
+                <Sidebar
+                    activeTab={activeTab}
+                    setActiveTab={setActiveTab}
+                />
+                {activeTab === 'tab1' ?
+                    <Jobs
+                        setJob={setJob}
+                        setOpenInsertionDialog={setOpenInsertionDialog}
+                        setOpenJobDialog={setOpenJobDialog}
+                    />
+                    :
+                    <Stats />
+                }
             </div>
             <InsertionDialog
                 open={openInsertionDialog}
