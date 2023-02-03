@@ -25,11 +25,48 @@ const Stats = () => {
         return counter;
     }
 
-    const calculate = () => {
-        const now = moment();
+    const calculateJobsAddedThisWeek = () => {
+        const week = moment().isoWeek();
         var counter = 0;
         Object.keys(jobs).forEach((status) => {
-            counter += jobs[status].items.filter((job) => moment.unix(job.timeline[0].date.seconds).isoWeek() === now.isoWeek()).length;
+            const items = jobs[status].items;
+            counter += items.filter((job) => {
+                if (Object.keys(job.timeline[0].date).length === 0)
+                    return moment(job.timeline[0]).isoWeek() === week;
+                return moment.unix(job.timeline[0].date.seconds).isoWeek() === week;
+            }).length;
+        });
+        return counter;
+    }
+
+    const calculateJobsInProgress = () => {
+        const week = moment().isoWeek();
+        var counter = 0;
+        Object.keys(jobs).forEach((status) => {
+            const items = jobs[status].items;
+            items.forEach((job) => {
+                counter += job.timeline.filter((step) => {
+                    if (Object.keys(step.date).length === 0)
+                        return step.action === 'Moved to In Progress' && moment(step.date).isoWeek() === week;
+                    return step.action === 'Moved to In Progress' && moment.unix(step.date.seconds).isoWeek() === week
+                }).length;
+            });
+        });
+        return counter;
+    }
+
+    const calculateJobsOffered = () => {
+        const week = moment().isoWeek();
+        var counter = 0;
+        Object.keys(jobs).forEach((status) => {
+            const items = jobs[status].items;
+            items.forEach((job) => {
+                counter += job.timeline.filter((step) => {
+                    if (Object.keys(step.date).length === 0)
+                        return step.action === 'Got an offer' && moment(step.date).isoWeek() === week;
+                    return step.action === 'Got an offer' && moment.unix(step.date.seconds).isoWeek() === week
+                }).length;
+            });
         });
         return counter;
     }
@@ -49,18 +86,18 @@ const Stats = () => {
                 <StatBox
                     title="Added This Week"
                     subtitle={`${week.start.format('DD/MM/YY')} - ${week.end.format('DD/MM/YY')}`}
-                    value={calculate()}
+                    value={calculateJobsAddedThisWeek()}
                     image={Stat4}
                 />
                 <StatBox
                     title="Jobs In Progress"
-                    subtitle={`added this week`}
+                    subtitle={`${calculateJobsInProgress()} added this week`}
                     value={jobs["In Progress"].items.length}
                     image={Stat3}
                 />
                 <StatBox
                     title="Jobs Offered"
-                    subtitle={`added this week`}
+                    subtitle={`${calculateJobsOffered()} added this week`}
                     value={jobs["Offered"].items.length}
                     image={Stat2}
                 />
