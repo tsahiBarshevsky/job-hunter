@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import moment from 'moment';
 import DataTable from 'react-data-table-component';
 import { Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useAuth } from '../../utils/context';
 import { tableColumns } from './tableColumns';
-import { renderProgressLine } from '../../utils/constants';
 import StatBox from '../Stat Box';
 import './stats.sass';
 
@@ -15,10 +14,13 @@ import Stat2 from '../../assets/interview.png';
 import Stat3 from '../../assets/contract.png';
 import Stat4 from '../../assets/weekly-calendar.png';
 
-const Stats = ({ jobsArray, setJobsArray }) => {
+const Stats = () => {
     const { user } = useAuth();
     const jobs = useSelector(state => state.jobs);
+    const stats = useSelector(state => state.stats);
     const week = useSelector(state => state.week);
+
+    console.log('stats', stats)
 
     const calculateTotalJobs = () => {
         var counter = 0;
@@ -74,20 +76,6 @@ const Stats = ({ jobsArray, setJobsArray }) => {
         return counter;
     }
 
-    useEffect(() => {
-        const arr = [];
-        Object.keys(jobs).forEach((status) => {
-            jobs[status].items.forEach((job) => arr.push({
-                title: job.title,
-                company: job.company,
-                status: job.status,
-                progress: <div style={{ width: 250 }}>{renderProgressLine(job.status)}</div>,
-                link: job.url && <a href={job.url} target="_blank" rel="noreferrer">{job.url}</a>
-            }));
-        });
-        setJobsArray(arr);
-    }, [jobs, setJobsArray]);
-
     return (
         <div className="stats-container">
             <div className="stats-header">
@@ -123,11 +111,15 @@ const Stats = ({ jobsArray, setJobsArray }) => {
                 <Typography variant="subtitle1">Jobs Overview</Typography>
                 <DataTable
                     columns={tableColumns}
-                    data={jobsArray}
+                    data={stats}
                     pagination
                     pointerOnHover
                     theme="solarized"
                 />
+            </div>
+            <div className="box">
+                <Typography variant="subtitle1">Monthly Jobs Applications Activity</Typography>
+
             </div>
         </div>
     )

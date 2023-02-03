@@ -15,7 +15,6 @@ const DashbaordPage = () => {
     const { user } = useAuth();
     const [activeTab, setActiveTab] = useState('tab1');
     const [job, setJob] = useState({});
-    const [jobsArray, setJobsArray] = useState([]);
     const [mode, setMode] = useState('');
     const [selectedContact, setSelectedContact] = useState({});
     const [openInsertionDialog, setOpenInsertionDialog] = useState(false);
@@ -31,11 +30,15 @@ const DashbaordPage = () => {
         const q = query(jobsRef, where("owner", "==", user.uid));
         try {
             const querySnapshot = await getDocs(q);
-            const data = querySnapshot.docs.map((doc) => doc.data()).reduce((r, a) => {
-                r[a.status] = r[a.status] || [];
-                r[a.status].push(a);
-                return r;
-            }, Object.create(null));
+            const data =
+                querySnapshot.docs
+                    .sort((a, b) => { return a.data().created - b.data().created })
+                    .map((doc) => doc.data())
+                    .reduce((r, a) => {
+                        r[a.status] = r[a.status] || [];
+                        r[a.status].push(a);
+                        return r;
+                    }, Object.create(null));
             const columns = {
                 "Wishlist": {
                     name: "Wishlist",
@@ -70,17 +73,21 @@ const DashbaordPage = () => {
 
             // Build jobs array for data table
             const arr = [];
-            querySnapshot.docs.forEach((doc) => {
-                const data = doc.data();
-                arr.push({
-                    title: data.title,
-                    company: data.company,
-                    status: data.status,
-                    progress: <div style={{ width: 250 }}>{renderProgressLine(data.status)}</div>,
-                    link: data.url && <a href={data.url} target="_blank" rel="noreferrer">{data.url}</a>
+            querySnapshot.docs
+                .sort((a, b) => { return a.data().created - b.data().created })
+                .forEach((doc) => {
+                    const data = doc.data();
+                    arr.push({
+                        id: data.id,
+                        created: moment.unix(data.created.seconds).format('DD/MM/YYYY'),
+                        title: data.title,
+                        company: data.company,
+                        status: data.status,
+                        progress: <div style={{ width: 250 }}>{renderProgressLine(data.status)}</div>,
+                        link: data.url && <a href={data.url} target="_blank" rel="noreferrer">{data.url}</a>
+                    });
                 });
-            });
-            setJobsArray(arr);
+            dispatch({ type: 'SET_STATS', stats: arr });
 
             // Get current week
             const now = moment();
@@ -115,10 +122,7 @@ const DashbaordPage = () => {
                         setOpenJobDialog={setOpenJobDialog}
                     />
                     :
-                    <Stats
-                        jobsArray={jobsArray}
-                        setJobsArray={setJobsArray}
-                    />
+                    <Stats />
                 }
             </div>
             <InsertionDialog

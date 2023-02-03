@@ -5,6 +5,8 @@ import { Typography, Button } from '@mui/material';
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useAuth } from '../../utils/context';
 import { addStepToTimeline } from '../../store/actions/jobs';
+import { updateStatus } from '../../store/actions/stats';
+import { renderProgressLine } from '../../utils/constants';
 import JobCard from '../Job Card';
 import './jobs.sass';
 
@@ -22,6 +24,7 @@ import { db } from '../../utils/firebase';
 const Jobs = ({ setJob, setOpenInsertionDialog, setOpenJobDialog }) => {
     const { user } = useAuth();
     const jobs = useSelector(state => state.jobs);
+    const stats = useSelector(state => state.stats);
     const dispatch = useDispatch();
 
     const onOpenJob = (item) => {
@@ -109,6 +112,10 @@ const Jobs = ({ setJob, setOpenInsertionDialog, setOpenJobDialog }) => {
             });
             dispatch({ type: 'SET_JOBS', jobs: updatedColumns }); // Update store
             dispatch(addStepToTimeline(destination.droppableId, index, step));
+            // Update stats
+            const statIndex = stats.findIndex((stat) => stat.id === job.id);
+            const progress = <div style={{ width: 250 }}>{renderProgressLine(destination.droppableId)}</div>;
+            dispatch(updateStatus(statIndex, destination.droppableId, progress));
             // Update firestore
             const jobRef = doc(db, "jobs", job.id);
             try {

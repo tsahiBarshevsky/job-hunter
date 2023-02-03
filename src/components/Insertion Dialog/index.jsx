@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import moment from 'moment/moment';
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch } from 'react-redux';
 import { useAuth } from '../../utils/context';
 import { addNewJob } from '../../store/actions/jobs';
-import { statuses } from '../../utils/constants';
+import { addNewStat } from '../../store/actions/stats';
+import { statuses, renderProgressLine } from '../../utils/constants';
 import useStyles from './styles.js';
 import './insertionDialog.sass';
 
@@ -51,6 +53,7 @@ const InsertionDialog = ({ open, setOpen }) => {
             activity: [],
             company: company,
             contacts: [],
+            created: new Date(),
             deadline: null,
             description: '',
             id: uuidv4(),
@@ -69,6 +72,15 @@ const InsertionDialog = ({ open, setOpen }) => {
         try {
             await setDoc(doc(db, 'jobs', job.id), job); // Add new doc
             dispatch(addNewJob(status, job)); // Update store
+            dispatch(addNewStat({
+                id: job.id,
+                created: moment(job.created).format('DD/MM/YYYY'),
+                title: job.title,
+                company: job.company,
+                status: job.status,
+                progress: <div style={{ width: 250 }}>{renderProgressLine(job.status)}</div>,
+                link: job.url && <a href={job.url} target="_blank" rel="noreferrer">{job.url}</a>
+            }))
             handleClose();
         }
         catch (error) {
