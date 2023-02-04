@@ -1,11 +1,22 @@
-import React from 'react';
-import { Typography } from '@mui/material';
+import React, { useState } from 'react';
+import { Typography, Pagination, Stack } from '@mui/material';
 import { Progress } from 'rsuite';
 import { useSelector } from 'react-redux';
+import usePagination from '../../utils/pagination';
 import './table.sass';
+
+const ENTRIES_PER_PAGE = 10;
 
 const Table = () => {
     const stats = useSelector(state => state.stats);
+    const [page, setPage] = useState(1);
+    const count = Math.ceil(stats.length / ENTRIES_PER_PAGE);
+    const data = usePagination(stats, ENTRIES_PER_PAGE);
+
+    const handlePageChange = (e, p) => {
+        setPage(p);
+        data.jump(p);
+    }
 
     const renderProgressLine = (status) => {
         switch (status) {
@@ -26,56 +37,68 @@ const Table = () => {
     }
 
     return (
-        <table id="jobs">
-            <thead>
-                <tr>
-                    <th>
-                        <Typography variant='h6'>Created</Typography>
-                    </th>
-                    <th>
-                        <Typography variant='h6'>Job Title</Typography>
-                    </th>
-                    <th>
-                        <Typography variant='h6'>Company</Typography>
-                    </th>
-                    <th>
-                        <Typography variant='h6'>Status</Typography>
-                    </th>
-                    <th>
-                        <Typography variant='h6'>Progress</Typography>
-                    </th>
-                    <th>
-                        <Typography variant='h6'>Link</Typography>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                {stats.map((job) => {
-                    return (
-                        <tr key={job.id}>
-                            <td>
-                                <Typography variant='body1'>{job.created}</Typography>
-                            </td>
-                            <td>
-                                <Typography variant='body1'>{job.title}</Typography>
-                            </td>
-                            <td>
-                                <Typography variant='body1'>{job.company}</Typography>
-                            </td>
-                            <td>
-                                <Typography variant='body1'>{job.status}</Typography>
-                            </td>
-                            <td>
-                                {renderProgressLine(job.status)}
-                            </td>
-                            <td>
-                                <a href={job.link} target="_blank" rel="noreferrer">{job.link}</a>
-                            </td>
-                        </tr>
-                    )
-                })}
-            </tbody>
-        </table>
+        <div className="table-container">
+            <table id="jobs">
+                <thead>
+                    <tr>
+                        <th>
+                            <Typography variant='h6'>Created</Typography>
+                        </th>
+                        <th>
+                            <Typography variant='h6'>Job Title</Typography>
+                        </th>
+                        <th>
+                            <Typography variant='h6'>Company</Typography>
+                        </th>
+                        <th>
+                            <Typography variant='h6'>Status</Typography>
+                        </th>
+                        <th>
+                            <Typography variant='h6'>Progress</Typography>
+                        </th>
+                        <th>
+                            <Typography variant='h6'>Link</Typography>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {data.currentData().map((job) => {
+                        return (
+                            <tr key={job.id}>
+                                <td>
+                                    <Typography variant='body1'>{job.created}</Typography>
+                                </td>
+                                <td>
+                                    <Typography variant='body1'>{job.title}</Typography>
+                                </td>
+                                <td>
+                                    <Typography variant='body1'>{job.company}</Typography>
+                                </td>
+                                <td>
+                                    <Typography variant='body1'>{job.status}</Typography>
+                                </td>
+                                <td>
+                                    {renderProgressLine(job.status)}
+                                </td>
+                                <td>
+                                    <a href={job.link} target="_blank" rel="noreferrer">{job.link}</a>
+                                </td>
+                            </tr>
+                        )
+                    })}
+                </tbody>
+            </table>
+            <Stack spacing={2}>
+                <Pagination
+                    count={count}
+                    page={page}
+                    onChange={handlePageChange}
+                    showLastButton
+                    showFirstButton
+
+                />
+            </Stack>
+        </div>
     )
 }
 

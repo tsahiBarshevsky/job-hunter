@@ -20,7 +20,9 @@ const DashbaordPage = () => {
     const [openJobDialog, setOpenJobDialog] = useState(false);
     const [openContactDialog, setOpenContactDialog] = useState(false);
     const jobs = useSelector(state => state.jobs);
+    console.log(jobs)
     const week = useSelector(state => state.week);
+    console.log(week)
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -65,7 +67,7 @@ const DashbaordPage = () => {
                 },
                 "Not Answered": {
                     name: "Not Answered",
-                    items: data['Not Answered'] ? data['Wishlist'] : []
+                    items: data['Not Answered'] ? data['Not Answered'] : []
                 }
             };
             dispatch({ type: 'SET_JOBS', jobs: columns });
