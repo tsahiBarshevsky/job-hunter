@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useAuth } from '../../utils/context';
 import { addNewJob } from '../../store/actions/jobs';
 import { addNewStat } from '../../store/actions/stats';
-import { statuses, renderProgressLine } from '../../utils/constants';
+import { statuses } from '../../utils/constants';
 import useStyles from './styles.js';
 import './insertionDialog.sass';
 
@@ -78,8 +78,7 @@ const InsertionDialog = ({ open, setOpen }) => {
                 title: job.title,
                 company: job.company,
                 status: job.status,
-                progress: <div style={{ width: 250 }}>{renderProgressLine(job.status)}</div>,
-                link: job.url && <a href={job.url} target="_blank" rel="noreferrer">{job.url}</a>
+                link: job.url
             }))
             handleClose();
         }

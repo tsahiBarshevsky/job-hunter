@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAuth } from '../../utils/context';
 import { ContactDialog, InsertionDialog, JobDialog, Jobs, Sidebar, Stats } from '../../components';
-import { renderProgressLine } from '../../utils/constants';
 import './dashboard.sass';
 
 // Firebase
@@ -83,8 +82,7 @@ const DashbaordPage = () => {
                         title: data.title,
                         company: data.company,
                         status: data.status,
-                        progress: <div style={{ width: 250 }}>{renderProgressLine(data.status)}</div>,
-                        link: data.url && <a href={data.url} target="_blank" rel="noreferrer">{data.url}</a>
+                        link: data.url
                     });
                 });
             dispatch({ type: 'SET_STATS', stats: arr });

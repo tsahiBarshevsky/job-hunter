@@ -6,7 +6,6 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useAuth } from '../../utils/context';
 import { addStepToTimeline } from '../../store/actions/jobs';
 import { updateStatus } from '../../store/actions/stats';
-import { renderProgressLine } from '../../utils/constants';
 import JobCard from '../Job Card';
 import './jobs.sass';
 
@@ -114,8 +113,7 @@ const Jobs = ({ setJob, setOpenInsertionDialog, setOpenJobDialog }) => {
             dispatch(addStepToTimeline(destination.droppableId, index, step));
             // Update stats
             const statIndex = stats.findIndex((stat) => stat.id === job.id);
-            const progress = <div style={{ width: 250 }}>{renderProgressLine(destination.droppableId)}</div>;
-            dispatch(updateStatus(statIndex, destination.droppableId, progress));
+            dispatch(updateStatus(statIndex, destination.droppableId));
             // Update firestore
             const jobRef = doc(db, "jobs", job.id);
             try {

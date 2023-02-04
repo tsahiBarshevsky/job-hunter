@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { CKEditor as TextEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { removeJob, updateJob } from '../../store/actions/jobs';
+import { removeStat, updateStat } from '../../store/actions/stats';
 import { toolbar } from '../../utils/constants';
 import useStyles from './styles';
 import './jobInfo.sass';
@@ -25,6 +26,7 @@ const JobInfo = ({ job, handleClose }) => {
     const [description, setDescription] = useState('');
     const [deadline, setDeadline] = useState(null);
     const jobs = useSelector(state => state.jobs);
+    const stats = useSelector(state => state.stats);
     const dispatch = useDispatch();
     const classes = useStyles();
 
@@ -43,6 +45,7 @@ const JobInfo = ({ job, handleClose }) => {
                 deadline: new Date(deadline)
             });
             const index = jobs[job.status].items.findIndex((item) => item.id === job.id);
+            const statIndex = stats.findIndex((item) => item.id === job.id);
             const editedJob = {
                 title: title,
                 company: company,
@@ -53,6 +56,8 @@ const JobInfo = ({ job, handleClose }) => {
                 deadline: new Date(deadline)
             };
             dispatch(updateJob(job.status, index, editedJob)); // Update store
+            const link = url && <a href={url} target="_blank" rel="noreferrer">{url}</a>;
+            dispatch(updateStat(statIndex, title, company, link)); // Update store
             handleClose();
         }
         catch (error) {
@@ -64,7 +69,9 @@ const JobInfo = ({ job, handleClose }) => {
         try {
             await deleteDoc(doc(db, "jobs", job.id));
             const index = jobs[job.status].items.findIndex((item) => item.id === job.id);
-            dispatch(removeJob(job.status, index));
+            const statIndex = stats.findIndex((item) => item.id === job.id);
+            dispatch(removeJob(job.status, index)); // Update store
+            dispatch(removeStat(statIndex)); // Update store
             handleClose();
         }
         catch (error) {

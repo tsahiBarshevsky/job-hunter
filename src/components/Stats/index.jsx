@@ -1,10 +1,8 @@
 import React from 'react';
 import moment from 'moment';
-import DataTable from 'react-data-table-component';
 import { Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useAuth } from '../../utils/context';
-import { tableColumns } from './tableColumns';
 import StatBox from '../Stat Box';
 import './stats.sass';
 
@@ -13,6 +11,7 @@ import Stat1 from '../../assets/job-search.png';
 import Stat2 from '../../assets/interview.png';
 import Stat3 from '../../assets/contract.png';
 import Stat4 from '../../assets/weekly-calendar.png';
+import Table from '../Table';
 
 const Stats = () => {
     const { user } = useAuth();
@@ -109,13 +108,14 @@ const Stats = () => {
             </div>
             <div className="box">
                 <Typography variant="subtitle1">Jobs Overview</Typography>
-                <DataTable
+                <Table />
+                {/* <DataTable
                     columns={tableColumns}
                     data={stats}
                     pagination
                     pointerOnHover
                     theme="solarized"
-                />
+                /> */}
             </div>
             <div className="box">
                 <Typography variant="subtitle1">Monthly Jobs Applications Activity</Typography>

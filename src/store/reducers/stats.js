@@ -15,9 +15,22 @@ const statsReducer = (state = INITIAL_STATE, action) => {
                 [action.payload.index]: {
                     $merge: {
                         status: action.payload.status,
-                        progress: action.payload.progress
                     }
                 }
+            });
+        case 'UPDATE_STAT':
+            return update(state, {
+                [action.payload.index]: {
+                    $merge: {
+                        title: action.payload.title,
+                        company: action.payload.company,
+                        link: action.payload.link
+                    }
+                }
+            });
+        case 'REMOVE_STAT':
+            return update(state, {
+                $splice: [[action.payload.index, 1]]
             });
         default:
             return state;
