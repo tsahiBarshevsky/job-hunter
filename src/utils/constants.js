@@ -10,4 +10,6 @@ const statuses = [
 
 const toolbar = ['bold', 'italic', '|', 'link', 'bulletedList', 'numberedList', '|', 'undo', 'redo'];
 
-export { statuses, toolbar };
+const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+export { statuses, toolbar, months };

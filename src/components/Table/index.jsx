@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import moment from 'moment';
 import { Typography, Pagination, Stack } from '@mui/material';
 import { Progress } from 'rsuite';
 import { useSelector } from 'react-redux';
@@ -66,7 +67,15 @@ const Table = () => {
                         return (
                             <tr key={job.id}>
                                 <td>
-                                    <Typography variant='body1'>{job.created}</Typography>
+                                    {Object.keys(job.created).length === 0 ?
+                                        <Typography variant='body1'>
+                                            {moment(job.created).format('DD/MM/YYYY')}
+                                        </Typography>
+                                        :
+                                        <Typography variant='body1'>
+                                            {moment.unix(job.created.seconds).format('DD/MM/YYYY')}
+                                        </Typography>
+                                    }
                                 </td>
                                 <td>
                                     <Typography variant='body1'>{job.title}</Typography>

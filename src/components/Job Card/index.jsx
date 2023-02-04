@@ -19,13 +19,13 @@ const JobCard = ({ job, provided, onOpenJob, index }) => {
         >
             <div className="header">
                 <Typography variant="subtitle1">{job.title}</Typography>
-                {Object.keys(job.timeline[0].date).length === 0 ?
+                {Object.keys(job.created).length === 0 ?
                     <Typography variant="caption">
-                        {moment(job.timeline[0].date).format('DD/MM/YYYY')}
+                        {moment(job.created).format('DD/MM/YYYY')}
                     </Typography>
                     :
                     <Typography variant="caption">
-                        {moment.unix(job.timeline[0].date.seconds).format('DD/MM/YYYY')}
+                        {moment.unix(job.created.seconds).format('DD/MM/YYYY')}
                     </Typography>
                 }
             </div>

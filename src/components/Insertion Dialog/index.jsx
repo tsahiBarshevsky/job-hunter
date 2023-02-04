@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import moment from 'moment/moment';
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch } from 'react-redux';
 import { useAuth } from '../../utils/context';
@@ -74,7 +73,7 @@ const InsertionDialog = ({ open, setOpen }) => {
             dispatch(addNewJob(status, job)); // Update store
             dispatch(addNewStat({
                 id: job.id,
-                created: moment(job.created).format('DD/MM/YYYY'),
+                created: new Date(),
                 title: job.title,
                 company: job.company,
                 status: job.status,

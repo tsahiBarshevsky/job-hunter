@@ -20,9 +20,7 @@ const DashbaordPage = () => {
     const [openJobDialog, setOpenJobDialog] = useState(false);
     const [openContactDialog, setOpenContactDialog] = useState(false);
     const jobs = useSelector(state => state.jobs);
-    console.log(jobs)
     const week = useSelector(state => state.week);
-    console.log(week)
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -43,36 +41,36 @@ const DashbaordPage = () => {
             const columns = {
                 "Wishlist": {
                     name: "Wishlist",
-                    items: data['Wishlist'] ? data['Wishlist'] : []
+                    items: data['Wishlist'] || []
                 },
                 "Applied": {
                     name: "Applied",
-                    items: data['Applied'] ? data['Applied'] : []
+                    items: data['Applied'] || []
                 },
                 "In Progress": {
                     name: "In Progress",
-                    items: data['In Progress'] ? data['In Progress'] : []
+                    items: data['In Progress'] || []
                 },
                 "Offered": {
                     name: "Offered",
-                    items: data['Offered'] ? data['Offered'] : []
+                    items: data['Offered'] || []
                 },
                 "Rejected": {
                     name: "Rejected",
-                    items: data['Rejected'] ? data['Rejected'] : []
+                    items: data['Rejected'] || []
                 },
                 "Accepted": {
                     name: "Accepted",
-                    items: data['Accepted'] ? data['Accepted'] : []
+                    items: data['Accepted'] || []
                 },
                 "Not Answered": {
                     name: "Not Answered",
-                    items: data['Not Answered'] ? data['Not Answered'] : []
+                    items: data['Not Answered'] || []
                 }
             };
             dispatch({ type: 'SET_JOBS', jobs: columns });
 
-            // Build jobs array for data table
+            // Build jobs array for data table and chart
             const arr = [];
             querySnapshot.docs
                 .sort((a, b) => { return a.data().created - b.data().created })
@@ -80,7 +78,7 @@ const DashbaordPage = () => {
                     const data = doc.data();
                     arr.push({
                         id: data.id,
-                        created: moment.unix(data.created.seconds).format('DD/MM/YYYY'),
+                        created: data.created,
                         title: data.title,
                         company: data.company,
                         status: data.status,

@@ -12,14 +12,12 @@ import Stat2 from '../../assets/interview.png';
 import Stat3 from '../../assets/contract.png';
 import Stat4 from '../../assets/weekly-calendar.png';
 import Table from '../Table';
+import Chart from '../Chart';
 
 const Stats = () => {
     const { user } = useAuth();
     const jobs = useSelector(state => state.jobs);
-    const stats = useSelector(state => state.stats);
     const week = useSelector(state => state.week);
-
-    console.log('stats', stats)
 
     const calculateTotalJobs = () => {
         var counter = 0;
@@ -109,17 +107,10 @@ const Stats = () => {
             <div className="box">
                 <Typography variant="subtitle1">Jobs Overview</Typography>
                 <Table />
-                {/* <DataTable
-                    columns={tableColumns}
-                    data={stats}
-                    pagination
-                    pointerOnHover
-                    theme="solarized"
-                /> */}
             </div>
             <div className="box">
-                <Typography variant="subtitle1">Monthly Jobs Applications Activity</Typography>
-
+                <Typography variant="subtitle1">{new Date().getFullYear()} Monthly Jobs Applications Activity</Typography>
+                <Chart />
             </div>
         </div>
     )
