@@ -28,29 +28,29 @@ const Stats = () => {
     }
 
     const calculateJobsAddedThisWeek = () => {
-        const week = moment().isoWeek();
+        const week = moment().week();
         var counter = 0;
         Object.keys(jobs).forEach((status) => {
             const items = jobs[status].items;
             counter += items.filter((job) => {
                 if (Object.keys(job.timeline[0].date).length === 0)
-                    return moment(job.timeline[0].date).isoWeek() === week;
-                return moment.unix(job.timeline[0].date.seconds).isoWeek() === week;
+                    return moment(job.timeline[0].date).week() === week;
+                return moment.unix(job.timeline[0].date.seconds).week() === week;
             }).length;
         });
         return counter;
     }
 
     const calculateJobsInProgress = () => {
-        const week = moment().isoWeek();
+        const week = moment().week();
         var counter = 0;
         Object.keys(jobs).forEach((status) => {
             const items = jobs[status].items;
             items.forEach((job) => {
                 counter += job.timeline.filter((step) => {
                     if (Object.keys(step.date).length === 0)
-                        return step.action.includes('In Progress') && moment(step.date).isoWeek() === week;
-                    return step.action.includes('In Progress') && moment.unix(step.date.seconds).isoWeek() === week
+                        return step.action.includes('In Progress') && moment(step.date).week() === week;
+                    return step.action.includes('In Progress') && moment.unix(step.date.seconds).week() === week
                 }).length;
             });
         });
@@ -58,15 +58,15 @@ const Stats = () => {
     }
 
     const calculateJobsOffered = () => {
-        const week = moment().isoWeek();
+        const week = moment().week();
         var counter = 0;
         Object.keys(jobs).forEach((status) => {
             const items = jobs[status].items;
             items.forEach((job) => {
                 counter += job.timeline.filter((step) => {
                     if (Object.keys(step.date).length === 0)
-                        return step.action.includes('offer') && moment(step.date).isoWeek() === week;
-                    return step.action.includes('offer') && moment.unix(step.date.seconds).isoWeek() === week
+                        return step.action.includes('offer') && moment(step.date).week() === week;
+                    return step.action.includes('offer') && moment.unix(step.date.seconds).week() === week
                 }).length;
             });
         });
