@@ -102,6 +102,17 @@ const updateActivityCompleted = (status, index, activityIndex, completed) => {
     }
 };
 
+const removeActivity = (status, index, activityIndex) => {
+    return {
+        type: 'REMOVE_ACTIVITY',
+        payload: {
+            status: status,
+            index: index,
+            activityIndex: activityIndex
+        }
+    }
+};
+
 const addNewContact = (status, index, contact) => {
     return {
         type: 'ADD_NEW_CONTACT',
@@ -125,7 +136,6 @@ const updateContact = (status, index, contact, contactIndex) => {
     }
 };
 
-
 const removeContact = (status, index, contactIndex) => {
     // status: current status, index: location in the array, contactIndex: contact's location in array
     return {
@@ -148,6 +158,7 @@ export {
     removeNote,
     addNewActivity,
     updateActivityCompleted,
+    removeActivity,
     addNewContact,
     updateContact,
     removeContact

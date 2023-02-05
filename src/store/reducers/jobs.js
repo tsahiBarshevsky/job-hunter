@@ -123,6 +123,18 @@ const jobsReducer = (state = INITIAL_STATE, action) => {
                     }
                 }
             });
+        case 'REMOVE_ACTIVITY':
+            return update(state, {
+                [action.payload.status]: {
+                    items: {
+                        [action.payload.index]: {
+                            activites: {
+                                $splice: [[action.payload.activityIndex, 1]]
+                            }
+                        }
+                    }
+                }
+            });
         case 'ADD_NEW_CONTACT':
             return update(state, {
                 [action.payload.status]: {

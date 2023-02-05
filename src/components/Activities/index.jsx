@@ -1,9 +1,10 @@
 import React from "react";
 import moment from "moment";
 import update from 'immutability-helper';
-import { Typography, Button, Checkbox } from '@mui/material';
+import { Typography, Button, Checkbox, Chip, IconButton } from '@mui/material';
+import { MdDelete } from 'react-icons/md';
 import { useSelector, useDispatch } from "react-redux";
-import { updateActivityCompleted } from "../../store/actions/jobs";
+import { removeActivity, updateActivityCompleted, addStepToTimeline } from "../../store/actions/jobs";
 
 // Firebase
 import { db } from '../../utils/firebase';
@@ -18,25 +19,74 @@ const Activities = ({ job, setJob, setOpenJobDialog, setOpenActivityDialog }) =>
         setOpenActivityDialog(true);
     }
 
-    const handleCompletedChange = async (activityIndex, isCompleted) => {
+    const handleCompletedChange = async (title, activityIndex, isCompleted) => {
         const jobRef = doc(db, "jobs", job.id);
         try {
+            var updatedJob = {};
             const index = jobs[job.status].items.findIndex((item) => item.id === job.id);
-            const updatedJob = update(job, {
-                activites: {
-                    [activityIndex]: {
-                        $merge: {
-                            completed: isCompleted
+            if (isCompleted) {
+                const step = {
+                    action: `${title} completed`,
+                    date: new Date()
+                };
+                updatedJob = update(job, {
+                    activites: {
+                        [activityIndex]: {
+                            $merge: {
+                                completed: isCompleted
+                            }
+                        }
+                    },
+                    timeline: { $push: [step] }
+                });
+                await updateDoc(jobRef, {
+                    activites: updatedJob.activites,
+                    timeline: updatedJob.timeline
+                });
+                dispatch(addStepToTimeline(job.status, index, step));
+            }
+            else {
+                updatedJob = update(job, {
+                    activites: {
+                        [activityIndex]: {
+                            $merge: {
+                                completed: isCompleted
+                            }
                         }
                     }
-                }
-            });
-            await updateDoc(jobRef, { activites: updatedJob.activites });
+                });
+                await updateDoc(jobRef, { activites: updatedJob.activites });
+            }
             dispatch(updateActivityCompleted(job.status, index, activityIndex, isCompleted));
             setJob(updatedJob);
         }
         catch (error) {
             console.log(error.message);
+        }
+    }
+
+    const onRemoveActivity = async (activityIndex) => {
+        const jobRef = doc(db, "jobs", job.id);
+        try {
+            const step = {
+                action: 'Activity deleted',
+                date: new Date()
+            };
+            const index = jobs[job.status].items.findIndex((item) => item.id === job.id);
+            const updatedJob = update(job, {
+                activites: { $splice: [[activityIndex, 1]] },
+                timeline: { $push: [step] }
+            });
+            await updateDoc(jobRef, {
+                activites: updatedJob.activites,
+                timeline: updatedJob.timeline
+            });
+            dispatch(removeActivity(job.status, index, activityIndex));
+            dispatch(addStepToTimeline(job.status, index, step));
+            setJob(updatedJob);
+        }
+        catch (error) {
+            console.log(error.message)
         }
     }
 
@@ -55,20 +105,26 @@ const Activities = ({ job, setJob, setOpenJobDialog, setOpenActivityDialog }) =>
                             <div key={activity.id}>
                                 <Checkbox
                                     checked={activity.completed}
-                                    onClick={() => handleCompletedChange(index, !activity.completed)}
+                                    onClick={() => handleCompletedChange(activity.title, index, !activity.completed)}
                                 />
-                                <Typography>{activity.completed ? 'yes' : 'no'}</Typography>
                                 <Typography>{activity.title}</Typography>
-                                <Typography>{activity.category}</Typography>
+                                <Chip
+                                    label={activity.category}
+                                    color="primary"
+                                    variant="filled"
+                                />
                                 {Object.keys(activity.startDate).length === 0 ?
                                     <Typography variant="caption">
-                                        {moment(activity.startDate).format('DD/MM/YYYY HH:mm')}
+                                        {moment(activity.startDate).format('DD/MM/YY HH:mm')}
                                     </Typography>
                                     :
                                     <Typography variant="caption">
-                                        {moment.unix(activity.startDate.seconds).format('DD/MM/YYYY HH:mm')}
+                                        {moment.unix(activity.startDate.seconds).format('DD/MM/YY HH:mm')}
                                     </Typography>
                                 }
+                                <IconButton onClick={() => onRemoveActivity(index)}>
+                                    <MdDelete />
+                                </IconButton>
                             </div>
                         )
                     })}
