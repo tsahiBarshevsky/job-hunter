@@ -11,8 +11,9 @@ import Tabs from '../Tabs';
 import JobInfo from '../Job Info';
 import Notes from '../Notes';
 import Contacts from '../Contacts';
+import Activities from '../Activities';
 
-const JobDialog = ({ job, setJob, setMode, setSelectedContact, open, setOpen, setOpenContactDialog }) => {
+const JobDialog = ({ job, setJob, setMode, setSelectedContact, open, setOpen, setOpenActivityDialog, setOpenContactDialog }) => {
     const [activeTab, setActiveTab] = useState('tab1');
     const classes = useStyles();
 
@@ -31,6 +32,15 @@ const JobDialog = ({ job, setJob, setMode, setSelectedContact, open, setOpen, se
                     <JobInfo
                         job={job}
                         handleClose={handleClose}
+                    />
+                );
+            case 'tab2':
+                return (
+                    <Activities
+                        job={job}
+                        setJob={setJob}
+                        setOpenJobDialog={setOpen}
+                        setOpenActivityDialog={setOpenActivityDialog}
                     />
                 );
             case 'tab3':

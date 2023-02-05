@@ -79,6 +79,17 @@ const removeNote = (status, index, noteIndex) => {
     }
 };
 
+const addNewActivity = (status, index, activity) => {
+    return {
+        type: 'ADD_NEW_ACTIVITY',
+        payload: {
+            status: status,
+            index: index,
+            activity: activity
+        }
+    }
+};
+
 const addNewContact = (status, index, contact) => {
     return {
         type: 'ADD_NEW_CONTACT',
@@ -123,6 +134,7 @@ export {
     addNewNote,
     updateNote,
     removeNote,
+    addNewActivity,
     addNewContact,
     updateContact,
     removeContact

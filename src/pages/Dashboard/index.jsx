@@ -3,7 +3,7 @@ import moment from 'moment/moment';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAuth } from '../../utils/context';
-import { ContactDialog, InsertionDialog, JobDialog, Jobs, Sidebar, Stats } from '../../components';
+import { ActivityDialog, ContactDialog, InsertionDialog, JobDialog, Jobs, Sidebar, Stats } from '../../components';
 import './dashboard.sass';
 
 // Firebase
@@ -19,6 +19,7 @@ const DashbaordPage = () => {
     const [openInsertionDialog, setOpenInsertionDialog] = useState(false);
     const [openJobDialog, setOpenJobDialog] = useState(false);
     const [openContactDialog, setOpenContactDialog] = useState(false);
+    const [openActivityDialog, setOpenActivityDialog] = useState(false);
     const jobs = useSelector(state => state.jobs);
     const week = useSelector(state => state.week);
     const navigate = useNavigate();
@@ -134,7 +135,15 @@ const DashbaordPage = () => {
                 setSelectedContact={setSelectedContact}
                 open={openJobDialog}
                 setOpen={setOpenJobDialog}
+                setOpenActivityDialog={setOpenActivityDialog}
                 setOpenContactDialog={setOpenContactDialog}
+            />
+            <ActivityDialog
+                open={openActivityDialog}
+                setOpen={setOpenActivityDialog}
+                job={job}
+                setJob={setJob}
+                setOpenJobDialog={setOpenJobDialog}
             />
             <ContactDialog
                 mode={mode}

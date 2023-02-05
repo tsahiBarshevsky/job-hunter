@@ -31,7 +31,6 @@ const ContactDialog = ({ mode, selectedContact, job, setJob, open, setOpen, setO
         setEmail('');
         setLinkedin('');
         setFacebook('');
-        handleClose();
     }
 
     const handleClose = () => {
@@ -107,7 +106,7 @@ const ContactDialog = ({ mode, selectedContact, job, setJob, open, setOpen, setO
             await updateDoc(jobRef, { contacts: updatedJob.contacts });
             dispatch(updateContact(job.status, index, contact, contactIndex));
             setJob(updatedJob);
-            resetForm();
+            handleClose();
         }
         catch (error) {
             console.log(error.message)

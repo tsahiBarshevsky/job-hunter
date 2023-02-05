@@ -95,6 +95,18 @@ const jobsReducer = (state = INITIAL_STATE, action) => {
                     }
                 }
             });
+        case 'ADD_NEW_ACTIVITY':
+            return update(state, {
+                [action.payload.status]: {
+                    items: {
+                        [action.payload.index]: {
+                            activites: {
+                                $push: [action.payload.activity]
+                            }
+                        }
+                    }
+                }
+            });
         case 'ADD_NEW_CONTACT':
             return update(state, {
                 [action.payload.status]: {
