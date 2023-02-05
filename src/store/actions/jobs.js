@@ -90,6 +90,18 @@ const addNewActivity = (status, index, activity) => {
     }
 };
 
+const updateActivityCompleted = (status, index, activityIndex, completed) => {
+    return {
+        type: 'UPDATE_ACTIVITY_COMPLETED',
+        payload: {
+            status: status,
+            index: index,
+            activityIndex: activityIndex,
+            completed: completed
+        }
+    }
+};
+
 const addNewContact = (status, index, contact) => {
     return {
         type: 'ADD_NEW_CONTACT',
@@ -135,6 +147,7 @@ export {
     updateNote,
     removeNote,
     addNewActivity,
+    updateActivityCompleted,
     addNewContact,
     updateContact,
     removeContact
