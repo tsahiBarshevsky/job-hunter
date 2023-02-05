@@ -1,10 +1,11 @@
 import React from "react";
 import moment from "moment";
 import update from 'immutability-helper';
-import { Typography, Button, Checkbox, Chip, IconButton } from '@mui/material';
+import { Typography, Button, Checkbox, Chip, IconButton, Divider } from '@mui/material';
 import { MdDelete } from 'react-icons/md';
 import { useSelector, useDispatch } from "react-redux";
 import { removeActivity, updateActivityCompleted, addStepToTimeline } from "../../store/actions/jobs";
+import './activities.sass';
 
 // Firebase
 import { db } from '../../utils/firebase';
@@ -100,9 +101,13 @@ const Activities = ({ job, setJob, setOpenJobDialog, setOpenActivityDialog }) =>
                 :
                 <div>
                     <Button variant="contained" onClick={() => onOpenContactDialog()}>Create activity</Button>
+                    <Divider className="divider" />
                     {job.activites.map((activity, index) => {
                         return (
-                            <div key={activity.id}>
+                            <div
+                                key={activity.id}
+                                className="activity-item"
+                            >
                                 <Checkbox
                                     checked={activity.completed}
                                     onClick={() => handleCompletedChange(activity.title, index, !activity.completed)}

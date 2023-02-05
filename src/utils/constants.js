@@ -9,11 +9,16 @@ const statuses = [
 ];
 
 const categories = [
-    { id: 0, category: 'Phone interview' },
-    { id: 1, category: 'Online interview' },
-    { id: 2, category: 'Frontal interview' },
-    { id: 3, category: 'Home test' },
-    { id: 4, category: 'Office test' }
+    { id: 0, category: 'phone interview' },
+    { id: 1, category: 'online interview' },
+    { id: 2, category: 'frontal interview' },
+    { id: 3, category: 'team leader interview' },
+    { id: 4, category: 'CEO interview' },
+    { id: 5, category: 'home test' },
+    { id: 6, category: 'office test' },
+    { id: 7, category: 'accept offer' },
+    { id: 8, category: 'decline offer' },
+    { id: 9, category: 'candidacy removal' }
 ];
 
 const toolbar = ['bold', 'italic', '|', 'link', 'bulletedList', 'numberedList', '|', 'undo', 'redo'];

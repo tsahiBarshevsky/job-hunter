@@ -4,7 +4,7 @@ export default makeStyles(() => ({
     paper: {
         '&&': {
             borderRadius: 15,
-            width: 400,
+            width: 450,
             '@media (max-width: 400px)':
             {
                 width: '100%'

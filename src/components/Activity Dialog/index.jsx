@@ -33,7 +33,7 @@ import { doc, updateDoc } from 'firebase/firestore/lite';
 const ActivityDialog = ({ open, setOpen, job, setJob, setOpenJobDialog }) => {
     const jobs = useSelector(state => state.jobs);
     const [title, setTitle] = useState('');
-    const [category, setCategory] = useState('');
+    const [category, setCategory] = useState(categories[0].category);
     const [startDate, setStartDate] = useState(moment());
     const [endDate, setEndDate] = useState(null);
     const [isCompleted, setIsCompleted] = useState(false);
@@ -42,7 +42,7 @@ const ActivityDialog = ({ open, setOpen, job, setJob, setOpenJobDialog }) => {
 
     const resetForm = () => {
         setTitle('');
-        setCategory('');
+        setCategory(categories[0].category);
         setIsCompleted(false);
         setTimeout(() => {
             setEndDate(null);
