@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
 import moment from 'moment';
-import { Typography, Pagination, Stack } from '@mui/material';
+import { Typography, Pagination, Stack, FormControl, Select, MenuItem } from '@mui/material';
 import { Progress } from 'rsuite';
 import { useSelector } from 'react-redux';
 import usePagination from '../../utils/pagination';
 import './table.sass';
 
-const ENTRIES_PER_PAGE = 10;
-
 const Table = () => {
-    const stats = useSelector(state => state.stats);
     const [page, setPage] = useState(1);
-    const count = Math.ceil(stats.length / ENTRIES_PER_PAGE);
-    const data = usePagination(stats, ENTRIES_PER_PAGE);
+    const [entriesPerPage, setEntriesPerPage] = useState(10);
+    const stats = useSelector(state => state.stats);
+    const count = Math.ceil(stats.length / entriesPerPage);
+    const data = usePagination(stats, entriesPerPage);
 
     const handlePageChange = (e, p) => {
         setPage(p);
         data.jump(p);
+    }
+
+    const handleEntriesChange = (event) => {
+        setEntriesPerPage(event.target.value);
+        handlePageChange(null, 1);
     }
 
     const renderProgressLine = (status) => {
@@ -97,16 +101,29 @@ const Table = () => {
                     })}
                 </tbody>
             </table>
-            <Stack spacing={2}>
-                <Pagination
-                    count={count}
-                    page={page}
-                    onChange={handlePageChange}
-                    showLastButton
-                    showFirstButton
+            <div className="form-control">
+                <Typography>Entries per page:</Typography>
+                <FormControl variant="outlined">
+                    <Select
+                        value={entriesPerPage}
+                        onChange={handleEntriesChange}
+                    >
+                        <MenuItem value={5}>5</MenuItem>
+                        <MenuItem value={10}>10</MenuItem>
+                        <MenuItem value={15}>15</MenuItem>
+                    </Select>
+                </FormControl>
+                <Stack spacing={2}>
+                    <Pagination
+                        count={count}
+                        page={page}
+                        onChange={handlePageChange}
+                        showLastButton
+                        showFirstButton
 
-                />
-            </Stack>
+                    />
+                </Stack>
+            </div>
         </div>
     )
 }
