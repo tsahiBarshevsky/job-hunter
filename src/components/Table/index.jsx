@@ -6,9 +6,8 @@ import { useSelector } from 'react-redux';
 import usePagination from '../../utils/pagination';
 import './table.sass';
 
-const Table = () => {
+const Table = ({ entriesPerPage, setEntriesPerPage }) => {
     const [page, setPage] = useState(1);
-    const [entriesPerPage, setEntriesPerPage] = useState(10);
     const stats = useSelector(state => state.stats);
     const count = Math.ceil(stats.length / entriesPerPage);
     const data = usePagination(stats, entriesPerPage);

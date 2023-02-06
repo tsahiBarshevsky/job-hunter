@@ -6,6 +6,7 @@ import { FiUsers } from 'react-icons/fi';
 import './tabs.sass';
 
 const Tabs = ({ activeTab, setActiveTab, job }) => {
+    const activites = job.activites.length;
     const notes = job.notes.length;
     const contacts = job.contacts.length;
 
@@ -27,8 +28,13 @@ const Tabs = ({ activeTab, setActiveTab, job }) => {
                     onClick={() => onChangeTab('tab2')}
                     className={activeTab === 'tab2' ? "active" : undefined}
                 >
-                    <GoListUnordered size={20} />
-                    <Typography variant="subtitle2">Activities</Typography>
+                    <Badge
+                        badgeContent={activites}
+                        color="primary"
+                    >
+                        <GoListUnordered size={20} />
+                        <Typography variant="subtitle2">Activities</Typography>
+                    </Badge>
                 </li>
                 <li
                     onClick={() => onChangeTab('tab3')}

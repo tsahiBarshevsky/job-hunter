@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import moment from 'moment';
 import { Typography, FormControl, Select, MenuItem } from '@mui/material';
 import { useSelector } from 'react-redux';
@@ -14,9 +14,8 @@ import Stat4 from '../../assets/weekly-calendar.png';
 import Table from '../Table';
 import Chart from '../Chart';
 
-const Stats = () => {
+const Stats = ({ currentYear, setCurrentYear, entriesPerPage, setEntriesPerPage }) => {
     const { user } = useAuth();
-    const [currentYear, setCurrentYear] = useState(moment().year());
     const jobs = useSelector(state => state.jobs);
     const stats = useSelector(state => state.stats);
     const week = useSelector(state => state.week);
@@ -114,7 +113,10 @@ const Stats = () => {
             </div>
             <div className="box">
                 <Typography variant="subtitle1">Jobs Overview</Typography>
-                <Table />
+                <Table
+                    entriesPerPage={entriesPerPage}
+                    setEntriesPerPage={setEntriesPerPage}
+                />
             </div>
             <div className="box">
                 <div className="form-control">

@@ -13,6 +13,8 @@ import { db } from '../../utils/firebase';
 const DashbaordPage = () => {
     const { user } = useAuth();
     const [activeTab, setActiveTab] = useState('tab1');
+    const [currentYear, setCurrentYear] = useState(moment().year());
+    const [entriesPerPage, setEntriesPerPage] = useState(10);
     const [job, setJob] = useState({});
     const [mode, setMode] = useState('');
     const [selectedContact, setSelectedContact] = useState({});
@@ -122,7 +124,12 @@ const DashbaordPage = () => {
                         setOpenJobDialog={setOpenJobDialog}
                     />
                     :
-                    <Stats />
+                    <Stats
+                        currentYear={currentYear}
+                        setCurrentYear={setCurrentYear}
+                        entriesPerPage={entriesPerPage}
+                        setEntriesPerPage={setEntriesPerPage}
+                    />
                 }
             </div>
             {/* Dialogs */}
