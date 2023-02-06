@@ -7,17 +7,17 @@ import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { useSelector, useDispatch } from 'react-redux';
 import { CKEditor as TextEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { removeJob, updateJob } from '../../store/actions/jobs';
-import { removeStat, updateStat } from '../../store/actions/stats';
+import { updateJob } from '../../store/actions/jobs';
+import { updateStat } from '../../store/actions/stats';
 import { toolbar } from '../../utils/constants';
 import useStyles from './styles';
 import './jobInfo.sass';
 
 // Firebase
 import { db } from '../../utils/firebase';
-import { doc, updateDoc, deleteDoc } from 'firebase/firestore/lite';
+import { doc, updateDoc } from 'firebase/firestore/lite';
 
-const JobInfo = ({ job, handleClose }) => {
+const JobInfo = ({ job, handleClose, setOpenAlertDialog }) => {
     const [title, setTitle] = useState('');
     const [company, setCompany] = useState('');
     const [location, setLocation] = useState('');
@@ -42,7 +42,7 @@ const JobInfo = ({ job, handleClose }) => {
                 salary: salary,
                 url: url,
                 description: description,
-                deadline: new Date(deadline)
+                deadline: deadline ? new Date(deadline) : null
             });
             const index = jobs[job.status].items.findIndex((item) => item.id === job.id);
             const statIndex = stats.findIndex((item) => item.id === job.id);
@@ -53,30 +53,20 @@ const JobInfo = ({ job, handleClose }) => {
                 salary: salary,
                 url: url,
                 description: description,
-                deadline: new Date(deadline)
+                deadline: deadline ? new Date(deadline) : null
             };
             dispatch(updateJob(job.status, index, editedJob)); // Update store
-            const link = url && <a href={url} target="_blank" rel="noreferrer">{url}</a>;
-            dispatch(updateStat(statIndex, title, company, link)); // Update store
+            dispatch(updateStat(statIndex, title, company, url)); // Update store
             handleClose();
         }
         catch (error) {
-            console.log(error.message)
+            console.log(error.message);
         }
     }
 
-    const onRemoveJob = async () => {
-        try {
-            await deleteDoc(doc(db, "jobs", job.id));
-            const index = jobs[job.status].items.findIndex((item) => item.id === job.id);
-            const statIndex = stats.findIndex((item) => item.id === job.id);
-            dispatch(removeJob(job.status, index)); // Update store
-            dispatch(removeStat(statIndex)); // Update store
-            handleClose();
-        }
-        catch (error) {
-            console.log(error.message)
-        }
+    const onRemoveJob = () => {
+        setOpenAlertDialog(true);
+        handleClose();
     }
 
     useEffect(() => {

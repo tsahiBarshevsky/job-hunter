@@ -3,7 +3,7 @@ import moment from 'moment/moment';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAuth } from '../../utils/context';
-import { ActivityDialog, ContactDialog, InsertionDialog, JobDialog, Jobs, Sidebar, Stats } from '../../components';
+import { ActivityDialog, AlertDialog, ContactDialog, InsertionDialog, JobDialog, Jobs, Sidebar, Stats } from '../../components';
 import './dashboard.sass';
 
 // Firebase
@@ -20,6 +20,7 @@ const DashbaordPage = () => {
     const [openJobDialog, setOpenJobDialog] = useState(false);
     const [openContactDialog, setOpenContactDialog] = useState(false);
     const [openActivityDialog, setOpenActivityDialog] = useState(false);
+    const [openAlertDialog, setOpenAlertDialog] = useState(false);
     const jobs = useSelector(state => state.jobs);
     const week = useSelector(state => state.week);
     const navigate = useNavigate();
@@ -124,6 +125,7 @@ const DashbaordPage = () => {
                     <Stats />
                 }
             </div>
+            {/* Dialogs */}
             <InsertionDialog
                 open={openInsertionDialog}
                 setOpen={setOpenInsertionDialog}
@@ -137,6 +139,7 @@ const DashbaordPage = () => {
                 setOpen={setOpenJobDialog}
                 setOpenActivityDialog={setOpenActivityDialog}
                 setOpenContactDialog={setOpenContactDialog}
+                setOpenAlertDialog={setOpenAlertDialog}
             />
             <ActivityDialog
                 open={openActivityDialog}
@@ -152,6 +155,13 @@ const DashbaordPage = () => {
                 setJob={setJob}
                 open={openContactDialog}
                 setOpen={setOpenContactDialog}
+                setOpenJobDialog={setOpenJobDialog}
+            />
+            <AlertDialog
+                open={openAlertDialog}
+                setOpen={setOpenAlertDialog}
+                job={job}
+                setJob={setJob}
                 setOpenJobDialog={setOpenJobDialog}
             />
         </>
