@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useCallback, useState, } from 'react';
 import moment from 'moment/moment';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,7 +10,7 @@ import './dashboard.sass';
 import { collection, query, where, getDocs } from 'firebase/firestore/lite';
 import { db } from '../../utils/firebase';
 
-const DashbaordPage = () => {
+const DashboardPage = () => {
     const { user } = useAuth();
     const [activeTab, setActiveTab] = useState('tab1');
     const [currentYear, setCurrentYear] = useState(moment().year());
@@ -175,4 +175,4 @@ const DashbaordPage = () => {
     )
 }
 
-export default DashbaordPage;
+export default DashboardPage;

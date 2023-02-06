@@ -1,2 +1,2 @@
 export { default as LoginPage } from './Login';
-export { default as DashbaordPage } from './Dashboard';
+export { default as DashboardPage } from './Dashboard';
