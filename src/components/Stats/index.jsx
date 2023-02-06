@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import moment from 'moment';
-import { Typography } from '@mui/material';
+import { Typography, FormControl, Select, MenuItem } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useAuth } from '../../utils/context';
 import StatBox from '../Stat Box';
@@ -16,7 +16,9 @@ import Chart from '../Chart';
 
 const Stats = () => {
     const { user } = useAuth();
+    const [currentYear, setCurrentYear] = useState(moment().year());
     const jobs = useSelector(state => state.jobs);
+    const stats = useSelector(state => state.stats);
     const week = useSelector(state => state.week);
 
     const calculateTotalJobs = () => {
@@ -73,6 +75,12 @@ const Stats = () => {
         return counter;
     }
 
+    const extractYears = (item) => {
+        if (Object.keys(item.created).length === 0)
+            return moment(item.created).year();
+        return moment.unix(item.created.seconds).year();
+    }
+
     return (
         <div className="stats-container">
             <div className="stats-header">
@@ -109,8 +117,30 @@ const Stats = () => {
                 <Table />
             </div>
             <div className="box">
-                <Typography variant="subtitle1">{new Date().getFullYear()} Monthly Jobs Applications Activity</Typography>
-                <Chart />
+                <div className="form-control">
+                    <FormControl variant="outlined">
+                        <Select
+                            value={currentYear}
+                            onChange={(event) => setCurrentYear(event.target.value)}
+                        >
+                            {[...new Set(stats.map((item) => { return extractYears(item) }))].reverse().map((item) => {
+                                return (
+                                    <MenuItem
+                                        key={item}
+                                        value={item}
+                                    >
+                                        {item}
+                                    </MenuItem>
+                                )
+                            })}
+                        </Select>
+                    </FormControl>
+                    <Typography variant="subtitle1">Monthly Jobs Applications Activity</Typography>
+                </div>
+                <Chart
+                    currentYear={currentYear}
+                    setCurrentYear={setCurrentYear}
+                />
             </div>
         </div>
     )

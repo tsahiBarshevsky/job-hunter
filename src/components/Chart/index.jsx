@@ -24,11 +24,10 @@ ChartJS.register(
     Legend
 );
 
-const Chart = () => {
+const Chart = ({ currentYear }) => {
     const stats = useSelector(state => state.stats);
     const reduce = stats.reduce((r, a) => {
         var date = null;
-        const currentYear = moment().year();
         if (Object.keys(a.created).length === 0)
             date = moment(a.created);
         else
