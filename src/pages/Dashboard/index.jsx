@@ -122,6 +122,7 @@ const DashboardPage = () => {
                         setJob={setJob}
                         setOpenInsertionDialog={setOpenInsertionDialog}
                         setOpenJobDialog={setOpenJobDialog}
+                        setOpenAlertDialog={setOpenAlertDialog}
                     />
                     :
                     <Stats

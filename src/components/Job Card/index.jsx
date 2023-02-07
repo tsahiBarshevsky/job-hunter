@@ -1,39 +1,50 @@
 import React, { useContext } from 'react';
 import moment from 'moment/moment';
 import { Typography } from '@mui/material';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { AiOutlineLink } from 'react-icons/ai';
-import { FiTrash } from 'react-icons/fi';
-import { removeJob } from '../../store/actions/jobs';
-import { removeStat } from '../../store/actions/stats';
+import { FiTrash, FiClock } from 'react-icons/fi';
 import { ThemeContext } from '../../utils/themeContext';
 import useStyles from './styles';
 import './jobCard.sass';
 
-const JobCard = ({ job, provided, onOpenJob, index }) => {
+const JobCard = ({ job, provided, onOpenJob, index, setOpenAlertDialog }) => {
     const { theme } = useContext(ThemeContext);
     const jobs = useSelector(state => state.jobs);
-    const stats = useSelector(state => state.stats);
     const length = jobs[job.status].items.length;
     const classes = useStyles();
-    const dispatch = useDispatch();
 
     const onRemoveJob = async (event) => {
         event.stopPropagation();
-        try {
-            // await deleteDoc(doc(db, "jobs", job.id));
-            const statIndex = stats.findIndex((item) => item.id === job.id);
-            dispatch(removeJob(job.status, index)); // Update store
-            dispatch(removeStat(statIndex)); // Update store
-        }
-        catch (error) {
-            console.log(error.message)
-        }
+        setOpenAlertDialog(true);
     }
 
     const onOpenLink = (event) => {
         event.stopPropagation();
         window.open(job.url);
+    }
+
+    const renderTimePassed = () => {
+        var duration = null;
+        if (Object.keys(job.created).length === 0)
+            duration = moment.duration(moment().diff(moment(job.created)));
+        else
+            duration = moment.duration(moment().diff(moment.unix(job.created.seconds)));
+        if (duration.asSeconds() === 0)
+            return 'now';
+        if (duration.asSeconds() < 60)
+            return `${Math.floor(duration.asSeconds())} sec`;
+        if (duration.asMinutes() < 60)
+            return `${Math.floor(duration.asMinutes())}m`;
+        if (duration.asHours() < 24)
+            return `${Math.floor(duration.asHours())}h`;
+        if (duration.asDays() < 7)
+            return `${Math.ceil(duration.asDays())}d`;
+        if (duration.asWeeks() < 4)
+            return `${Math.floor(duration.asWeeks())}w`;
+        if (duration.asMonths() < 12)
+            return `${Math.floor(duration.asMonths())} mon`;
+        return `${Math.floor(duration.asYears())}y`;
     }
 
     return (
@@ -83,16 +94,11 @@ const JobCard = ({ job, provided, onOpenJob, index }) => {
                     }
                 </div>
             </div>
-            <div className="date">
-                {Object.keys(job.created).length === 0 ?
-                    <Typography variant="caption" className={classes.text}>
-                        {moment(job.created).format('DD/MM/YYYY')}
-                    </Typography>
-                    :
-                    <Typography variant="caption" className={classes.text}>
-                        {moment.unix(job.created.seconds).format('DD/MM/YYYY')}
-                    </Typography>
-                }
+            <div className={job.url ? "date space" : "date"}>
+                <Typography variant="caption" className={classes.text}>
+                    {renderTimePassed()}
+                </Typography>
+                <FiClock className="clock" />
             </div>
         </div>
     )
