@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState, } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import moment from 'moment/moment';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';

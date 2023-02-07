@@ -3,13 +3,13 @@
 .sidebar-container
     display: flex
     flex-direction: column
-    justify-content: flex-start
     align-items: center
+    justify-content: space-between
     width: $sidebar-width
     height: 100vh
     color: white
     background-color: $primary-color
-    padding: 15px 0
+    padding: 15px 0 10px
     cursor: default
 
     @media screen and ( max-width: $sm )
@@ -54,9 +54,15 @@
             background-color: #043a71
 
     .user
-        position: absolute
-        bottom: 0
-        margin-bottom: 10px
+        vertical-align: bottom
+        cursor: pointer
+        user-select: none
+        border: 1px solid white
+        border-radius: 10px
+        padding: 3px 10px 3px 3px
+        // position: absolute
+        // bottom: 0
+        // margin-bottom: 10px
 
         @media screen and ( max-width: $sm )
             display: none
