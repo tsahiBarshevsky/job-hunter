@@ -20,7 +20,6 @@
         width: 100%
         padding: 15px 0
         cursor: default
-        background-color: royalblue
 
     .dnd-container
         display: flex
@@ -30,7 +29,6 @@
         align-items: baseline
         width: 100%
         height: 100%
-        background: #da8888
 
         .context
             display: flex
@@ -39,6 +37,16 @@
             align-items: center
             width: fit-content
 
+            .column-header-light
+                border-left: 2px solid rgba(black, 0.25)
+                border-top: 2px solid rgba(black, 0.25)
+                border-right: 2px solid rgba(black, 0.25)
+
+            .column-header-dark
+                border-left: 2px solid rgba(white, 0.25)
+                border-top: 2px solid rgba(white, 0.25)
+                border-right: 2px solid rgba(white, 0.25)
+
             .column-header
                 display: flex
                 flex-direction: column
@@ -46,14 +54,11 @@
                 align-items: center
                 width: 100%
                 color: white
-                background-color: green
+                background-color: $primary-color
                 padding: 5px 20px
                 user-select: none
                 border-top-left-radius: 15px
                 border-top-right-radius: 15px
-                border-left: 2px solid black
-                border-top: 2px solid black
-                border-right: 2px solid black
 
                 .column-header-top-line
                     display: flex
@@ -63,8 +68,10 @@
                     width: 100%
                     margin-bottom: 5px
 
-                    .column-header-icon
-                        font-size: 18px
+                    .column-header-icon-wrapper
+                        display: flex
+                        align-items: center
+                        justify-content: center
 
             .droppable
                 padding: 15px
@@ -73,9 +80,16 @@
                 height: calc( 100vh - 160px )
                 border-bottom-left-radius: 15px
                 border-bottom-right-radius: 15px
-                border-left: 2px solid black
-                border-bottom: 2px solid black
-                border-right: 2px solid black
 
                 @media screen and ( max-width: $sm )
                     height: calc( 100vh - 210px )
+
+            .droppable-light
+                border-left: 2px solid rgba(black, 0.25)
+                border-bottom: 2px solid rgba(black, 0.25)
+                border-right: 2px solid rgba(black, 0.25)
+
+            .droppable-dark
+                border-left: 2px solid rgba(white, 0.25)
+                border-bottom: 2px solid rgba(white, 0.25)
+                border-right: 2px solid rgba(white, 0.25)

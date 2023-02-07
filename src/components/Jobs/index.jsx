@@ -1,20 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import update from 'immutability-helper';
+import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Button } from '@mui/material';
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useAuth } from '../../utils/context';
+import { ThemeContext } from '../../utils/themeContext';
 import { addStepToTimeline } from '../../store/actions/jobs';
 import { updateStatus } from '../../store/actions/stats';
 import JobCard from '../Job Card';
+import useStyles from './styles';
 import './jobs.sass';
 
 // Icons
 import { BsHeart } from 'react-icons/bs';
 import { GiCheckMark } from 'react-icons/gi';
+import { MdWorkOutline } from 'react-icons/md';
 import { FiPhoneIncoming, FiPhoneOff } from 'react-icons/fi';
 import { HiOutlineThumbDown, HiOutlineThumbUp } from 'react-icons/hi';
-import WorkOutlineOutlinedIcon from '@mui/icons-material/WorkOutlineOutlined';
 
 // Firebase
 import { doc, updateDoc } from 'firebase/firestore/lite';
@@ -22,9 +25,11 @@ import { db } from '../../utils/firebase';
 
 const Jobs = ({ setJob, setOpenInsertionDialog, setOpenJobDialog }) => {
     const { user } = useAuth();
+    const { theme } = useContext(ThemeContext);
     const jobs = useSelector(state => state.jobs);
     const stats = useSelector(state => state.stats);
     const dispatch = useDispatch();
+    const classes = useStyles();
 
     const onOpenJob = (item) => {
         setJob(item);
@@ -34,19 +39,19 @@ const Jobs = ({ setJob, setOpenInsertionDialog, setOpenJobDialog }) => {
     const renderIcon = (columnName) => {
         switch (columnName) {
             case 'Wishlist':
-                return <BsHeart className="column-header-icon" />;
+                return <BsHeart size={20} />;
             case 'Applied':
-                return <GiCheckMark className="column-header-icon" />;
+                return <GiCheckMark size={18} />;
             case 'In Progress':
-                return <FiPhoneIncoming className="column-header-icon" />;
+                return <FiPhoneIncoming size={18} />;
             case 'Offered':
-                return <WorkOutlineOutlinedIcon className="column-header-icon" />;
+                return <MdWorkOutline size={20} />;
             case 'Rejected':
-                return <HiOutlineThumbDown className="column-header-icon" />;
+                return <HiOutlineThumbDown size={21} />;
             case 'Accepted':
-                return <HiOutlineThumbUp className="column-header-icon" />;
+                return <HiOutlineThumbUp size={21} />;
             case 'Not Answered':
-                return <FiPhoneOff className="column-header-icon" />;
+                return <FiPhoneOff size={18} />;
             default: return null;
         }
     }
@@ -146,9 +151,17 @@ const Jobs = ({ setJob, setOpenInsertionDialog, setOpenJobDialog }) => {
     return (
         <div className="jobs-container">
             <div className="jobs-header">
-                <Typography variant="h6">Hey, {user.displayName ? user.displayName : user.email}!</Typography>
+                <Typography
+                    variant="h6"
+                    className={[classes.text, classes.bold]}
+                >
+                    Hey, {user.displayName ? user.displayName : user.email}!
+                </Typography>
                 <Button
                     variant="contained"
+                    className={classes.button}
+                    endIcon={<AddRoundedIcon />}
+                    disableRipple
                     onClick={() => setOpenInsertionDialog(true)}
                 >
                     Add job
@@ -159,12 +172,22 @@ const Jobs = ({ setJob, setOpenInsertionDialog, setOpenJobDialog }) => {
                     {Object.entries(jobs).map(([columnId, column], index) => {
                         return (
                             <div className="context" key={columnId} style={index !== 6 ? { marginRight: 20 } : {}}>
-                                <div className="column-header">
+                                <div className={`column-header column-header-${theme}`}>
                                     <div className="column-header-top-line">
-                                        <Typography variant="subtitle1">{column.name}</Typography>
-                                        {renderIcon(column.name)}
+                                        <Typography
+                                            variant="subtitle1"
+                                            className={classes.text}
+                                        >
+                                            {column.name}
+                                        </Typography>
+                                        <div className="column-header-icon-wrapper">
+                                            {renderIcon(column.name)}
+                                        </div>
                                     </div>
-                                    <Typography variant="subtitle2">
+                                    <Typography
+                                        variant="subtitle2"
+                                        className={classes.text}
+                                    >
                                         {column.items.length === 0 ?
                                             'Empty list'
                                             :
@@ -179,11 +202,16 @@ const Jobs = ({ setJob, setOpenInsertionDialog, setOpenJobDialog }) => {
                                     {(provided, snapshot) => {
                                         return (
                                             <div
-                                                className="droppable"
+                                                className={`droppable droppable-${theme}`}
                                                 {...provided.droppableProps}
                                                 ref={provided.innerRef}
                                                 style={{
-                                                    background: snapshot.isDraggingOver ? "#A9A9A9" : "lightgray"
+                                                    background:
+                                                        theme === 'light' ? (
+                                                            snapshot.isDraggingOver ? "#A9A9A9" : "lightgrey"
+                                                        ) : (
+                                                            snapshot.isDraggingOver ? "#494f52" : "#313537"
+                                                        )
                                                 }}
                                             >
                                                 {column.items.map((item, index) => {
