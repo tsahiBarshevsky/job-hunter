@@ -3,26 +3,60 @@
 .job-card-container
     display: flex
     flex-direction: column
-    justify-content: center
     align-items: flex-start
+    justify-content: flex-start
     user-select: none
     border-radius: 10px
     padding: 10px
+    width: 100%
     min-height: 50px
     background-color: white
     box-shadow: 0 3px 7px -1px rgba(black, 0.5)
-    cursor: pointer
+    cursor: pointer !important
     border: 1px solid rgba(white, 0.05)
+
+    &:hover > .wrapper > .buttons
+        visibility: visible
+
+    .wrapper
+        display: flex
+        flex-direction: row
+        align-items: flex-start
+        justify-content: space-between
+        width: 100%
+
+        .details
+            flex-direction: column
+            display: flex
+
+        .buttons
+            display: flex
+            flex-direction: column
+            align-items: center
+            justify-content: center
+            margin-left: 10px
+            visibility: hidden
+
+            .icon-button
+                display: flex
+                align-items: center
+                justify-content: center
+                width: 27px
+                height: 27px
+                border: 1px solid black
+                border-radius: 10px
+                background-color: transparent
+                box-shadow: 0 3px 5px -1px rgba(black, 0.25)
+                transition: background-color ease-in-out 0.25s
+
+                &:hover
+                    background-color: rgba(black, 0.025)
+
+            .trash
+                margin-bottom: 6px
+
+    .date
+        align-self: flex-end
 
 .job-card-container-margin
     margin-bottom: 15px
-
-.job-card-container > .header
-    display: flex
-    justify-content: space-between
-    align-items: baseline
-    width: 100%
-
-.job-card-container >.divider
-    width: 100%
-    margin: 10px 0 5px
