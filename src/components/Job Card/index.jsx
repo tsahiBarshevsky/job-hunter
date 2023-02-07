@@ -1,17 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import moment from 'moment/moment';
 import { Typography } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
-import { AiOutlineLink, AiFillDelete } from 'react-icons/ai';
+import { AiOutlineLink } from 'react-icons/ai';
 import { FiTrash } from 'react-icons/fi';
 import { removeJob } from '../../store/actions/jobs';
 import { removeStat } from '../../store/actions/stats';
+import { ThemeContext } from '../../utils/themeContext';
 import useStyles from './styles';
 import './jobCard.sass';
 
-import { IconButton } from 'rsuite';
-
 const JobCard = ({ job, provided, onOpenJob, index }) => {
+    const { theme } = useContext(ThemeContext);
     const jobs = useSelector(state => state.jobs);
     const stats = useSelector(state => state.stats);
     const length = jobs[job.status].items.length;
@@ -39,11 +39,16 @@ const JobCard = ({ job, provided, onOpenJob, index }) => {
     return (
         <div
             onClick={() => onOpenJob(job)}
-            className={(length - 1) === index ? "job-card-container" : "job-card-container job-card-container-margin"}
             ref={provided.innerRef}
             style={{ ...provided.draggableProps.style }}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
+            className={
+                (length - 1) === index ?
+                    `job-card-container job-card-container-${theme}`
+                    :
+                    `job-card-container job-card-container-${theme} job-card-container-margin`
+            }
         >
             <div className="wrapper">
                 <div className="details">
@@ -62,17 +67,16 @@ const JobCard = ({ job, provided, onOpenJob, index }) => {
                     </Typography>
                 </div>
                 <div className="buttons">
-                    {/* <IconButton className="icon-button trash" size="xs" icon={<FiTrash size={15} />} /> */}
                     <button
                         onClick={onRemoveJob}
-                        className="icon-button trash"
+                        className={`icon-button icon-button-${theme} trash`}
                     >
                         <FiTrash />
                     </button>
                     {job.url &&
                         <button
                             onClick={onOpenLink}
-                            className="icon-button trash"
+                            className={`icon-button icon-button-${theme}`}
                         >
                             <AiOutlineLink />
                         </button>

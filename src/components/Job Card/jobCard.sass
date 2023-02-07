@@ -10,10 +10,8 @@
     padding: 10px
     width: 100%
     min-height: 50px
-    background-color: white
     box-shadow: 0 3px 7px -1px rgba(black, 0.5)
     cursor: pointer !important
-    border: 1px solid rgba(white, 0.05)
 
     &:hover > .wrapper > .buttons
         visibility: visible
@@ -43,20 +41,36 @@
                 justify-content: center
                 width: 27px
                 height: 27px
-                border: 1px solid black
-                border-radius: 10px
+                border-radius: 8px
                 background-color: transparent
                 box-shadow: 0 3px 5px -1px rgba(black, 0.25)
                 transition: background-color ease-in-out 0.25s
 
+            .icon-button-light
+                background-color: rgba(black, 0.125)
+
                 &:hover
-                    background-color: rgba(black, 0.025)
+                    background-color: rgba(black, 0.225)
+
+            .icon-button-dark
+                background-color: rgba(white, 0.125)
+
+                &:hover
+                    background-color: rgba(white, 0.225)
 
             .trash
-                margin-bottom: 6px
+                margin-bottom: 7px
 
     .date
         align-self: flex-end
+
+.job-card-container-light
+    background-color: $box-light
+    border: 1px solid rgba(white, 0.05)
+
+.job-card-container-dark
+    background-color: $box-dark
+    border: 1px solid rgba(black, 0.05)
 
 .job-card-container-margin
     margin-bottom: 15px
