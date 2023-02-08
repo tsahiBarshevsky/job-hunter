@@ -1,19 +1,19 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Typography } from '@mui/material';
+import { Typography, Button } from '@mui/material';
 import { MdDashboard, MdMenu } from 'react-icons/md';
 import { IoStatsChart } from 'react-icons/io5';
 import { FiLogOut } from 'react-icons/fi';
 import { BsSunFill, BsFillMoonFill } from 'react-icons/bs';
 import { useAuth } from '../../utils/context';
 import { ThemeContext } from '../../utils/themeContext';
+import Menu from '../Menu';
 import useStyles from './styles';
 import './sidebar.sass';
 
 // Firebase
 import { signOut } from 'firebase/auth';
 import { authentication } from '../../utils/firebase';
-import Menu from '../Menu';
 
 const Sidebar = ({ activeTab, setActiveTab }) => {
     const { user } = useAuth();
@@ -69,16 +69,32 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
                     </li>
                 </ul>
             </div>
-            <ul className="links">
+            <div className="links">
+                <Button
+                    id="basic-button"
+                    aria-controls={open ? 'basic-menu' : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? 'true' : undefined}
+                    onClick={handleClick}
+                    disableRipple
+                    className={`link link-${theme}`}
+                >
+                    <MdMenu className="icon" />
+                    <Typography className={classes.text}>Options</Typography>
+                </Button>
+            </div>
+            {/* <ul className="links">
                 <li
-                    className="link"
+                    className={`link link-${theme}`}
                     onClick={handleClick}
                     aria-controls={open ? 'basic-menu' : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? 'true' : undefined}
                 >
                     <MdMenu className="icon" />
                     <Typography className={classes.text}>Options</Typography>
                 </li>
-            </ul>
+            </ul> */}
             <Menu
                 open={open}
                 anchorEl={anchorEl}
