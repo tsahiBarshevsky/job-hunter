@@ -8,10 +8,12 @@
     position: relative
     width: 265px
     height: 120px
-    background-color: white
     border-radius: 20px
     padding: 10px 15px
     cursor: default
+
+    @media screen and ( max-width: 1319px )
+        margin-bottom: 10px !important
 
     @media screen and ( max-width: $xs )
         width: 100%
@@ -32,3 +34,15 @@
         align-items: center
         height: fit-content
         height: 100%
+
+.stat-box-container-light
+    background-color: $box-light
+
+.stat-box-container-dark
+    background-color: $box-dark
+
+.space
+    margin: 0 5px
+
+    @media screen and ( max-width: $md )
+        margin: 0

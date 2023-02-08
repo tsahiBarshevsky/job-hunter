@@ -1,15 +1,26 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Typography } from '@mui/material';
+import { ThemeContext } from '../../utils/themeContext';
+import useStyles from './styles';
 import './statBox.sass'
 
-const StatBox = ({ title, subtitle, value, image }) => {
+const StatBox = ({ title, subtitle, value, image, withSpace }) => {
+    const { theme } = useContext(ThemeContext);
+    const classes = useStyles();
+
     return (
-        <div className="stat-box-container">
+        <div
+            className={withSpace ?
+                `stat-box-container stat-box-container-${theme} space`
+                :
+                `stat-box-container stat-box-container-${theme}`
+            }
+        >
             <div className="content">
-                <Typography variant="subtitle2">{title}</Typography>
+                <Typography className={classes.text} variant="subtitle2">{title}</Typography>
                 <div className="content-absolute">
-                    <Typography variant="h5">{value}</Typography>
-                    <Typography variant="caption">{subtitle}</Typography>
+                    <Typography className={classes.text} variant="h5">{value}</Typography>
+                    <Typography className={classes.text} variant="caption">{subtitle}</Typography>
                 </div>
             </div>
             <div className="image-container">

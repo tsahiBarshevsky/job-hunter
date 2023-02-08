@@ -4,6 +4,7 @@ import { Typography, FormControl, Select, MenuItem } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useAuth } from '../../utils/context';
 import StatBox from '../Stat Box';
+import useStyles from './styles';
 import './stats.sass';
 
 // Images
@@ -19,6 +20,7 @@ const Stats = ({ currentYear, setCurrentYear, entriesPerPage, setEntriesPerPage 
     const jobs = useSelector(state => state.jobs);
     const stats = useSelector(state => state.stats);
     const week = useSelector(state => state.week);
+    const classes = useStyles();
 
     const calculateTotalJobs = () => {
         var counter = 0;
@@ -83,7 +85,9 @@ const Stats = ({ currentYear, setCurrentYear, entriesPerPage, setEntriesPerPage 
     return (
         <div className="stats-container">
             <div className="stats-header">
-                <Typography variant="h6">{user.displayName ? user.displayName : user.email}'s stats</Typography>
+                <Typography className={[classes.text, classes.bold]} variant="h6">
+                    {user.displayName ? user.displayName : user.email}'s stats
+                </Typography>
             </div>
             <div className="statistics">
                 <StatBox
@@ -91,27 +95,31 @@ const Stats = ({ currentYear, setCurrentYear, entriesPerPage, setEntriesPerPage 
                     subtitle="In all stages"
                     value={calculateTotalJobs()}
                     image={Stat1}
+                    withSpace={false}
                 />
                 <StatBox
                     title="Added This Week"
                     subtitle={`${week.start.format('DD/MM/YY')} - ${week.end.format('DD/MM/YY')}`}
                     value={calculateJobsAddedThisWeek()}
                     image={Stat4}
+                    withSpace
                 />
                 <StatBox
                     title="Jobs In Progress"
                     subtitle={`${calculateJobsInProgress()} added this week`}
                     value={jobs["In Progress"].items.length}
                     image={Stat3}
+                    withSpace
                 />
                 <StatBox
                     title="Jobs Offered"
                     subtitle={`${calculateJobsOffered()} added this week`}
                     value={jobs["Offered"].items.length}
                     image={Stat2}
+                    withSpace={false}
                 />
             </div>
-            <div className="box">
+            {/* <div className="box">
                 <Typography variant="subtitle1">Jobs Overview</Typography>
                 <Table
                     entriesPerPage={entriesPerPage}
@@ -143,7 +151,7 @@ const Stats = ({ currentYear, setCurrentYear, entriesPerPage, setEntriesPerPage 
                     currentYear={currentYear}
                     setCurrentYear={setCurrentYear}
                 />
-            </div>
+            </div> */}
         </div>
     )
 }
