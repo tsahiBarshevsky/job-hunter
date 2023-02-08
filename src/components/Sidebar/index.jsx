@@ -1,12 +1,13 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Typography } from '@mui/material';
-import { MdDashboard } from 'react-icons/md';
+import { MdDashboard, MdMenu } from 'react-icons/md';
 import { IoStatsChart } from 'react-icons/io5';
 import { FiLogOut } from 'react-icons/fi';
 import { BsSunFill, BsFillMoonFill } from 'react-icons/bs';
 import { useAuth } from '../../utils/context';
 import { ThemeContext } from '../../utils/themeContext';
+import useStyles from './styles';
 import './sidebar.sass';
 
 // Firebase
@@ -20,6 +21,7 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const navigate = useNavigate();
+    const classes = useStyles();
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -39,33 +41,44 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
     }
 
     return (
-        <div className="sidebar-container">
+        <div className={`sidebar-container sidebar-container-${theme}`}>
+            <div className="wrapper">
+                <div style={{ marginBottom: 20 }}>
+                    <Typography className={classes.logo}>Job</Typography>
+                    <Typography className={classes.logo}>Hunter</Typography>
+                </div>
+                {user.photoURL &&
+                    <div className={`image-wrapper image-wrapper-${theme}`}>
+                        <img src={user.photoURL} alt={user.displayName} className="user-image" />
+                    </div>
+                }
+                <ul className="links">
+                    <li
+                        onClick={() => setActiveTab('tab1')}
+                        className={activeTab === 'tab1' ? `link link-${theme} active active-${theme}` : `link link-${theme}`}
+                    >
+                        <MdDashboard className="icon" />
+                        <Typography className={classes.text}>Jobs Board</Typography>
+                    </li>
+                    <li
+                        onClick={() => setActiveTab('tab2')}
+                        className={activeTab === 'tab2' ? `link link-${theme} active active-${theme}` : `link link-${theme}`}
+                    >
+                        <IoStatsChart className="icon" />
+                        <Typography className={classes.text}>Statistics</Typography>
+                    </li>
+                </ul>
+            </div>
             <ul className="links">
                 <li
-                    onClick={() => setActiveTab('tab1')}
-                    className={activeTab === 'tab1' ? "link active" : "link"}
+                    className="link"
+                    onClick={handleClick}
+                    aria-controls={open ? 'basic-menu' : undefined}
                 >
-                    <MdDashboard className="icon" />
-                    <Typography>Jobs Board</Typography>
-                </li>
-                <li
-                    onClick={() => setActiveTab('tab2')}
-                    className={activeTab === 'tab2' ? "link active" : "link"}
-                >
-                    <IoStatsChart className="icon" />
-                    <Typography>Statistics</Typography>
+                    <MdMenu className="icon" />
+                    <Typography className={classes.text}>Options</Typography>
                 </li>
             </ul>
-            <div
-                className="user"
-                onClick={handleClick}
-                aria-controls={open ? 'basic-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
-            >
-                <img src={user.photoURL} alt={user.displayName} className="user-image" />
-                <Typography variant="caption">{user.displayName}</Typography>
-            </div>
             <Menu
                 open={open}
                 anchorEl={anchorEl}
@@ -75,35 +88,35 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
             <ul className="mobile-links">
                 <li
                     onClick={() => setActiveTab('tab1')}
-                    className={activeTab === 'tab1' ? "mobile-link active" : "mobile-link"}
+                    className={activeTab === 'tab1' ? `mobile-link mobile-link-${theme} active active-${theme}` : `mobile-link mobile-link-${theme}`}
                 >
                     <MdDashboard className="mobile-icon" />
-                    <Typography>Jobs Board</Typography>
+                    <Typography className={classes.text} variant="subtitle2">Jobs Board</Typography>
                 </li>
                 <li
                     onClick={() => setActiveTab('tab2')}
-                    className={activeTab === 'tab2' ? "mobile-link active" : "mobile-link"}
+                    className={activeTab === 'tab2' ? `mobile-link mobile-link-${theme} active active-${theme}` : `mobile-link mobile-link-${theme}`}
                 >
                     <IoStatsChart className="mobile-icon" />
-                    <Typography>Statistics</Typography>
+                    <Typography className={classes.text} variant="subtitle2">Statistics</Typography>
                 </li>
                 <li
                     onClick={toggleTheme}
-                    className="mobile-link"
+                    className={`mobile-link mobile-link-${theme}`}
                 >
                     {theme === 'light' ?
                         <BsSunFill className="mobile-icon" />
                         :
                         <BsFillMoonFill className="mobile-icon" />
                     }
-                    <Typography>Switch Theme</Typography>
+                    <Typography className={classes.text} variant="subtitle2">Switch Theme</Typography>
                 </li>
                 <li
                     onClick={onSignOut}
-                    className="mobile-link"
+                    className={`mobile-link mobile-link-${theme}`}
                 >
                     <FiLogOut className="mobile-icon" />
-                    <Typography>Sign Out</Typography>
+                    <Typography className={classes.text} variant="subtitle2">Sign Out</Typography>
                 </li>
             </ul>
         </div>

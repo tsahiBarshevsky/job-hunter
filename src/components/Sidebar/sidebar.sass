@@ -7,15 +7,44 @@
     justify-content: space-between
     width: $sidebar-width
     height: 100vh
-    color: white
-    background-color: $primary-color
-    padding: 15px 0 10px
+    padding: 15px 0 0
     cursor: default
 
     @media screen and ( max-width: $sm )
         flex-direction: row
         width: 100%
         height: $sidebar-mobile-height
+        padding: 0
+
+    .wrapper
+        width: 100%
+        display: flex
+        flex-direction: column
+        align-items: center
+        justify-content: center
+
+        @media screen and ( max-width: $sm )
+            display: none
+
+        .image-wrapper
+            display: flex
+            align-items: center
+            justify-content: center
+            width: 82px
+            height: 82px
+            border-radius: 50%
+            margin-bottom: 15px
+
+            .user-image
+                width: 70px
+                height: 70px
+                border-radius: 50%
+
+        .image-wrapper-light
+            border: 2px solid black
+
+        .image-wrapper-dark
+            border: 2px solid white
 
     .links
         width: 100%
@@ -23,7 +52,6 @@
         flex-direction: column
         align-items: center
         justify-content: flex-start
-        width: 100%
         margin: 0
         padding: 0
 
@@ -34,44 +62,37 @@
             display: flex
             align-items: center
             justify-content: flex-start
-            width: 100%
+            width: 90%
             padding: 10px 25px
             list-style: none
             text-align: center
             cursor: pointer
-            transition: all 0.5s
             margin: 5px 0
+            border-radius: 10px
+            transition: all 0.5s
 
             .icon
                 font-size: 20px
                 margin-right: 20px
 
+        .link-light
             &:hover
-                background-color: #043a71
+                background-color: #043a711f
+
+        .link-dark
+            &:hover
+                background-color: #043a7152
 
         .link.active
             cursor: default
-            background-color: #043a71
 
-    .user
-        vertical-align: bottom
-        cursor: pointer
-        user-select: none
-        border: 1px solid white
-        border-radius: 10px
-        padding: 3px 10px 3px 3px
-        // position: absolute
-        // bottom: 0
-        // margin-bottom: 10px
+        .link.active-light
+            color: #1355ba
+            background-color: #043a711f
 
-        @media screen and ( max-width: $sm )
-            display: none
-
-        .user-image
-            width: 25px
-            height: 25px
-            border-radius: 7px
-            margin-right: 10px
+        .link.active-dark
+            color: #98c1fa
+            background-color: #043a7152
 
     .mobile-links
         display: none
@@ -89,21 +110,38 @@
             flex-direction: column
             justify-content: center
             align-items: center
-            color: white
             width: 100%
             height: $sidebar-mobile-height
             user-select: none
-            padding: 0 10px
+            padding: 5px 0 0
             cursor: pointer
             transition: all 0.5s
 
-            &:hover
-                background-color: #043a71
-
             .mobile-icon
-                font-size: 20px
+                font-size: 18px
                 margin-bottom: 5px
+
+        .mobile-link-light
+            &:hover
+                background-color: #043a711f
+
+        .mobile-link-dark
+            &:hover
+                background-color: #043a7152
 
         .mobile-link.active
             cursor: default
-            background-color: #043a71
+
+        .mobile-link.active-light
+            color: #1355ba
+            background-color: #043a711f
+
+        .mobile-link.active-dark
+            color: #98c1fa
+            background-color: #043a7152
+
+.sidebar-container-light
+    background-color: #d9dbe2
+
+.sidebar-container-dark
+    background-color: #0f0f0f
