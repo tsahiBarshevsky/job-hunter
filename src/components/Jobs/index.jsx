@@ -231,6 +231,7 @@ const Jobs = ({ setJob, setOpenInsertionDialog, setOpenJobDialog, setOpenAlertDi
                                                                         onOpenJob={onOpenJob}
                                                                         index={index}
                                                                         setOpenAlertDialog={setOpenAlertDialog}
+                                                                        setOrigin={setOrigin}
                                                                     />
                                                                 );
                                                             }}

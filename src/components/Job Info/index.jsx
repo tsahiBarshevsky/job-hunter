@@ -17,7 +17,7 @@ import './jobInfo.sass';
 import { db } from '../../utils/firebase';
 import { doc, updateDoc } from 'firebase/firestore/lite';
 
-const JobInfo = ({ job, handleClose, setOpenAlertDialog }) => {
+const JobInfo = ({ job, handleClose, setOpenAlertDialog, setOrigin }) => {
     const [title, setTitle] = useState('');
     const [company, setCompany] = useState('');
     const [location, setLocation] = useState('');
@@ -66,6 +66,7 @@ const JobInfo = ({ job, handleClose, setOpenAlertDialog }) => {
 
     const onRemoveJob = () => {
         setOpenAlertDialog(true);
+        setOrigin('dialog');
         handleClose();
     }
 
@@ -92,7 +93,7 @@ const JobInfo = ({ job, handleClose, setOpenAlertDialog }) => {
             >
                 <div className="input-wrapper space-right">
                     <div className="input-title">
-                        <Typography variant="subtitle1">Job Title</Typography>
+                        <Typography className={classes.text} variant="subtitle1">Job Title</Typography>
                     </div>
                     <TextField
                         required
@@ -102,11 +103,16 @@ const JobInfo = ({ job, handleClose, setOpenAlertDialog }) => {
                         autoComplete="off"
                         placeholder="Job Title"
                         className={classes.input}
+                        InputProps={{
+                            classes: {
+                                input: classes.text
+                            }
+                        }}
                     />
                 </div>
                 <div className="input-wrapper space-left">
                     <div className="input-title">
-                        <Typography variant="subtitle1">Company</Typography>
+                        <Typography className={classes.text} variant="subtitle1">Company</Typography>
                     </div>
                     <TextField
                         required
@@ -116,11 +122,16 @@ const JobInfo = ({ job, handleClose, setOpenAlertDialog }) => {
                         autoComplete="off"
                         placeholder="Company"
                         className={classes.input}
+                        InputProps={{
+                            classes: {
+                                input: classes.text
+                            }
+                        }}
                     />
                 </div>
                 <div className="input-wrapper space-right">
                     <div className="input-title">
-                        <Typography variant="subtitle1">Location</Typography>
+                        <Typography className={classes.text} variant="subtitle1">Location</Typography>
                     </div>
                     <TextField
                         value={location}
@@ -129,11 +140,16 @@ const JobInfo = ({ job, handleClose, setOpenAlertDialog }) => {
                         autoComplete="off"
                         placeholder="Location"
                         className={classes.input}
+                        InputProps={{
+                            classes: {
+                                input: classes.text
+                            }
+                        }}
                     />
                 </div>
                 <div className="input-wrapper space-left">
                     <div className="input-title">
-                        <Typography variant="subtitle1">Salary</Typography>
+                        <Typography className={classes.text} variant="subtitle1">Salary</Typography>
                     </div>
                     <TextField
                         value={salary}
@@ -144,11 +160,16 @@ const JobInfo = ({ job, handleClose, setOpenAlertDialog }) => {
                         autoComplete="off"
                         placeholder="Salary"
                         className={classes.input}
+                        InputProps={{
+                            classes: {
+                                input: classes.text
+                            }
+                        }}
                     />
                 </div>
                 <div className="input-wrapper space-right">
                     <div className="input-title">
-                        <Typography variant="subtitle1">URL</Typography>
+                        <Typography className={classes.text} variant="subtitle1">URL</Typography>
                     </div>
                     <TextField
                         value={url}
@@ -157,24 +178,34 @@ const JobInfo = ({ job, handleClose, setOpenAlertDialog }) => {
                         autoComplete="off"
                         placeholder="URL"
                         className={classes.input}
+                        InputProps={{
+                            classes: {
+                                input: classes.text
+                            }
+                        }}
                     />
                 </div>
                 <div className="input-wrapper space-left">
                     <div className="input-title">
-                        <Typography variant="subtitle1">Deadline</Typography>
+                        <Typography className={classes.text} variant="subtitle1">Deadline</Typography>
                     </div>
                     <LocalizationProvider dateAdapter={AdapterMoment}>
                         <DatePicker
                             value={deadline}
                             inputFormat="DD/MM/YYYY"
                             onChange={(value) => setDeadline(moment(value))}
+                            InputProps={{
+                                classes: {
+                                    input: classes.text
+                                }
+                            }}
                             renderInput={(params) => {
                                 return (
                                     <TextField
                                         {...params}
                                         inputProps={{
                                             ...params.inputProps,
-                                            placeholder: "DD/MM/YYYY"
+                                            placeholder: "DD/MM/YYYY",
                                         }}
                                     />
                                 )
@@ -182,8 +213,8 @@ const JobInfo = ({ job, handleClose, setOpenAlertDialog }) => {
                         />
                     </LocalizationProvider>
                 </div>
+                <Typography className={classes.text} variant="subtitle1">Description</Typography>
                 <div className="text-editor">
-                    <Typography variant="subtitle1">Description</Typography>
                     <TextEditor
                         editor={ClassicEditor}
                         data={description ? description : ''}
@@ -194,9 +225,9 @@ const JobInfo = ({ job, handleClose, setOpenAlertDialog }) => {
                         }}
                     />
                 </div>
-                <div>
-                    <Button variant="contained" onClick={onRemoveJob}>Delete job</Button>
-                    <Button type="submit" variant="contained">Save changes</Button>
+                <div className="buttons">
+                    <Button disableRipple className={classes.delete} onClick={onRemoveJob}>Delete job</Button>
+                    <Button className={classes.saveChanges} type="submit" variant="contained">Save changes</Button>
                 </div>
             </form>
         </div>

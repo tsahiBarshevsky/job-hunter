@@ -1,6 +1,11 @@
 import { makeStyles } from '@mui/styles';
 
 export default makeStyles(() => ({
+    text: {
+        '&&': {
+            fontFamily: `'Poppins', sans-serif`
+        }
+    },
     paper: {
         '&&': {
             borderRadius: 20,
@@ -14,27 +19,25 @@ export default makeStyles(() => ({
         '&&': {
             display: 'flex',
             justifyContent: 'space-between',
-            alignItems: 'flex-start'
-            // minHeight: '85vh'
+            alignItems: 'flex-start',
+            minHeight: '85vh'
         }
     },
     details: {
         '&&': {
             width: '75%',
             minHeight: '85vh',
-            padding: 20
+            padding: 15,
+            '@media (max-width: 800px)': {
+                width: '100%'
+            }
         }
-        // [theme.breakpoints.down('sm')]:
-        // {
-        //     width: '100%'
-        // }
     },
     header: {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'baseline',
-        marginBottom: 10,
-        backgroundColor: 'pink'
+        marginBottom: 10
     },
     form: {
         display: 'flex',
@@ -50,50 +53,31 @@ export default makeStyles(() => ({
         width: '100%',
         margin: '15px 0'
     },
-    saveChanges: {
-        height: 40,
-        borderRadius: 5,
-        color: 'white',
-        backgroundColor: '#1d5692',
-        textTransform: 'capitalize',
-        position: 'absolute',
-        bottom: 10,
-        right: 20,
-        '&:hover': { backgroundColor: '#1d5692CC' }
-    },
-    delete: {
-        height: 40,
-        borderRadius: 5,
-        border: '2px solid #1d5692',
-        color: '#1d5692',
-        backgroundColor: 'transparent',
-        textTransform: 'capitalize',
-        transition: 'all 0.25s ease-in-out',
-        position: 'absolute',
-        bottom: 10,
-        '&:hover':
-        {
+    timelineContainer: {
+        '&&': {
+            width: '25%',
+            height: '85vh',
             color: 'white',
-            backgroundColor: '#1d5692'
+            backgroundColor: '#1d5692',
+            overflowY: 'auto',
+            overflowX: 'hidden',
+            padding: '10px 15px',
+            cursor: 'default',
+            '@media (max-width: 800px)': {
+                display: 'none'
+            }
         }
     },
-    timelineContainer: {
-        width: '25%',
-        height: '85vh',
-        color: 'white',
-        backgroundColor: '#1d5692',
-        overflowY: 'auto',
-        overflowX: 'hidden',
-        padding: '10px 15px',
-        // [theme.breakpoints.down('sm')]:
-        // {
-        //     display: 'none'
-        // }
+    timelineTitle: {
+        '&&': {
+            lineHeight: 1.2
+        }
     },
     divider: {
-        backgroundColor: '#ffffff4D',
-        marginTop: 2,
-        marginBottom: 15
+        '&&': {
+            marginTop: 2,
+            marginBottom: 15
+        }
     },
     icon: {
         width: 20,
@@ -102,9 +86,6 @@ export default makeStyles(() => ({
         color: 'white',
         borderRadius: '50%',
         transform: 'translateX(-12%)'
-    },
-    dialog: {
-        // cursor: 'default',
     },
     input: {
         '&&': {

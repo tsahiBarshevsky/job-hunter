@@ -20,7 +20,6 @@ const JobDialog = ({ job, setJob, setMode, setSelectedContact, open, setOpen, se
     const handleClose = () => {
         setOpen(false);
         setTimeout(() => {
-            setOrigin('');
             setActiveTab("tab1");
         }, 100);
     }
@@ -33,6 +32,7 @@ const JobDialog = ({ job, setJob, setMode, setSelectedContact, open, setOpen, se
                         job={job}
                         handleClose={handleClose}
                         setOpenAlertDialog={setOpenAlertDialog}
+                        setOrigin={setOrigin}
                     />
                 );
             case 'tab2':
@@ -72,15 +72,23 @@ const JobDialog = ({ job, setJob, setMode, setSelectedContact, open, setOpen, se
             open={open}
             onClose={handleClose}
             classes={{ paper: classes.paper }}
-            className={classes.dialog}
         >
             <div className={classes.container}>
                 <div className={classes.details}>
                     <div className={classes.header}>
                         <div>
-                            <Typography variant="h5">{job.title}</Typography>
-                            <Typography variant="subtitle2" color="textSecondary">At {job.company}</Typography>
-                            <Typography variant="subtitle2" color="textSecondary">Status: {job.status}</Typography>
+                            <Typography
+                                className={classes.text}
+                                variant="h5"
+                            >
+                                {job.title}
+                            </Typography>
+                            <Typography
+                                className={classes.text}
+                                variant="subtitle2"
+                            >
+                                At {job.company}
+                            </Typography>
                         </div>
                         <IconButton
                             onClick={handleClose}
@@ -104,14 +112,14 @@ const JobDialog = ({ job, setJob, setMode, setSelectedContact, open, setOpen, se
                         {Object.keys(job).length > 0 && job.timeline.map((step, index) => {
                             return (
                                 <Timeline.Item key={index}>
-                                    <Typography className={classes.text} variant="subtitle1">{step.action}</Typography>
+                                    <Typography className={[classes.text, classes.timelineTitle]} variant="subtitle1">{step.action}</Typography>
                                     {Object.keys(step.date).length === 0 ?
-                                        <Typography variant="caption" color="textSecondary">
-                                            {moment(step.date).format('DD/MM/YYYY HH:mm')}
+                                        <Typography className={classes.text} variant="caption" color="textSecondary">
+                                            {moment(step.date).format('DD/MM/YYYY HH:mm:ss')}
                                         </Typography>
                                         :
-                                        <Typography variant="caption" color="textSecondary">
-                                            {moment.unix(step.date.seconds).format('DD/MM/YYYY HH:mm')}
+                                        <Typography className={classes.text} variant="caption" color="textSecondary">
+                                            {moment.unix(step.date.seconds).format('DD/MM/YYYY HH:mm:ss')}
                                         </Typography>
                                     }
                                 </Timeline.Item>

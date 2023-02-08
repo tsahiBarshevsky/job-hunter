@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 import update from 'immutability-helper';
-import { Typography, Button, Checkbox, Chip, IconButton, Divider } from '@mui/material';
+import { Typography, Button, Checkbox, Chip, IconButton, Divider, FormControlLabel } from '@mui/material';
 import { MdDelete } from 'react-icons/md';
 import { useSelector, useDispatch } from "react-redux";
 import { removeActivity, updateActivityCompleted, addStepToTimeline } from "../../store/actions/jobs";
@@ -102,17 +102,65 @@ const Activities = ({ job, setJob, setOpenJobDialog, setOpenActivityDialog }) =>
                 <div>
                     <Button variant="contained" onClick={() => onOpenContactDialog()}>Create activity</Button>
                     <Divider className="divider" />
-                    {job.activites.map((activity, index) => {
+                    <table style={{ backgroundColor: 'purple', width: '100%' }}>
+                        <tbody>
+                            {job.activites.map((activity, index) => {
+                                return (
+                                    <tr key={activity.id}>
+                                        <td style={{ backgroundColor: 'green', width: '40%' }}>
+                                            <FormControlLabel
+                                                control={
+                                                    <Checkbox
+                                                        checked={activity.completed}
+                                                        onClick={() => handleCompletedChange(activity.title, index, !activity.completed)}
+                                                    />
+                                                }
+                                                label={activity.title}
+                                            />
+                                        </td>
+                                        <td style={{ backgroundColor: 'blue', width: '30%' }}>
+                                            <Chip
+                                                label={activity.category}
+                                                color="primary"
+                                                variant="filled"
+                                            />
+                                        </td>
+                                        <td style={{ backgroundColor: 'brown', width: '20%' }}>
+                                            {Object.keys(activity.startDate).length === 0 ?
+                                                <Typography variant="caption">
+                                                    {moment(activity.startDate).format('DD/MM/YY HH:mm')}
+                                                </Typography>
+                                                :
+                                                <Typography variant="caption">
+                                                    {moment.unix(activity.startDate.seconds).format('DD/MM/YY HH:mm')}
+                                                </Typography>
+                                            }
+                                        </td>
+                                        <td style={{ backgroundColor: 'red', width: '10%' }}>
+                                            <IconButton onClick={() => onRemoveActivity(index)}>
+                                                <MdDelete />
+                                            </IconButton>
+                                        </td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </table>
+                    {/* {job.activites.map((activity, index) => {
                         return (
                             <div
                                 key={activity.id}
                                 className="activity-item"
                             >
-                                <Checkbox
-                                    checked={activity.completed}
-                                    onClick={() => handleCompletedChange(activity.title, index, !activity.completed)}
+                                <FormControlLabel
+                                    control={
+                                        <Checkbox
+                                            checked={activity.completed}
+                                            onClick={() => handleCompletedChange(activity.title, index, !activity.completed)}
+                                        />
+                                    }
+                                    label={activity.title}
                                 />
-                                <Typography>{activity.title}</Typography>
                                 <Chip
                                     label={activity.category}
                                     color="primary"
@@ -132,7 +180,7 @@ const Activities = ({ job, setJob, setOpenJobDialog, setOpenActivityDialog }) =>
                                 </IconButton>
                             </div>
                         )
-                    })}
+                    })} */}
                 </div>
             }
         </div>

@@ -8,7 +8,7 @@ import { ThemeContext } from '../../utils/themeContext';
 import useStyles from './styles';
 import './jobCard.sass';
 
-const JobCard = ({ job, setJob, provided, onOpenJob, index, setOpenAlertDialog }) => {
+const JobCard = ({ job, setJob, provided, onOpenJob, index, setOpenAlertDialog, setOrigin }) => {
     const { theme } = useContext(ThemeContext);
     const jobs = useSelector(state => state.jobs);
     const length = jobs[job.status].items.length;
@@ -17,6 +17,7 @@ const JobCard = ({ job, setJob, provided, onOpenJob, index, setOpenAlertDialog }
     const onRemoveJob = async (event) => {
         event.stopPropagation();
         setJob(job);
+        setOrigin('card');
         setOpenAlertDialog(true);
     }
 

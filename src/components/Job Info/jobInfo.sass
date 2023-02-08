@@ -1,9 +1,7 @@
 @import '../../styles/_variables'
 
 .job-info-container
-    background-color: royalblue
     width: 100%
-    background-color: blue
     height: 100%
 
     .job-info-form
@@ -16,9 +14,9 @@
         .input-wrapper
             display: flex
             flex-direction: column
-            background-color: pink
             width: 50%
             margin-bottom: 15px
+            cursor: default
 
             .input-title
                 display: flex
@@ -29,9 +27,19 @@
         .text-editor
             display: flex
             flex-direction: column
-            background-color: pink
             width: 100%
             margin-bottom: 15px
+            color: black
+            font-family: 'Poppins', sans-serif
+
+            .ck-editor__editable
+                height: 150px !important
+
+        .buttons
+            display: flex
+            align-items: center
+            justify-content: space-between
+            width: 100%
 
         .space-right
             padding-right: 10px

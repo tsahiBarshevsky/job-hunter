@@ -1,14 +1,36 @@
 import React from 'react';
-import { Typography, Badge } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import { styled } from '@mui/material/styles';
+import { Typography, Badge, Divider } from '@mui/material';
 import { GoInfo, GoListUnordered } from 'react-icons/go';
 import { SlNotebook } from 'react-icons/sl';
 import { FiUsers } from 'react-icons/fi';
 import './tabs.sass';
 
+const useStyles = makeStyles(() => ({
+    text: {
+        '&&': {
+            fontFamily: `'Poppins', sans-serif`,
+            marginLeft: 7
+        }
+    }
+}));
+
+const StyledBadge = styled(Badge)(() => ({
+    '& .MuiBadge-badge': {
+        right: -5,
+        fontFamily: `'Poppins', sans-serif`,
+        fontSize: 12,
+        color: 'white',
+        backgroundColor: '#1d5692'
+    },
+}));
+
 const Tabs = ({ activeTab, setActiveTab, job }) => {
     const activites = job.activites.length;
     const notes = job.notes.length;
     const contacts = job.contacts.length;
+    const classes = useStyles();
 
     const onChangeTab = (tab) => {
         setActiveTab(tab);
@@ -22,45 +44,37 @@ const Tabs = ({ activeTab, setActiveTab, job }) => {
                     className={activeTab === 'tab1' ? "active" : undefined}
                 >
                     <GoInfo size={22} />
-                    <Typography variant="subtitle2">Job Info</Typography>
+                    <Typography className={classes.text} variant="subtitle2">Job Info</Typography>
                 </li>
                 <li
                     onClick={() => onChangeTab('tab2')}
                     className={activeTab === 'tab2' ? "active" : undefined}
                 >
-                    <Badge
-                        badgeContent={activites}
-                        color="primary"
-                    >
+                    <StyledBadge badgeContent={activites} max={9}>
                         <GoListUnordered size={20} />
-                        <Typography variant="subtitle2">Activities</Typography>
-                    </Badge>
+                        <Typography className={classes.text} variant="subtitle2">Activities</Typography>
+                    </StyledBadge>
                 </li>
                 <li
                     onClick={() => onChangeTab('tab3')}
                     className={activeTab === 'tab3' ? "active" : undefined}
                 >
-                    <Badge
-                        badgeContent={notes}
-                        color="primary"
-                    >
+                    <StyledBadge badgeContent={notes} max={9}>
                         <SlNotebook size={20} />
-                        <Typography variant="subtitle2">Notes</Typography>
-                    </Badge>
+                        <Typography className={classes.text} variant="subtitle2">Notes</Typography>
+                    </StyledBadge>
                 </li>
                 <li
                     onClick={() => onChangeTab('tab4')}
                     className={activeTab === 'tab4' ? "active" : undefined}
                 >
-                    <Badge
-                        badgeContent={contacts}
-                        color="primary"
-                    >
+                    <StyledBadge badgeContent={contacts} max={9}>
                         <FiUsers size={20} />
-                        <Typography variant="subtitle2">Contacts</Typography>
-                    </Badge>
+                        <Typography className={classes.text} variant="subtitle2">Contacts</Typography>
+                    </StyledBadge>
                 </li>
             </ul>
+            <Divider />
         </div>
     )
 }
