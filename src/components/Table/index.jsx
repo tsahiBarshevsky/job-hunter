@@ -1,16 +1,20 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import moment from 'moment';
 import { Typography, Pagination, Stack, FormControl, Select, MenuItem } from '@mui/material';
 import { Progress } from 'rsuite';
 import { useSelector } from 'react-redux';
+import { ThemeContext } from '../../utils/themeContext';
 import usePagination from '../../utils/pagination';
+import useStyles from './styles';
 import './table.sass';
 
 const Table = ({ entriesPerPage, setEntriesPerPage }) => {
+    const { theme } = useContext(ThemeContext);
     const [page, setPage] = useState(1);
     const stats = useSelector(state => state.stats);
     const count = Math.ceil(stats.length / entriesPerPage);
     const data = usePagination(stats, entriesPerPage);
+    const classes = useStyles();
 
     const handlePageChange = (e, p) => {
         setPage(p);
@@ -46,22 +50,22 @@ const Table = ({ entriesPerPage, setEntriesPerPage }) => {
                 <thead>
                     <tr>
                         <th>
-                            <Typography variant='h6'>Created</Typography>
+                            <Typography className={[classes.text, classes.bold]} variant="subtitle1">Created</Typography>
                         </th>
                         <th>
-                            <Typography variant='h6'>Job Title</Typography>
+                            <Typography className={[classes.text, classes.bold]} variant="subtitle1">Job Title</Typography>
                         </th>
                         <th>
-                            <Typography variant='h6'>Company</Typography>
+                            <Typography className={[classes.text, classes.bold]} variant="subtitle1">Company</Typography>
                         </th>
                         <th>
-                            <Typography variant='h6'>Status</Typography>
+                            <Typography className={[classes.text, classes.bold]} variant="subtitle1">Status</Typography>
                         </th>
                         <th>
-                            <Typography variant='h6'>Progress</Typography>
+                            <Typography className={[classes.text, classes.bold]} variant="subtitle1">Progress</Typography>
                         </th>
                         <th>
-                            <Typography variant='h6'>Link</Typography>
+                            <Typography className={[classes.text, classes.bold]} variant="subtitle1">Link</Typography>
                         </th>
                     </tr>
                 </thead>
@@ -71,29 +75,36 @@ const Table = ({ entriesPerPage, setEntriesPerPage }) => {
                             <tr key={job.id}>
                                 <td>
                                     {Object.keys(job.created).length === 0 ?
-                                        <Typography variant='body1'>
+                                        <Typography className={classes.text} variant='body2'>
                                             {moment(job.created).format('DD/MM/YYYY')}
                                         </Typography>
                                         :
-                                        <Typography variant='body1'>
+                                        <Typography className={classes.text} variant='body2'>
                                             {moment.unix(job.created.seconds).format('DD/MM/YYYY')}
                                         </Typography>
                                     }
                                 </td>
                                 <td>
-                                    <Typography variant='body1'>{job.title}</Typography>
+                                    <Typography className={classes.text} variant='body2'>{job.title}</Typography>
                                 </td>
                                 <td>
-                                    <Typography variant='body1'>{job.company}</Typography>
+                                    <Typography className={classes.text} variant='body2'>{job.company}</Typography>
                                 </td>
                                 <td>
-                                    <Typography variant='body1'>{job.status}</Typography>
+                                    <Typography className={classes.text} variant='body2'>{job.status}</Typography>
                                 </td>
                                 <td>
-                                    {renderProgressLine(job.status)}
+                                    {/* {renderProgressLine(job.status)} */}
                                 </td>
                                 <td>
-                                    <a href={job.link} target="_blank" rel="noreferrer">{job.link}</a>
+                                    <a
+                                        href={job.link}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className={`link link-${theme}`}
+                                    >
+                                        {job.link}
+                                    </a>
                                 </td>
                             </tr>
                         )

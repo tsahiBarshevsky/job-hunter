@@ -2,19 +2,36 @@
 
 .table-container
     width: 100%
+    overflow-x: auto
+    cursor: default
 
     #jobs
         border-collapse: collapse
         width: 100%
         margin-bottom: 20px
-        cursor: default
+        border-spacing: 0
 
         td, th
             border-bottom: 1px solid #414350
             padding: 10px 20px
 
+            .link
+                text-decoration: none
+                font-family: 'Poppins', sans-serif
+
+            .link-light
+                color: black
+
+            .link-dark
+                color: white
+
         th
             text-align: left
+
+        .progress
+            width: 300px
+            height: 57px
+            font-family: 'Poppins', sans-serif
 
     .form-control
         display: flex

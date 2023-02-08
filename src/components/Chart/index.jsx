@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { Line } from 'react-chartjs-2';
 import {
@@ -10,9 +11,10 @@ import {
     Title,
     Tooltip,
     Legend,
+    defaults
 } from 'chart.js';
 import { months } from '../../utils/constants';
-import moment from 'moment';
+import { ThemeContext } from '../../utils/themeContext';
 
 ChartJS.register(
     CategoryScale,
@@ -25,6 +27,7 @@ ChartJS.register(
 );
 
 const Chart = ({ currentYear }) => {
+    const { theme } = useContext(ThemeContext);
     const stats = useSelector(state => state.stats);
     const reduce = stats.reduce((r, a) => {
         var date = null;
@@ -38,6 +41,11 @@ const Chart = ({ currentYear }) => {
         }
         return r;
     }, Object.create(null));
+
+    // Chart variables
+    defaults.font.family = 'Poppins';
+    defaults.color = theme === 'light' ? 'black' : 'white';
+    defaults.font.size = 12;
 
     const columns = {
         'January': reduce['January'] || [],
@@ -62,7 +70,7 @@ const Chart = ({ currentYear }) => {
                 data: Object.keys(columns).map((month) => columns[month].length),
                 fill: false,
                 backgroundColor: '#1d5692',
-                borderColor: '#1d569250'
+                borderColor: '#1d569268'
             }]
     };
 
@@ -71,8 +79,29 @@ const Chart = ({ currentYear }) => {
         animation: {
             duration: 0
         },
+        legend: {
+            color: "blue",
+        },
         scales: {
-            y: { min: 0 }
+            y: {
+                min: 0,
+                grid: {
+                    drawBorder: true,
+                    color: theme === 'light' ? '#0000001A' : '#ffffff1A'
+                },
+                ticks: {
+                    color: theme === 'light' ? 'black' : 'white'
+                }
+            },
+            x: {
+                grid: {
+                    drawBorder: true,
+                    color: theme === 'light' ? '#0000001A' : '#ffffff1A'
+                },
+                ticks: {
+                    color: theme === 'light' ? 'black' : 'white'
+                }
+            }
         }
     };
 

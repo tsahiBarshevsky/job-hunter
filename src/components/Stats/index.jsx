@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import moment from 'moment';
 import { Typography, FormControl, Select, MenuItem } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useAuth } from '../../utils/context';
+import { ThemeContext } from '../../utils/themeContext';
 import StatBox from '../Stat Box';
 import useStyles from './styles';
 import './stats.sass';
@@ -17,6 +18,7 @@ import Chart from '../Chart';
 
 const Stats = ({ currentYear, setCurrentYear, entriesPerPage, setEntriesPerPage }) => {
     const { user } = useAuth();
+    const { theme } = useContext(ThemeContext);
     const jobs = useSelector(state => state.jobs);
     const stats = useSelector(state => state.stats);
     const week = useSelector(state => state.week);
@@ -119,25 +121,30 @@ const Stats = ({ currentYear, setCurrentYear, entriesPerPage, setEntriesPerPage 
                     withSpace={false}
                 />
             </div>
-            {/* <div className="box">
-                <Typography variant="subtitle1">Jobs Overview</Typography>
+            <div className={`box box-${theme}`}>
+                <Typography className={classes.text} variant="subtitle1">Jobs Overview</Typography>
                 <Table
                     entriesPerPage={entriesPerPage}
                     setEntriesPerPage={setEntriesPerPage}
                 />
             </div>
-            <div className="box">
+            <div className={`box box-${theme}`}>
                 <div className="form-control">
                     <FormControl variant="outlined">
                         <Select
                             value={currentYear}
                             onChange={(event) => setCurrentYear(event.target.value)}
+                            className={classes.select}
+                            inputProps={{
+                                className: classes.text
+                            }}
                         >
                             {[...new Set(stats.map((item) => { return extractYears(item) }))].reverse().map((item) => {
                                 return (
                                     <MenuItem
                                         key={item}
                                         value={item}
+                                        className={classes.text}
                                     >
                                         {item}
                                     </MenuItem>
@@ -145,13 +152,13 @@ const Stats = ({ currentYear, setCurrentYear, entriesPerPage, setEntriesPerPage 
                             })}
                         </Select>
                     </FormControl>
-                    <Typography variant="subtitle1">Monthly Jobs Applications Activity</Typography>
+                    <Typography className={classes.text} variant="subtitle1">Monthly Jobs Applications Activity</Typography>
                 </div>
                 <Chart
                     currentYear={currentYear}
                     setCurrentYear={setCurrentYear}
                 />
-            </div> */}
+            </div>
         </div>
     )
 }

@@ -10,12 +10,5 @@ export default makeStyles(() => ({
         '&&': {
             fontWeight: 'bold'
         }
-    },
-    select: {
-        '&&': {
-            marginRight: 10,
-            borderRadius: 10,
-            height: 40
-        }
     }
 }));

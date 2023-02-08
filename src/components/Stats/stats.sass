@@ -7,7 +7,7 @@
     align-items: flex-start
     width: calc( 100% - #{$sidebar-width} )
     height: 100vh
-    padding: 0 20px
+    padding: 0 20px 10px 20px
     overflow-y: auto
 
     @media screen and ( max-width: $sm )
@@ -30,12 +30,6 @@
         margin-bottom: 10px
         flex-wrap: wrap
 
-        // @media screen and ( max-width: 1335px )
-        //     display: grid
-        //     grid-gap: 10px
-        //     grid-template-columns: repeat(2, 1fr)
-        //     background-color: blue
-
     .box
         display: flex
         flex-direction: column
@@ -43,7 +37,6 @@
         align-items: flex-start
         width: 100%
         height: fit-content
-        background-color: white
         border-radius: 20px
         padding: 20px
         margin: 10px 0
@@ -53,3 +46,9 @@
             display: flex
             align-items: center
             justify-content: flex-start
+
+    .box-light
+        background-color: $box-light
+
+    .box-dark
+        background-color: $box-dark
