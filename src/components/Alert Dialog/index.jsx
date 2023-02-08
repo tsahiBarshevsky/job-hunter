@@ -8,14 +8,15 @@ import { removeStat } from '../../store/actions/stats';
 import { db } from '../../utils/firebase';
 import { doc, deleteDoc } from 'firebase/firestore/lite';
 
-const AlertDialog = ({ open, setOpen, job, setJob, setOpenJobDialog }) => {
+const AlertDialog = ({ open, setOpen, job, setJob, setOpenJobDialog, origin }) => {
     const jobs = useSelector(state => state.jobs);
     const stats = useSelector(state => state.stats);
     const dispatch = useDispatch();
 
     const handleClose = () => {
         setOpen(false);
-        setOpenJobDialog(true);
+        if (origin === 'dialog')
+            setOpenJobDialog(true);
     }
 
     const onRemoveJob = async () => {

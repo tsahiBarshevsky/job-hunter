@@ -23,7 +23,7 @@ import { HiOutlineThumbDown, HiOutlineThumbUp } from 'react-icons/hi';
 import { doc, updateDoc } from 'firebase/firestore/lite';
 import { db } from '../../utils/firebase';
 
-const Jobs = ({ setJob, setOpenInsertionDialog, setOpenJobDialog, setOpenAlertDialog }) => {
+const Jobs = ({ setJob, setOpenInsertionDialog, setOpenJobDialog, setOpenAlertDialog, setOrigin }) => {
     const { user } = useAuth();
     const { theme } = useContext(ThemeContext);
     const jobs = useSelector(state => state.jobs);
@@ -33,6 +33,7 @@ const Jobs = ({ setJob, setOpenInsertionDialog, setOpenJobDialog, setOpenAlertDi
 
     const onOpenJob = (item) => {
         setJob(item);
+        setOrigin('dialog');
         setOpenJobDialog(true);
     }
 
@@ -225,6 +226,7 @@ const Jobs = ({ setJob, setOpenInsertionDialog, setOpenJobDialog, setOpenAlertDi
                                                                 return (
                                                                     <JobCard
                                                                         job={item}
+                                                                        setJob={setJob}
                                                                         provided={provided}
                                                                         onOpenJob={onOpenJob}
                                                                         index={index}

@@ -23,6 +23,7 @@ const DashboardPage = () => {
     const [openContactDialog, setOpenContactDialog] = useState(false);
     const [openActivityDialog, setOpenActivityDialog] = useState(false);
     const [openAlertDialog, setOpenAlertDialog] = useState(false);
+    const [origin, setOrigin] = useState('');
     const jobs = useSelector(state => state.jobs);
     const week = useSelector(state => state.week);
     const navigate = useNavigate();
@@ -123,6 +124,7 @@ const DashboardPage = () => {
                         setOpenInsertionDialog={setOpenInsertionDialog}
                         setOpenJobDialog={setOpenJobDialog}
                         setOpenAlertDialog={setOpenAlertDialog}
+                        setOrigin={setOrigin}
                     />
                     :
                     <Stats
@@ -148,6 +150,7 @@ const DashboardPage = () => {
                 setOpenActivityDialog={setOpenActivityDialog}
                 setOpenContactDialog={setOpenContactDialog}
                 setOpenAlertDialog={setOpenAlertDialog}
+                setOrigin={setOrigin}
             />
             <ActivityDialog
                 open={openActivityDialog}
@@ -171,6 +174,7 @@ const DashboardPage = () => {
                 job={job}
                 setJob={setJob}
                 setOpenJobDialog={setOpenJobDialog}
+                origin={origin}
             />
         </>
     )
