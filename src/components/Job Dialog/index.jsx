@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import moment from 'moment';
+import clsx from 'clsx';
 import { Timeline } from 'rsuite';
 import { Dialog, Typography, Divider, IconButton } from '@mui/material';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
@@ -107,13 +108,18 @@ const JobDialog = ({ job, setJob, setMode, setSelectedContact, open, setOpen, se
                     <div>{renderTab()}</div>
                 </div>
                 <div className="timeline">
-                    <Typography className={classes.timelineTitle} variant="h6">Timeline</Typography>
+                    <Typography className={classes.text} variant="h6">Timeline</Typography>
                     <Divider className={classes.divider} />
                     <Timeline>
                         {Object.keys(job).length > 0 && job.timeline.map((step, index) => {
                             return (
                                 <Timeline.Item key={index}>
-                                    <Typography className={[classes.text, classes.timelineTitle]} variant="subtitle1">{step.action}</Typography>
+                                    <Typography
+                                        className={clsx(classes.text, classes.timelineTitle)}
+                                        variant="subtitle2"
+                                    >
+                                        {step.action}
+                                    </Typography>
                                     {Object.keys(step.date).length === 0 ?
                                         <Typography className={classes.date} variant="caption">
                                             {moment(step.date).format('DD/MM/YYYY HH:mm:ss')}

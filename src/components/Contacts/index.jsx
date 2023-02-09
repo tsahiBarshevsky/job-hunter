@@ -36,7 +36,7 @@ const useStyles = makeStyles(() => ({
             }
         }
     }
-}))
+}));
 
 const Contacts = ({ job, setJob, setMode, setSelectedContact, setOpenJobDialog, setOpenContactDialog }) => {
     const jobs = useSelector(state => state.jobs);

@@ -33,7 +33,7 @@ const JobCard = ({ job, setJob, provided, onOpenJob, index, setOpenAlertDialog, 
         else
             duration = moment.duration(moment().diff(moment.unix(job.created.seconds)));
         if (duration.asSeconds() === 0)
-            return 'now';
+            return 'Now';
         if (duration.asSeconds() < 60)
             return `${Math.floor(duration.asSeconds())} sec`;
         if (duration.asMinutes() < 60)
@@ -98,7 +98,7 @@ const JobCard = ({ job, setJob, provided, onOpenJob, index, setOpenAlertDialog, 
             </div>
             <div className={job.url ? "date space" : "date"}>
                 <Typography variant="caption" className={classes.text}>
-                    {moment.unix(job.created.seconds).format('DD/MM/YY HH:mm')} - {renderTimePassed()}
+                    {renderTimePassed()}
                 </Typography>
                 <FiClock className="clock" />
             </div>
