@@ -4,6 +4,29 @@
     align-items: center
     justify-content: space-between
 
+.names
+    display: flex
+    align-items: center
+    justify-content: space-between
+
+    @media screen and ( max-width: 500px )
+        flex-direction: column
+
+    .wrapper
+        width: 100%
+
+    .left
+        margin-right: 7px
+
+        @media screen and ( max-width: 500px )
+            margin: 0
+
+    .right
+        margin-left: 7px
+
+        @media screen and ( max-width: 500px )
+            margin: 0
+
 .input-title
     display: flex
     flex-direction: row
@@ -11,6 +34,14 @@
     justify-content: space-between
 
 .social-media-container
-    border: 1px solid lightgrey
-    border-radius: 5px
+    border-radius: 4px
     padding: 5px 10px
+
+    .icon
+        margin-right: 10px
+
+.social-media-container-light
+    border: 1px solid #c4c4c4
+
+.social-media-container-dark
+    border: 1px solid #666666 // light

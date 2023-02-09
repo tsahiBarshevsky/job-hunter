@@ -5,19 +5,19 @@
     flex-direction: column
     width: fit-content
     height: fit-content
-    width: 50%
-    height: 190px
-    background-color: white
-    box-shadow: 0 3px 7px -1px rgba(black, 0.5)
-    border: 1px solid rgba(white, 0.05)
+    width: 100%
+    // height: 190px
     border-radius: 15px
     padding: 10px 15px
-    margin: 0 10px 10px 0
+    cursor: default
+
+    &:hover > .contact-card-header > .actions
+        visibility: visible
 
     .contact-card-header
         display: flex
         flex-direction: row
-        align-items: center
+        align-items: flex-start
         justify-content: space-between
 
         .user
@@ -27,13 +27,44 @@
             justify-content: flex-start
 
         .actions
-            background-color: pink
+            display: flex
+            flex-direction: row
+            align-items: center
+            justify-content: center
+            margin-left: 5px
+            visibility: hidden
+
+            .icon-button
+                display: flex
+                align-items: center
+                justify-content: center
+                width: 28px
+                height: 28px
+                border-radius: 8px
+                background-color: transparent
+                transition: background-color ease-in-out 0.25s
+
+            .icon-button-light
+                border: 1px solid rgba(black, 0.1)
+                background-color: rgba(black, 0.025)
+
+                &:hover
+                    background-color: rgba(black, 0.125)
+
+            .icon-button-dark
+                border: 1px solid rgba(white, 0.1)
+                background-color: rgba(white, 0.025)
+
+                &:hover
+                    background-color: rgba(white, 0.125)
+
+            .trash
+                margin-left: 5px
 
     .contact
         display: flex
         align-items: center
         justify-content: flex-start
-        background-color: pink
         margin-bottom: 5px
 
         .icon-wrapper
@@ -43,13 +74,53 @@
             width: 25px
             height: 25px
             margin-right: 5px
-            background-color: grey
 
     .social-media
         display: flex
         align-items: center
         justify-content: flex-start
-        background-color: pink
+
+        .social-link-space
+            margin-right: 10px
+
+        .social-link
+            display: flex
+            align-items: center
+            justify-content: center
+            width: 35px
+            height: 35px
+            border-radius: 8px
+            background-color: transparent
+            transition: background-color ease-in-out 0.25s
+            text-decoration: none
+
+        .social-link-light
+            color: black
+            border: 1px solid rgba(black, 0.1)
+            background-color: rgba(black, 0.025)
+
+            &:hover
+                background-color: rgba(black, 0.125)
+
+        .social-link-dark
+            color: white
+            border: 1px solid rgba(white, 0.1)
+            background-color: rgba(white, 0.025)
+
+            &:hover
+                background-color: rgba(white, 0.125)
+
+        #linkedin
+            font-size: 22px
+
+        #facebook
+            font-size: 19px
 
     .divider
         margin: 10px 0
+
+.contact-card-container-light
+    border: 2px solid rgba(black, 0.1)
+
+.contact-card-container-dark
+    border: 2px solid rgba(white, 0.1)
