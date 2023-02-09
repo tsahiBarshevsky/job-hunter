@@ -5,6 +5,7 @@ import { Dialog, Typography, Divider, IconButton } from '@mui/material';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import useStyles from './styles';
 import "rsuite/dist/rsuite.min.css";
+import './jobDialog.sass';
 
 // Components
 import Tabs from '../Tabs';
@@ -73,9 +74,9 @@ const JobDialog = ({ job, setJob, setMode, setSelectedContact, open, setOpen, se
             onClose={handleClose}
             classes={{ paper: classes.paper }}
         >
-            <div className={classes.container}>
-                <div className={classes.details}>
-                    <div className={classes.header}>
+            <div className="container">
+                <div className="job-details">
+                    <div className="header">
                         <div>
                             <Typography
                                 className={classes.text}
@@ -105,8 +106,8 @@ const JobDialog = ({ job, setJob, setMode, setSelectedContact, open, setOpen, se
                     />
                     <div>{renderTab()}</div>
                 </div>
-                <div className={classes.timelineContainer}>
-                    <Typography className={classes.text} variant="h6">Timeline</Typography>
+                <div className="timeline">
+                    <Typography className={classes.timelineTitle} variant="h6">Timeline</Typography>
                     <Divider className={classes.divider} />
                     <Timeline>
                         {Object.keys(job).length > 0 && job.timeline.map((step, index) => {
@@ -114,11 +115,11 @@ const JobDialog = ({ job, setJob, setMode, setSelectedContact, open, setOpen, se
                                 <Timeline.Item key={index}>
                                     <Typography className={[classes.text, classes.timelineTitle]} variant="subtitle1">{step.action}</Typography>
                                     {Object.keys(step.date).length === 0 ?
-                                        <Typography className={classes.text} variant="caption" color="textSecondary">
+                                        <Typography className={classes.date} variant="caption">
                                             {moment(step.date).format('DD/MM/YYYY HH:mm:ss')}
                                         </Typography>
                                         :
-                                        <Typography className={classes.text} variant="caption" color="textSecondary">
+                                        <Typography className={classes.date} variant="caption">
                                             {moment.unix(step.date.seconds).format('DD/MM/YYYY HH:mm:ss')}
                                         </Typography>
                                     }

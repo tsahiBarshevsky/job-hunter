@@ -1,0 +1,40 @@
+@import '../../styles/_variables'
+
+.container
+    display: flex
+    align-items: flex-start
+    justify-content: flex-start
+    height: 85vh
+    width: 100%
+
+    .job-details
+        width: 75%
+        height: 85vh
+        padding: 20
+        background-color: rgba(white, 0.1)
+        padding: 15px 20px
+        overflow-y: auto
+
+        @media screen and ( max-width: 800px)
+            width: 100%
+
+        .header
+            display: flex
+            align-items: baseline
+            justify-content: space-between
+            margin-bottom: 10
+
+    .timeline
+        width: 25%
+        height: 85vh
+        color: white
+        cursor: default
+        background-color: $primary-color
+        overflow-y: auto
+        overflow-x: hidden
+        padding: 15px
+        border-top-right-radius: 20px
+        border-bottom-right-radius: 20px
+
+        @media screen and ( max-width: 800px)
+            display: none

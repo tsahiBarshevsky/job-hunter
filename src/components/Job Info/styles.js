@@ -33,10 +33,21 @@ export default makeStyles(() => ({
             textTransform: 'capitalize',
             fontFamily: `'Poppins', sans-serif`,
             transition: 'all 0.25s ease-in-out',
-            color: 'white',
+            padding: '0 20px',
             '&:hover': {
+                color: 'white',
                 backgroundColor: '#1d5692'
             }
+        }
+    },
+    deleteLight: {
+        '&&': {
+            color: 'black'
+        }
+    },
+    deleteDark: {
+        '&&': {
+            color: 'white'
         }
     }
 }));

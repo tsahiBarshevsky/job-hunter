@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import moment from 'moment';
+import clsx from 'clsx';
 import { TextField, Typography, Button } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -10,6 +11,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { updateJob } from '../../store/actions/jobs';
 import { updateStat } from '../../store/actions/stats';
 import { toolbar } from '../../utils/constants';
+import { ThemeContext } from '../../utils/themeContext';
 import useStyles from './styles';
 import './jobInfo.sass';
 
@@ -18,6 +20,7 @@ import { db } from '../../utils/firebase';
 import { doc, updateDoc } from 'firebase/firestore/lite';
 
 const JobInfo = ({ job, handleClose, setOpenAlertDialog, setOrigin }) => {
+    const { theme } = useContext(ThemeContext);
     const [title, setTitle] = useState('');
     const [company, setCompany] = useState('');
     const [location, setLocation] = useState('');
@@ -213,7 +216,9 @@ const JobInfo = ({ job, handleClose, setOpenAlertDialog, setOrigin }) => {
                         />
                     </LocalizationProvider>
                 </div>
-                <Typography className={classes.text} variant="subtitle1">Description</Typography>
+                <div style={{ cursor: 'default' }}>
+                    <Typography className={classes.text} variant="subtitle1">Description</Typography>
+                </div>
                 <div className="text-editor">
                     <TextEditor
                         editor={ClassicEditor}
@@ -226,8 +231,20 @@ const JobInfo = ({ job, handleClose, setOpenAlertDialog, setOrigin }) => {
                     />
                 </div>
                 <div className="buttons">
-                    <Button disableRipple className={classes.delete} onClick={onRemoveJob}>Delete job</Button>
-                    <Button className={classes.saveChanges} type="submit" variant="contained">Save changes</Button>
+                    <Button
+                        disableRipple
+                        className={clsx(classes.delete, theme === 'light' ? classes.deleteLight : classes.deleteDark)}
+                        onClick={onRemoveJob}
+                    >
+                        Delete job
+                    </Button>
+                    <Button
+                        className={classes.saveChanges}
+                        type="submit"
+                        variant="contained"
+                    >
+                        Save changes
+                    </Button>
                 </div>
             </form>
         </div>
