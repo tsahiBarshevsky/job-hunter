@@ -4,11 +4,43 @@
     width: 100%
     height: 100%
 
-    .ck-editor__editable
-        height: 150px !important
+    .text-editor
+        display: flex
+        flex-direction: column
+        width: 100%
+        margin-bottom: 15px
+        color: black
+        font-family: 'Poppins', sans-serif
+        border: 1px solid lightgrey
+        border-radius: 4px
+        background-color: white
+        padding: 10px 0
+
+        .ck-toolbar
+            border-radius: 0 !important
+            border-top-color: lightgrey
+            border-right-color: transparent
+            border-left-color: transparent
+
+        .ck-editor__editable
+            height: 150px !important
+            border-top-color: lightgrey !important
+            border-bottom-color: transparent !important
+            border-right-color: transparent !important
+            border-left-color: transparent !important
+
+        .buttons
+            display: flex
+            align-items: center
+            justify-content: flex-end
+            padding-top: 10px
+            padding-right: 10px
 
     .notes
-        display: flex
-        align-items: center
-        justify-content: flex-start
-        flex-wrap: wrap
+        display: grid
+        grid-template-columns: repeat(2, 1fr)
+        grid-column-gap: 15px
+        grid-row-gap: 5px
+
+        @media screen and ( max-width: $xs )
+            grid-template-columns: repeat(1, 1fr)

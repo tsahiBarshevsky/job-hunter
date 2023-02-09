@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import update from 'immutability-helper';
-import { TextField, Button } from '@mui/material';
+import { TextField, Button, Divider } from '@mui/material';
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import { CKEditor as TextEditor } from '@ckeditor/ckeditor5-react';
@@ -8,11 +8,13 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { toolbar } from '../../utils/constants';
 import { addNewNote, removeNote, updateNote } from '../../store/actions/jobs';
 import NoteCard from '../Note Card';
+import useStyles from './styles';
 import './notes.sass';
 
 // Firebase
 import { db } from '../../utils/firebase';
 import { doc, updateDoc } from 'firebase/firestore/lite';
+import clsx from 'clsx';
 
 const Notes = ({ job, setJob }) => {
     const [mode, setMode] = useState('insertion');
@@ -21,6 +23,7 @@ const Notes = ({ job, setJob }) => {
     const [noteID, setNoteID] = useState('');
     const jobs = useSelector(state => state.jobs);
     const dispatch = useDispatch();
+    const classes = useStyles();
 
     const resetForm = () => {
         setTitle('');
@@ -32,12 +35,14 @@ const Notes = ({ job, setJob }) => {
         resetForm();
     }
 
-    const onAddNewNote = async () => {
+    const onAddNewNote = async (event) => {
+        event.preventDefault();
         const jobRef = doc(db, "jobs", job.id);
         const note = {
             id: uuidv4(),
             title: title,
-            text: text
+            text: text,
+            date: new Date()
         };
         try {
             const step = {
@@ -62,7 +67,8 @@ const Notes = ({ job, setJob }) => {
         }
     }
 
-    const onEditNote = async () => {
+    const onEditNote = async (event) => {
+        event.preventDefault();
         const jobRef = doc(db, "jobs", job.id);
         const note = {
             title: title,
@@ -118,31 +124,69 @@ const Notes = ({ job, setJob }) => {
 
     return (
         <div className="notes-container">
-            <TextField
-                required
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                variant="outlined"
-                autoComplete="off"
-                placeholder="Note Title"
-            // className={classes.input}
-            />
-            <TextEditor
-                editor={ClassicEditor}
-                data={text ? text : ''}
-                config={{ toolbar: toolbar, placeholder: 'Take a note...' }}
-                onChange={(event, editor) => {
-                    const data = editor.getData();
-                    setText(data);
-                }}
-            />
-            {mode === 'insertion' ?
-                <Button variant="contained" onClick={onAddNewNote}>Add note</Button>
-                :
-                <div>
-                    <Button variant="contained" onClick={onCancelEditMode}>Cancel</Button>
-                    <Button variant="contained" onClick={onEditNote}>Save changes</Button>
+            <form onSubmit={mode === 'insertion' ? onAddNewNote : onEditNote}>
+                <div className="text-editor">
+                    <TextField
+                        required
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        autoComplete="off"
+                        placeholder="Note Title"
+                        variant="standard"
+                        className={classes.input}
+                        sx={{
+                            input: {
+                                color: '#000000CC',
+                            },
+                        }}
+                        InputProps={{
+                            disableUnderline: true,
+                            classes: {
+                                input: classes.text
+                            }
+                        }}
+                    />
+                    <TextEditor
+                        editor={ClassicEditor}
+                        data={text ? text : ''}
+                        config={{ toolbar: toolbar, placeholder: 'Take a note...' }}
+                        onChange={(event, editor) => {
+                            const data = editor.getData();
+                            setText(data);
+                        }}
+                    />
+                    <div className="buttons">
+                        {mode === 'insertion' ?
+                            <Button
+                                variant="contained"
+                                type="submit"
+                                className={classes.button}
+                            >
+                                Save
+                            </Button>
+                            :
+                            <div>
+                                <Button
+                                    variant="contained"
+                                    onClick={onCancelEditMode}
+                                    className={classes.button}
+                                >
+                                    Cancel
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    onClick={onEditNote}
+                                    className={clsx(classes.button, classes.cancel)}
+                                >
+                                    Save
+                                </Button>
+                            </div>
+                        }
+                    </div>
                 </div>
+            </form>
+            {Object.keys(job.notes).length > 0 &&
+                <Divider className={classes.divider} />
             }
             <div className="notes">
                 {Object.keys(job).length > 0 &&

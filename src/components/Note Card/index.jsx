@@ -1,10 +1,24 @@
-import React from 'react';
-import { IconButton, Typography } from '@mui/material';
-import { MdEdit, MdDelete } from 'react-icons/md';
+import React, { useContext } from 'react';
 import parse from 'html-react-parser';
+import { Typography } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import { MdEdit } from 'react-icons/md';
+import { FiTrash } from 'react-icons/fi';
+import { ThemeContext } from '../../utils/themeContext';
 import './noteCard.sass';
 
+const useStyles = makeStyles(() => ({
+    text: {
+        '&&': {
+            fontFamily: `'Poppins', sans-serif`
+        }
+    }
+}));
+
 const NoteCard = ({ note, setMode, setTitle, setText, setNoteID, onRemoveNote }) => {
+    const { theme } = useContext(ThemeContext);
+    const classes = useStyles();
+
     const onSwitchToEditMode = () => {
         setMode('editing');
         setNoteID(note.id);
@@ -13,25 +27,31 @@ const NoteCard = ({ note, setMode, setTitle, setText, setNoteID, onRemoveNote })
     }
 
     return (
-        <div className="note-card-container">
+        <div className={`note-card-container note-card-container-${theme}`}>
             <div className="note-card-header">
-                <Typography variant="h6">{note.title}</Typography>
+                <Typography variant="h6" className={classes.text}>
+                    {note.title}
+                </Typography>
                 <div className="actions">
-                    <IconButton
+                    <button
                         onClick={onSwitchToEditMode}
-                        size="small"
+                        className={`icon-button icon-button-${theme}`}
                     >
                         <MdEdit />
-                    </IconButton>
-                    <IconButton
+                    </button>
+                    <button
                         onClick={() => onRemoveNote(note.id)}
-                        size="small"
+                        className={`icon-button icon-button-${theme} trash`}
                     >
-                        <MdDelete />
-                    </IconButton>
+                        <FiTrash />
+                    </button>
                 </div>
             </div>
-            <Typography>{parse(note.text)}</Typography>
+            <div className="note-card-content">
+                {/* <Typography className={classes.text}>
+                    {parse(note.text)}
+                </Typography> */}
+            </div>
         </div>
     )
 }

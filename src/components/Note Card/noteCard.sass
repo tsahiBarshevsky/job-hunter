@@ -3,18 +3,67 @@
 .note-card-container
     display: flex
     flex-direction: column
-    width: fit-content
-    height: fit-content
-    width: 33.3%
-    background-color: white
-    box-shadow: 0 3px 7px -1px rgba(black, 0.5)
-    border: 1px solid rgba(white, 0.05)
-    border-radius: 15px
-    padding: 10px 15px
+    width: 100%
+    height: 200px
+    border-radius: 12px
+    padding: 10px 0
+    // padding: 10px 15px
+    // padding: 5px 0 10px 10px
     margin: 0 10px 10px 0
+    cursor: default
+
+    &:hover > .note-card-header > .actions
+        visibility: visible
 
     .note-card-header
         display: flex
         flex-direction: row
-        align-items: center
+        align-items: flex-start
         justify-content: space-between
+        padding: 0 10px
+        margin-bottom: 10px
+
+        .actions
+            display: flex
+            flex-direction: row
+            align-items: center
+            justify-content: center
+            margin-left: 5px
+            visibility: hidden
+
+            .icon-button
+                display: flex
+                align-items: center
+                justify-content: center
+                width: 28px
+                height: 28px
+                border-radius: 8px
+                background-color: transparent
+                transition: background-color ease-in-out 0.25s
+
+            .icon-button-light
+                border: 1px solid rgba(black, 0.1)
+                background-color: rgba(black, 0.025)
+
+                &:hover
+                    background-color: rgba(black, 0.125)
+
+            .icon-button-dark
+                border: 1px solid rgba(white, 0.1)
+                background-color: rgba(white, 0.025)
+
+                &:hover
+                    background-color: rgba(white, 0.125)
+
+            .trash
+                margin-left: 5px
+
+    .note-card-content
+        padding: 0 10px
+        height: 100%
+
+.note-card-container-light
+    border: 2px solid rgba(black, 0.1)
+
+.note-card-container-dark
+    border: 2px solid rgba(white, 0.1)

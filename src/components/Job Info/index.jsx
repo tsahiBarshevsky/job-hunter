@@ -235,6 +235,7 @@ const JobInfo = ({ job, handleClose, setOpenAlertDialog, setOrigin }) => {
                         disableRipple
                         className={clsx(classes.delete, theme === 'light' ? classes.deleteLight : classes.deleteDark)}
                         onClick={onRemoveJob}
+                        variant="contained"
                     >
                         Delete job
                     </Button>
