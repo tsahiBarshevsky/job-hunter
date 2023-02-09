@@ -34,7 +34,11 @@ const Menu = ({ open, anchorEl, onSignOut, handleClose }) => {
             onClose={handleClose}
             MenuListProps={{ 'aria-labelledby': 'basic-button' }}
             PaperProps={{
-                style: { width: 185, borderRadius: 10, transform: 'translateY(-35%)' }
+                style: {
+                    width: 185,
+                    borderRadius: 10,
+                    transform: 'translateY(-50%)'
+                }
             }}
         >
             <MenuItem onClick={onSignOut}>

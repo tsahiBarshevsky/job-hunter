@@ -98,7 +98,7 @@ const JobCard = ({ job, setJob, provided, onOpenJob, index, setOpenAlertDialog, 
             </div>
             <div className={job.url ? "date space" : "date"}>
                 <Typography variant="caption" className={classes.text}>
-                    {renderTimePassed()}
+                    {moment.unix(job.created.seconds).format('DD/MM/YY HH:mm')} - {renderTimePassed()}
                 </Typography>
                 <FiClock className="clock" />
             </div>

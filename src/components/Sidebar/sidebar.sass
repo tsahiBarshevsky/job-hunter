@@ -99,6 +99,45 @@
             color: #98c1fa
             background-color: #043a7152
 
+        .options
+            display: flex
+            align-items: center
+            justify-content: space-between
+            width: 90%
+            border-radius: 10px
+            text-transform: capitalize
+            margin-bottom: 10px
+
+            .wrapper
+                display: flex
+                flex-direction: row
+                align-items: center
+                justify-content: flex-start
+                width: fit-content
+                overflow: hidden
+                text-overflow: ellipsis
+                margin-right: 7px
+
+                .user-image
+                    width: 25px
+                    height: 25px
+                    border-radius: 7px
+                    margin-right: 10px
+
+        .options-light
+            color: black
+            border: 1px solid rgba(black, 0.2)
+
+            &:hover
+                background-color: rgba(black, 0.1)
+
+        .options-dark
+            color: white
+            border: 1px solid rgba(white, 0.2)
+
+            &:hover
+                background-color: rgba(white, 0.2)
+
     .mobile-links
         display: none
 

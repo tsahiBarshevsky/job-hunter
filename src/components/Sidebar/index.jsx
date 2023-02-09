@@ -1,8 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Typography, Button } from '@mui/material';
-import { MdDashboard, MdMenu } from 'react-icons/md';
+import { MdDashboard } from 'react-icons/md';
 import { IoStatsChart } from 'react-icons/io5';
+import { IoMdSettings } from 'react-icons/io';
 import { FiLogOut } from 'react-icons/fi';
 import { BsSunFill, BsFillMoonFill } from 'react-icons/bs';
 import { useAuth } from '../../utils/context';
@@ -47,11 +48,11 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
                     <Typography className={classes.logo}>Job</Typography>
                     <Typography className={classes.logo}>Hunter</Typography>
                 </div>
-                {user.photoURL &&
+                {/* {user.photoURL &&
                     <div className={`image-wrapper image-wrapper-${theme}`}>
                         <img src={user.photoURL} alt={user.displayName} className="user-image" />
                     </div>
-                }
+                } */}
                 <ul className="links">
                     <li
                         onClick={() => setActiveTab('tab1')}
@@ -77,24 +78,25 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
                     aria-expanded={open ? 'true' : undefined}
                     onClick={handleClick}
                     disableRipple
-                    className={`link link-${theme}`}
+                    className={`options options-${theme}`}
                 >
-                    <MdMenu className="icon" />
-                    <Typography className={classes.text}>Options</Typography>
+                    <div className="wrapper">
+                        <img
+                            src={user.photoURL}
+                            alt={user.displayName}
+                            className="user-image"
+                        />
+                        <Typography
+                            className={classes.text}
+                            variant="caption"
+                            noWrap
+                        >
+                            {user.displayName}
+                        </Typography>
+                    </div>
+                    <IoMdSettings />
                 </Button>
             </div>
-            {/* <ul className="links">
-                <li
-                    className={`link link-${theme}`}
-                    onClick={handleClick}
-                    aria-controls={open ? 'basic-menu' : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? 'true' : undefined}
-                >
-                    <MdMenu className="icon" />
-                    <Typography className={classes.text}>Options</Typography>
-                </li>
-            </ul> */}
             <Menu
                 open={open}
                 anchorEl={anchorEl}
