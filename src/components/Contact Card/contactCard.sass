@@ -8,7 +8,7 @@
     width: 100%
     height: 231px
     border-radius: 15px
-    padding: 10px 15px
+    padding: 10px 0 5px
     cursor: default
 
     &:hover > .contact-card-header > .actions
@@ -19,6 +19,7 @@
         flex-direction: row
         align-items: flex-start
         justify-content: space-between
+        padding: 0 10px
 
         .user
             display: flex
@@ -61,63 +62,67 @@
             .trash
                 margin-left: 5px
 
-    .contact
-        display: flex
-        align-items: center
-        justify-content: flex-start
-        margin-bottom: 5px
+    .contact-card-content
+        padding: 0 10px
+        height: 100%
 
-        .icon-wrapper
+        .contact
             display: flex
             align-items: center
-            justify-content: center
-            width: 25px
-            height: 25px
-            margin-right: 5px
+            justify-content: flex-start
+            margin-bottom: 5px
 
-    .social-media
-        display: flex
-        align-items: center
-        justify-content: flex-start
+            .icon-wrapper
+                display: flex
+                align-items: center
+                justify-content: center
+                width: 25px
+                height: 25px
+                margin-right: 5px
 
-        .social-link-space
-            margin-right: 10px
-
-        .social-link
+        .social-media
             display: flex
             align-items: center
-            justify-content: center
-            width: 35px
-            height: 35px
-            border-radius: 8px
-            background-color: transparent
-            transition: background-color ease-in-out 0.25s
-            text-decoration: none
+            justify-content: flex-start
 
-        .social-link-light
-            color: black
-            border: 1px solid rgba(black, 0.1)
-            background-color: rgba(black, 0.025)
+            .social-link-space
+                margin-right: 10px
 
-            &:hover
-                background-color: rgba(black, 0.125)
+            .social-link
+                display: flex
+                align-items: center
+                justify-content: center
+                width: 35px
+                height: 35px
+                border-radius: 8px
+                background-color: transparent
+                transition: background-color ease-in-out 0.25s
+                text-decoration: none
 
-        .social-link-dark
-            color: white
-            border: 1px solid rgba(white, 0.1)
-            background-color: rgba(white, 0.025)
+            .social-link-light
+                color: black
+                border: 1px solid rgba(black, 0.1)
+                background-color: rgba(black, 0.025)
 
-            &:hover
-                background-color: rgba(white, 0.125)
+                &:hover
+                    background-color: rgba(black, 0.125)
 
-        #linkedin
-            font-size: 22px
+            .social-link-dark
+                color: white
+                border: 1px solid rgba(white, 0.1)
+                background-color: rgba(white, 0.025)
 
-        #facebook
-            font-size: 19px
+                &:hover
+                    background-color: rgba(white, 0.125)
 
-    .divider
-        margin: 10px 0
+            #linkedin
+                font-size: 22px
+
+            #facebook
+                font-size: 19px
+
+        .divider
+            margin: 10px 0
 
 .contact-card-container-light
     border: 2px solid rgba(black, 0.1)

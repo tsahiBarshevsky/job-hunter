@@ -43,29 +43,35 @@ export default makeStyles(() => ({
             backgroundColor: '#1d5692',
             textTransform: 'capitalize',
             transition: '0.5s ease-out',
-            fontFamily: `'Poppins', sans-serif`
+            fontFamily: `'Poppins', sans-serif`,
+            '&:hover': {
+                backgroundColor: '#1d5692CC'
+            }
         },
-        '&:hover': {
-            backgroundColor: '#1d5692CC'
-        }
     },
     chip: {
         '&&': {
-            // color: 'white',
             textTransform: 'capitalize',
             fontFamily: `'Poppins', sans-serif`,
         }
     },
     unselected: {
         '&&': {
-            border: '1px solid #1d5692'
+            backgroundColor: 'transparent',
+            border: '1px solid #1d5692',
+            '&:hover': {
+                backgroundColor: '#1d5692CC'
+            }
         }
     },
     selected: {
         '&&': {
             color: 'white',
             border: '1px solid #1d5692',
-            backgroundColor: '#1d5692'
+            backgroundColor: '#1d5692',
+            '&:hover': {
+                backgroundColor: '#1d5692CC'
+            }
         }
     }
 }));

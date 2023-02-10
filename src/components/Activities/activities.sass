@@ -24,15 +24,11 @@
         align-items: center
         justify-content: flex-end
 
-    #activites
-        border-collapse: collapse
-        width: 100%
+    .activites
+        display: grid
+        grid-template-columns: repeat(2, 1fr)
+        grid-column-gap: 15px
+        grid-row-gap: 10px
 
-    .activity-item
-        display: flex
-        align-items: center
-        justify-content: space-between
-
-        .activity-temp
-            background-color: pink
-            width: 100%
+        @media screen and ( max-width: $xs )
+            grid-template-columns: repeat(1, 1fr)

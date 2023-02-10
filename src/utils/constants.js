@@ -9,17 +9,17 @@ const statuses = [
 ];
 
 const categories = [
-    { id: 0, category: 'got a phone' },
-    { id: 1, category: 'phone interview' },
-    { id: 2, category: 'online interview' },
-    { id: 3, category: 'frontal interview' },
-    { id: 4, category: 'team leader interview' },
-    { id: 5, category: 'CEO interview' },
-    { id: 6, category: 'home test' },
-    { id: 7, category: 'office test' },
-    { id: 8, category: 'accept offer' },
-    { id: 9, category: 'decline offer' },
-    { id: 10, category: 'candidacy removal' }
+    { id: 0, category: 'got a phone', color: '#0d47a1' },
+    { id: 1, category: 'phone interview', color: '#0d47a1' },
+    { id: 2, category: 'online interview', color: '#0d47a1' },
+    { id: 3, category: 'frontal interview', color: '#0d47a1' },
+    { id: 4, category: 'team leader interview', color: '#0d47a1' },
+    { id: 5, category: 'CEO interview', color: '#0d47a1' },
+    { id: 6, category: 'home test', color: '#1b5e20' },
+    { id: 7, category: 'office test', color: '#1b5e20' },
+    { id: 8, category: 'accept offer', color: '#e65100' },
+    { id: 9, category: 'decline offer', color: '#e65100' },
+    { id: 10, category: 'candidacy removal', color: '#e65100' }
 ];
 
 const toolbar = ['bold', 'italic', '|', 'link', 'bulletedList', 'numberedList', '|', 'undo', 'redo'];

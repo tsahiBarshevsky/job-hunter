@@ -64,52 +64,54 @@ const ContactCard = ({ contact, company, onRemoveContact, onOpenContactDialog })
                     </button>
                 </div>
             </div>
-            <Divider className="divider" />
-            <div className="contact">
-                <div className="icon-wrapper">
-                    <FaSuitcase size={16} />
-                </div>
-                <Typography className={classes.text}>{contact.role}</Typography>
-            </div>
-            <div className="contact">
-                <div className="icon-wrapper">
-                    <BsTelephoneFill size={16} />
-                </div>
-                <Typography className={classes.text}>{contact.phone ? contact.phone : "None"}</Typography>
-            </div>
-            <div className="contact">
-                <div className="icon-wrapper">
-                    <HiMail size={20} />
-                </div>
-                <Typography className={classes.text}>{contact.email ? contact.email : "None"}</Typography>
-            </div>
-            {(contact.linkedin || contact.facebook) &&
-                <div>
-                    <Divider className="divider" />
-                    <div className="social-media">
-                        {contact.linkedin &&
-                            <a
-                                className={`social-link social-link-space social-link-${theme}`}
-                                href={contact.linkedin}
-                                target="_blank"
-                                rel="noreferrer"
-                            >
-                                <FaLinkedinIn id="linkedin" />
-                            </a>
-                        }
-                        {contact.facebook &&
-                            <a
-                                className={`social-link social-link-${theme}`}
-                                href={contact.facebook}
-                                target="_blank"
-                                rel="noreferrer"
-                            >
-                                <FaFacebookF id="facebook" />
-                            </a>
-                        }
+            <div className="contact-card-content">
+                <Divider className="divider" />
+                <div className="contact">
+                    <div className="icon-wrapper">
+                        <FaSuitcase size={16} />
                     </div>
+                    <Typography className={classes.text}>{contact.role}</Typography>
                 </div>
-            }
+                <div className="contact">
+                    <div className="icon-wrapper">
+                        <BsTelephoneFill size={16} />
+                    </div>
+                    <Typography className={classes.text}>{contact.phone ? contact.phone : "None"}</Typography>
+                </div>
+                <div className="contact">
+                    <div className="icon-wrapper">
+                        <HiMail size={20} />
+                    </div>
+                    <Typography className={classes.text}>{contact.email ? contact.email : "None"}</Typography>
+                </div>
+                {(contact.linkedin || contact.facebook) &&
+                    <div>
+                        <Divider className="divider" />
+                        <div className="social-media">
+                            {contact.linkedin &&
+                                <a
+                                    className={`social-link social-link-space social-link-${theme}`}
+                                    href={contact.linkedin}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >
+                                    <FaLinkedinIn id="linkedin" />
+                                </a>
+                            }
+                            {contact.facebook &&
+                                <a
+                                    className={`social-link social-link-${theme}`}
+                                    href={contact.facebook}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >
+                                    <FaFacebookF id="facebook" />
+                                </a>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
     )
 }

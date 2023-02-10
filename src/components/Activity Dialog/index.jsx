@@ -37,7 +37,7 @@ const ActivityDialog = ({ open, setOpen, job, setJob, setOpenJobDialog }) => {
     const { theme } = useContext(ThemeContext);
     const jobs = useSelector(state => state.jobs);
     const [title, setTitle] = useState('');
-    const [category, setCategory] = useState(categories[0].category);
+    const [category, setCategory] = useState(0);
     const [startDate, setStartDate] = useState(moment());
     const [endDate, setEndDate] = useState(null);
     const [isCompleted, setIsCompleted] = useState(false);
@@ -46,7 +46,7 @@ const ActivityDialog = ({ open, setOpen, job, setJob, setOpenJobDialog }) => {
 
     const resetForm = () => {
         setTitle('');
-        setCategory(categories[0].category);
+        setCategory(0);
         setIsCompleted(false);
         setTimeout(() => {
             setEndDate(null);
@@ -137,7 +137,7 @@ const ActivityDialog = ({ open, setOpen, job, setJob, setOpenJobDialog }) => {
                         variant="outlined"
                         className={classes.input}
                         autoComplete="off"
-                        placeholder="Title"
+                        placeholder="Activity title"
                         InputProps={{
                             classes: {
                                 input: classes.text
@@ -149,14 +149,14 @@ const ActivityDialog = ({ open, setOpen, job, setJob, setOpenJobDialog }) => {
                         <Typography className={classes.text} variant="caption">Required</Typography>
                     </div>
                     <Stack sx={{ flexWrap: 'wrap', gap: 1 }} direction="row" alignItems="start">
-                        {categories.map((item) => {
+                        {categories.map((item, index) => {
                             return (
                                 <Chip
                                     key={item.id}
                                     label={item.category}
-                                    variant={item.category === category ? 'filled' : 'outlined'}
-                                    onClick={() => setCategory(item.category)}
-                                    className={clsx(classes.chip, item.category === category ? classes.selected : classes.unselected)}
+                                    variant="filled"
+                                    onClick={() => setCategory(index)}
+                                    className={clsx(classes.chip, index === category ? classes.selected : classes.unselected)}
                                 />
                             )
                         })}

@@ -1,0 +1,69 @@
+@import '../../styles/_variables'
+
+.activity-card-container
+    display: flex
+    flex-direction: column
+    width: fit-content
+    height: fit-content
+    width: 100%
+    min-height: 140px
+    border-radius: 15px
+    padding: 10px 0 5px
+    cursor: default
+
+    &:hover > .activity-card-header > .icon-button
+        visibility: visible
+
+    .activity-card-header
+        display: flex
+        flex-direction: row
+        align-items: flex-start
+        justify-content: space-between
+        padding: 0 10px
+        margin-bottom: 15px
+
+        .type
+            display: flex
+            flex-direction: row
+            align-items: center
+            justify-content: flex-start
+
+        .icon-button
+            display: flex
+            align-items: center
+            justify-content: center
+            width: 28px
+            height: 28px
+            border-radius: 8px
+            background-color: transparent
+            transition: background-color ease-in-out 0.25s
+            visibility: hidden
+
+        .icon-button-light
+            border: 1px solid rgba(black, 0.1)
+            background-color: rgba(black, 0.025)
+
+            &:hover
+                background-color: rgba(black, 0.125)
+
+        .icon-button-dark
+            border: 1px solid rgba(white, 0.1)
+            background-color: rgba(white, 0.025)
+
+            &:hover
+                background-color: rgba(white, 0.125)
+
+    .activity-card-content
+        padding: 0 10px
+        height: 100%
+
+    .date
+        display: flex
+        align-items: flex-end
+        justify-content: baseline
+
+.activity-card-container-light
+    border: 2px solid rgba(black, 0.1)
+
+.activity-card-container-dark
+    border: 2px solid rgba(white, 0.1)
