@@ -41,14 +41,14 @@ const Tabs = ({ activeTab, setActiveTab, job }) => {
             <ul className="tabs-links">
                 <li
                     onClick={() => onChangeTab('tab1')}
-                    className={activeTab === 'tab1' ? "active" : undefined}
+                    className={activeTab === 'tab1' ? "tab-link active" : "tab-link"}
                 >
                     <GoInfo size={22} />
                     <Typography className={classes.text} variant="subtitle2">Job Info</Typography>
                 </li>
                 <li
                     onClick={() => onChangeTab('tab2')}
-                    className={activeTab === 'tab2' ? "active" : undefined}
+                    className={activeTab === 'tab2' ? "tab-link active" : "tab-link"}
                 >
                     <StyledBadge badgeContent={activites} max={9}>
                         <GoListUnordered size={20} />
@@ -57,7 +57,7 @@ const Tabs = ({ activeTab, setActiveTab, job }) => {
                 </li>
                 <li
                     onClick={() => onChangeTab('tab3')}
-                    className={activeTab === 'tab3' ? "active" : undefined}
+                    className={activeTab === 'tab3' ? "tab-link active" : "tab-link"}
                 >
                     <StyledBadge badgeContent={notes} max={9}>
                         <SlNotebook size={20} />
@@ -66,11 +66,43 @@ const Tabs = ({ activeTab, setActiveTab, job }) => {
                 </li>
                 <li
                     onClick={() => onChangeTab('tab4')}
-                    className={activeTab === 'tab4' ? "active" : undefined}
+                    className={activeTab === 'tab4' ? "tab-link active" : "tab-link"}
                 >
                     <StyledBadge badgeContent={contacts} max={9}>
                         <FiUsers size={20} />
                         <Typography className={classes.text} variant="subtitle2">Contacts</Typography>
+                    </StyledBadge>
+                </li>
+            </ul>
+            <ul className="tabs-mobile-links">
+                <li
+                    onClick={() => onChangeTab('tab1')}
+                    className={activeTab === 'tab1' ? "tab-mobile-link active" : "tab-mobile-link"}
+                >
+                    <GoInfo size={22} />
+                </li>
+                <li
+                    onClick={() => onChangeTab('tab2')}
+                    className={activeTab === 'tab2' ? "tab-mobile-link active" : "tab-mobile-link"}
+                >
+                    <StyledBadge badgeContent={activites} max={9}>
+                        <GoListUnordered size={20} />
+                    </StyledBadge>
+                </li>
+                <li
+                    onClick={() => onChangeTab('tab3')}
+                    className={activeTab === 'tab3' ? "tab-mobile-link active" : "tab-mobile-link"}
+                >
+                    <StyledBadge badgeContent={notes} max={9}>
+                        <SlNotebook size={20} />
+                    </StyledBadge>
+                </li>
+                <li
+                    onClick={() => onChangeTab('tab4')}
+                    className={activeTab === 'tab4' ? "tab-mobile-link active" : "tab-mobile-link"}
+                >
+                    <StyledBadge badgeContent={contacts} max={9}>
+                        <FiUsers size={20} />
                     </StyledBadge>
                 </li>
             </ul>

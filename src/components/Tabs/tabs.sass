@@ -13,11 +13,9 @@
         padding: 0
 
         @media screen and ( max-width: $xs )
-            flex-direction: column
-            align-items: flex-start
-            justify-content: center
+            display: none
 
-        li
+        .tab-link
             display: flex
             align-items: center
             justify-content: flex-start
@@ -30,9 +28,31 @@
             transition: all 0.5s
             border-bottom: 2px solid transparent
 
-            @media screen and ( max-width: $xs )
-                width: 50%
-                margin-bottom: 10px
+        .tab-link.active
+            border-bottom: 2px solid $primary-color
 
-        li.active
+    .tabs-mobile-links
+        display: none
+
+        @media screen and ( max-width: $sm )
+            display: flex
+            justify-content: center
+            align-items: center
+            width: 100%
+            margin: 0
+            padding: 0
+
+        .tab-mobile-link
+            display: flex
+            flex-direction: column
+            justify-content: center
+            align-items: center
+            width: 100%
+            list-style: none
+            padding: 10px 0
+            cursor: pointer
+            transition: all 0.5s
+            border-bottom: 2px solid transparent
+
+        .tab-mobile-link.active
             border-bottom: 2px solid $primary-color
