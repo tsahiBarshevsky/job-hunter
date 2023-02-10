@@ -216,30 +216,32 @@ const Jobs = ({ setJob, setOpenInsertionDialog, setOpenJobDialog, setOpenAlertDi
                                                         )
                                                 }}
                                             >
-                                                {column.items.map((item, index) => {
-                                                    return (
-                                                        <Draggable
-                                                            key={item.id}
-                                                            draggableId={item.id}
-                                                            index={index}
-                                                        >
-                                                            {(provided, snapshot) => {
-                                                                return (
-                                                                    <JobCard
-                                                                        job={item}
-                                                                        setJob={setJob}
-                                                                        provided={provided}
-                                                                        onOpenJob={onOpenJob}
-                                                                        index={index}
-                                                                        setOpenAlertDialog={setOpenAlertDialog}
-                                                                        setOrigin={setOrigin}
-                                                                    />
-                                                                );
-                                                            }}
-                                                        </Draggable>
-                                                    );
-                                                })}
-                                                {provided.placeholder}
+                                                <div className="scrollable">
+                                                    {column.items.map((item, index) => {
+                                                        return (
+                                                            <Draggable
+                                                                key={item.id}
+                                                                draggableId={item.id}
+                                                                index={index}
+                                                            >
+                                                                {(provided, snapshot) => {
+                                                                    return (
+                                                                        <JobCard
+                                                                            job={item}
+                                                                            setJob={setJob}
+                                                                            provided={provided}
+                                                                            onOpenJob={onOpenJob}
+                                                                            index={index}
+                                                                            setOpenAlertDialog={setOpenAlertDialog}
+                                                                            setOrigin={setOrigin}
+                                                                        />
+                                                                    );
+                                                                }}
+                                                            </Draggable>
+                                                        );
+                                                    })}
+                                                    {provided.placeholder}
+                                                </div>
                                             </div>
                                         );
                                     }}

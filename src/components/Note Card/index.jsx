@@ -49,9 +49,9 @@ const NoteCard = ({ note, setMode, setTitle, setText, setNoteID, onRemoveNote })
                 </div>
             </div>
             <div className="note-card-content">
-                {/* <Typography className={classes.text}>
+                <Typography className={classes.text}>
                     {parse(note.text)}
-                </Typography> */}
+                </Typography>
             </div>
             <div className="note-card-date">
                 {Object.keys(note.date).length === 0 ?
@@ -60,14 +60,15 @@ const NoteCard = ({ note, setMode, setTitle, setText, setNoteID, onRemoveNote })
                         className={classes.text}
                         variant="caption"
                     >
-                        {moment(note.date).format('D/M/YY HH:mm:ss')}
+                        {moment(note.date).format('DD/MM/YY HH:mm:ss')}
                     </Typography>
                     :
                     <Typography
                         color="textSecondary"
                         className={classes.text}
-                        variant="caption">
-                        {moment.unix(note.date.seconds).format('D/M/YY HH:mm:ss')}
+                        variant="caption"
+                    >
+                        {moment.unix(note.date.seconds).format('DD/MM/YY HH:mm:ss')}
                     </Typography>
                 }
             </div>

@@ -15,8 +15,8 @@
 
     .jobs-header
         display: flex
-        justify-content: space-between
         align-items: flex-start
+        justify-content: space-between
         width: 100%
         padding: 15px 0
         cursor: default
@@ -74,15 +74,19 @@
                         justify-content: center
 
             .droppable
-                padding: 15px
+                padding-bottom: 15px
                 width: 300px
-                overflow-y: auto
                 height: calc( 100vh - 160px )
                 border-bottom-left-radius: 15px
                 border-bottom-right-radius: 15px
 
                 @media screen and ( max-width: $sm )
                     height: calc( 100vh - 210px )
+
+                .scrollable
+                    height: 100%
+                    padding: 15px 15px 0
+                    overflow-y: auto
 
             .droppable-light
                 border-left: 2px solid rgba(black, 0.25)

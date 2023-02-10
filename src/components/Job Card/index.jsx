@@ -59,7 +59,7 @@ const JobCard = ({ job, setJob, provided, onOpenJob, index, setOpenAlertDialog, 
             {...provided.dragHandleProps}
             className={
                 (length - 1) === index ?
-                    `job-card-container job-card-container-${theme}`
+                    `job-card-container job-card-container-${theme} job-card-container-margin-small`
                     :
                     `job-card-container job-card-container-${theme} job-card-container-margin`
             }
