@@ -19,6 +19,7 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 // Firebase
 import { db } from '../../utils/firebase';
 import { doc, setDoc } from 'firebase/firestore/lite';
+import clsx from 'clsx';
 
 const InsertionDialog = ({ open, setOpen }) => {
     const { user } = useAuth();
@@ -30,8 +31,10 @@ const InsertionDialog = ({ open, setOpen }) => {
 
     const handleClose = () => {
         setOpen(false);
-        setTitle('');
-        setCompany('');
+        setTimeout(() => {
+            setTitle('');
+            setCompany('');
+        }, 100);
     }
 
     const handleStatusChange = (event) => {
@@ -101,7 +104,7 @@ const InsertionDialog = ({ open, setOpen }) => {
         >
             <DialogTitle className={classes.title}>
                 <div className="title-items">
-                    <Typography variant="h6">Add New Job</Typography>
+                    <Typography className={classes.text} variant="h6">Add New Job</Typography>
                     <IconButton
                         onClick={handleClose}
                         size="small"
@@ -114,8 +117,8 @@ const InsertionDialog = ({ open, setOpen }) => {
             <DialogContent>
                 <form onSubmit={onAddNewJob}>
                     <div className="input-title">
-                        <Typography variant="subtitle1">Job Title</Typography>
-                        <Typography variant="caption">Required</Typography>
+                        <Typography className={classes.text} variant="subtitle1">Job Title</Typography>
+                        <Typography className={classes.text} variant="caption">Required</Typography>
                     </div>
                     <TextField
                         required
@@ -126,10 +129,15 @@ const InsertionDialog = ({ open, setOpen }) => {
                         className={classes.input}
                         autoComplete="off"
                         placeholder="Job Title"
+                        InputProps={{
+                            classes: {
+                                input: classes.text
+                            }
+                        }}
                     />
                     <div className="input-title">
-                        <Typography variant="subtitle1">Company</Typography>
-                        <Typography variant="caption">Required</Typography>
+                        <Typography className={classes.text} variant="subtitle1">Company</Typography>
+                        <Typography className={classes.text} variant="caption">Required</Typography>
                     </div>
                     <TextField
                         required
@@ -139,10 +147,15 @@ const InsertionDialog = ({ open, setOpen }) => {
                         className={classes.input}
                         autoComplete="off"
                         placeholder="Company"
+                        InputProps={{
+                            classes: {
+                                input: classes.text
+                            }
+                        }}
                     />
                     <div className="input-title">
-                        <Typography variant="subtitle1">Job Status</Typography>
-                        <Typography variant="caption">Required</Typography>
+                        <Typography className={classes.text} variant="subtitle1">Job Status</Typography>
+                        <Typography className={classes.text} variant="caption">Required</Typography>
                     </div>
                     <FormControl
                         variant="outlined"
@@ -152,12 +165,16 @@ const InsertionDialog = ({ open, setOpen }) => {
                             required
                             value={status}
                             onChange={handleStatusChange}
+                            inputProps={{
+                                className: classes.text
+                            }}
                         >
                             {statuses.map((status) => {
                                 return (
                                     <MenuItem
                                         key={status.id}
                                         value={status.name}
+                                        className={classes.text}
                                     >
                                         {status.name}
                                     </MenuItem>
@@ -168,8 +185,8 @@ const InsertionDialog = ({ open, setOpen }) => {
                     <Button
                         type="submit"
                         variant="contained"
-                        className={classes.button}
                         disabled={title === '' || company === ''}
+                        className={clsx(classes.button, title !== '' && company !== '' && classes.buttonColor)}
                     >
                         Save Job
                     </Button>

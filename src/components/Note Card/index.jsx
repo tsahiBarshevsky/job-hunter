@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import parse from 'html-react-parser';
+import moment from 'moment';
 import { Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { MdEdit } from 'react-icons/md';
@@ -51,6 +52,24 @@ const NoteCard = ({ note, setMode, setTitle, setText, setNoteID, onRemoveNote })
                 {/* <Typography className={classes.text}>
                     {parse(note.text)}
                 </Typography> */}
+            </div>
+            <div className="note-card-date">
+                {Object.keys(note.date).length === 0 ?
+                    <Typography
+                        color="textSecondary"
+                        className={classes.text}
+                        variant="caption"
+                    >
+                        {moment(note.date).format('D/M/YY HH:mm:ss')}
+                    </Typography>
+                    :
+                    <Typography
+                        color="textSecondary"
+                        className={classes.text}
+                        variant="caption">
+                        {moment.unix(note.date.seconds).format('D/M/YY HH:mm:ss')}
+                    </Typography>
+                }
             </div>
         </div>
     )
