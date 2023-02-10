@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import moment from 'moment';
 import update from 'immutability-helper';
+import clsx from 'clsx';
 import { v4 as uuidv4 } from 'uuid';
 import { useSelector, useDispatch } from 'react-redux';
 import { categories } from '../../utils/constants';
 import { addNewActivity, addStepToTimeline } from '../../store/actions/jobs';
+import { ThemeContext } from '../../utils/themeContext';
 import useStyles from './styles';
+import './activityDialog.sass';
 
 // Mui components
 import {
@@ -31,6 +34,7 @@ import { db } from '../../utils/firebase';
 import { doc, updateDoc } from 'firebase/firestore/lite';
 
 const ActivityDialog = ({ open, setOpen, job, setJob, setOpenJobDialog }) => {
+    const { theme } = useContext(ThemeContext);
     const jobs = useSelector(state => state.jobs);
     const [title, setTitle] = useState('');
     const [category, setCategory] = useState(categories[0].category);
@@ -57,36 +61,40 @@ const ActivityDialog = ({ open, setOpen, job, setJob, setOpenJobDialog }) => {
 
     const onAddNewActivity = async (event) => {
         event.preventDefault();
-        const jobRef = doc(db, "jobs", job.id);
-        const activity = {
-            id: uuidv4(),
-            title: title,
-            category: category,
-            startDate: new Date(startDate),
-            endDate: endDate ? new Date(endDate) : null,
-            completed: isCompleted
-        };
-        try {
-            const step = {
-                action: 'Activity added',
-                date: new Date()
+        if (moment(endDate).isBefore(moment(startDate)))
+            alert('end before start');
+        else {
+            const jobRef = doc(db, "jobs", job.id);
+            const activity = {
+                id: uuidv4(),
+                title: title,
+                category: category,
+                startDate: new Date(startDate),
+                endDate: endDate ? new Date(endDate) : null,
+                completed: isCompleted
             };
-            const index = jobs[job.status].items.findIndex((item) => item.id === job.id);
-            const updatedJob = update(job, {
-                activites: { $push: [activity] },
-                timeline: { $push: [step] }
-            });
-            await updateDoc(jobRef, {
-                activites: updatedJob.activites,
-                timeline: updatedJob.timeline
-            });
-            dispatch(addNewActivity(job.status, index, activity));
-            dispatch(addStepToTimeline(job.status, index, step));
-            setJob(updatedJob);
-            handleClose();
-        }
-        catch (error) {
-            console.log(error.message);
+            try {
+                const step = {
+                    action: 'Activity added',
+                    date: new Date()
+                };
+                const index = jobs[job.status].items.findIndex((item) => item.id === job.id);
+                const updatedJob = update(job, {
+                    activites: { $push: [activity] },
+                    timeline: { $push: [step] }
+                });
+                await updateDoc(jobRef, {
+                    activites: updatedJob.activites,
+                    timeline: updatedJob.timeline
+                });
+                dispatch(addNewActivity(job.status, index, activity));
+                dispatch(addStepToTimeline(job.status, index, step));
+                setJob(updatedJob);
+                handleClose();
+            }
+            catch (error) {
+                console.log(error.message);
+            }
         }
     }
 
@@ -105,7 +113,7 @@ const ActivityDialog = ({ open, setOpen, job, setJob, setOpenJobDialog }) => {
         >
             <DialogTitle>
                 <div className="title-items">
-                    <Typography variant="h6">New log activity</Typography>
+                    <Typography className={classes.text} variant="h6">New log activity</Typography>
                     <IconButton
                         onClick={handleClose}
                         size="small"
@@ -118,8 +126,8 @@ const ActivityDialog = ({ open, setOpen, job, setJob, setOpenJobDialog }) => {
             <DialogContent>
                 <form onSubmit={onAddNewActivity}>
                     <div className="input-title">
-                        <Typography variant="subtitle1">Title</Typography>
-                        <Typography variant="caption">Required</Typography>
+                        <Typography className={classes.text} variant="subtitle1">Title</Typography>
+                        <Typography className={classes.text} variant="caption">Required</Typography>
                     </div>
                     <TextField
                         required
@@ -130,10 +138,15 @@ const ActivityDialog = ({ open, setOpen, job, setJob, setOpenJobDialog }) => {
                         className={classes.input}
                         autoComplete="off"
                         placeholder="Title"
+                        InputProps={{
+                            classes: {
+                                input: classes.text
+                            }
+                        }}
                     />
                     <div className="input-title">
-                        <Typography variant="subtitle1">Category</Typography>
-                        <Typography variant="caption">Required</Typography>
+                        <Typography className={classes.text} variant="subtitle1">Category</Typography>
+                        <Typography className={classes.text} variant="caption">Required</Typography>
                     </div>
                     <Stack sx={{ flexWrap: 'wrap', gap: 1 }} direction="row" alignItems="start">
                         {categories.map((item) => {
@@ -143,66 +156,96 @@ const ActivityDialog = ({ open, setOpen, job, setJob, setOpenJobDialog }) => {
                                     label={item.category}
                                     variant={item.category === category ? 'filled' : 'outlined'}
                                     onClick={() => setCategory(item.category)}
+                                    className={clsx(classes.chip, item.category === category ? classes.selected : classes.unselected)}
                                 />
                             )
                         })}
                     </Stack>
-                    <div className="input-title">
-                        <Typography variant="subtitle1">Start date</Typography>
+                    <div className="dates">
+                        <div className="wrapper left">
+                            <div className="input-title">
+                                <Typography className={classes.text} variant="subtitle1">Start date</Typography>
+                            </div>
+                            <LocalizationProvider dateAdapter={AdapterMoment}>
+                                <DateTimePicker
+                                    value={startDate}
+                                    inputFormat="DD/MM/YYYY HH:mm"
+                                    ampm={false}
+                                    onChange={(value) => setStartDate(moment(value))}
+                                    InputProps={{
+                                        classes: {
+                                            input: classes.text
+                                        }
+                                    }}
+                                    renderInput={(params) => {
+                                        return (
+                                            <TextField
+                                                {...params}
+                                                inputProps={{
+                                                    ...params.inputProps,
+                                                    placeholder: "DD/MM/YYYY HH:mm"
+                                                }}
+                                            />
+                                        )
+                                    }}
+                                />
+                            </LocalizationProvider>
+                        </div>
+                        <div className="wrapper right">
+                            <div className="input-title">
+                                <Typography className={classes.text} variant="subtitle1">End date</Typography>
+                            </div>
+                            <LocalizationProvider dateAdapter={AdapterMoment}>
+                                <DateTimePicker
+                                    value={endDate}
+                                    inputFormat="DD/MM/YYYY HH:mm"
+                                    minDate={startDate}
+                                    ampm={false}
+                                    onChange={(value) => setEndDate(moment(value))}
+                                    InputProps={{
+                                        classes: {
+                                            input: classes.text
+                                        }
+                                    }}
+                                    renderInput={(params) => {
+                                        return (
+                                            <TextField
+                                                {...params}
+                                                inputProps={{
+                                                    ...params.inputProps,
+                                                    placeholder: "End date"
+                                                }}
+                                            />
+                                        )
+                                    }}
+                                />
+                            </LocalizationProvider>
+                        </div>
                     </div>
-                    <LocalizationProvider dateAdapter={AdapterMoment}>
-                        <DateTimePicker
-                            value={startDate}
-                            inputFormat="DD/MM/YYYY HH:mm"
-                            ampm={false}
-                            onChange={(value) => setStartDate(moment(value))}
-                            renderInput={(params) => {
-                                return (
-                                    <TextField
-                                        {...params}
-                                        inputProps={{
-                                            ...params.inputProps,
-                                            placeholder: "DD/MM/YYYY HH:mm"
-                                        }}
-                                    />
-                                )
-                            }}
+                    <div>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={isCompleted}
+                                    onClick={() => setIsCompleted(!isCompleted)}
+                                    style={{ color: theme === 'light' ? "#1d5692" : "#ffffff" }}
+                                    disableRipple
+                                />
+                            }
+                            label={
+                                <Typography
+                                    variant="subtitle1"
+                                    className={classes.text}
+                                >
+                                    Mark as completed
+                                </Typography>
+                            }
                         />
-                    </LocalizationProvider>
-                    <div className="input-title">
-                        <Typography variant="subtitle1">End date</Typography>
                     </div>
-                    <LocalizationProvider dateAdapter={AdapterMoment}>
-                        <DateTimePicker
-                            value={endDate}
-                            inputFormat="DD/MM/YYYY HH:MM"
-                            ampm={false}
-                            onChange={(value) => setEndDate(moment(value))}
-                            renderInput={(params) => {
-                                return (
-                                    <TextField
-                                        {...params}
-                                        inputProps={{
-                                            ...params.inputProps,
-                                            placeholder: "DD/MM/YYYY HH:MM"
-                                        }}
-                                    />
-                                )
-                            }}
-                        />
-                    </LocalizationProvider>
-                    <FormControlLabel
-                        control={
-                            <Checkbox
-                                checked={isCompleted}
-                                onClick={() => setIsCompleted(!isCompleted)}
-                            />
-                        }
-                        label="Mark as completed"
-                    />
                     <Button
                         type="submit"
                         variant="contained"
+                        className={classes.button}
                     >
                         Add Activity
                     </Button>

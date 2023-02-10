@@ -1,11 +1,16 @@
 import { makeStyles } from '@mui/styles';
 
 export default makeStyles(() => ({
+    text: {
+        '&&': {
+            fontFamily: `'Poppins', sans-serif`
+        }
+    },
     paper: {
         '&&': {
             borderRadius: 15,
-            width: 450,
-            '@media (max-width: 400px)':
+            width: 470,
+            '@media (max-width: 600px)':
             {
                 width: '100%'
             }
@@ -30,7 +35,7 @@ export default makeStyles(() => ({
     button: {
         '&&': {
             height: 40,
-            borderRadius: 5,
+            borderRadius: 10,
             zIndex: 1,
             marginTop: 10,
             width: '100%',
@@ -38,9 +43,29 @@ export default makeStyles(() => ({
             backgroundColor: '#1d5692',
             textTransform: 'capitalize',
             transition: '0.5s ease-out',
+            fontFamily: `'Poppins', sans-serif`
         },
         '&:hover': {
             backgroundColor: '#1d5692CC'
+        }
+    },
+    chip: {
+        '&&': {
+            // color: 'white',
+            textTransform: 'capitalize',
+            fontFamily: `'Poppins', sans-serif`,
+        }
+    },
+    unselected: {
+        '&&': {
+            border: '1px solid #1d5692'
+        }
+    },
+    selected: {
+        '&&': {
+            color: 'white',
+            border: '1px solid #1d5692',
+            backgroundColor: '#1d5692'
         }
     }
 }));

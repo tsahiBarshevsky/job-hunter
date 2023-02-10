@@ -9,3 +9,27 @@
     flex-direction: row
     align-items: baseline
     justify-content: space-between
+
+.dates
+    display: flex
+    align-items: center
+    justify-content: space-between
+    margin: 10px 0
+
+    @media screen and ( max-width: 550px )
+        flex-direction: column
+
+    .wrapper
+        width: 100%
+
+    .left
+        margin-right: 7px
+
+        @media screen and ( max-width: 550px )
+            margin: 0 0 5px
+
+    .right
+        margin-left: 7px
+
+        @media screen and ( max-width: 550px )
+            margin: 0

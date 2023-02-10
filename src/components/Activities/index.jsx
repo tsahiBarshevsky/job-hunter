@@ -19,7 +19,8 @@ const useStyles = makeStyles(() => ({
     text: {
         '&&': {
             fontFamily: `'Poppins', sans-serif`,
-            textAlign: 'center'
+            lineHeight: 1.2,
+            textAlign: 'start'
         }
     },
     button: {
@@ -181,7 +182,6 @@ const Activities = ({ job, setJob, setOpenJobDialog, setOpenActivityDialog }) =>
                                                             {activity.title}
                                                         </Typography>
                                                     }
-
                                                 />
                                             </td>
                                             <td style={{ width: '30%' }}>
@@ -192,15 +192,29 @@ const Activities = ({ job, setJob, setOpenJobDialog, setOpenActivityDialog }) =>
                                                 />
                                             </td>
                                             <td style={{ width: '20%' }}>
-                                                {Object.keys(activity.startDate).length === 0 ?
-                                                    <Typography className={classes.text} variant="caption">
-                                                        {moment(activity.startDate).format('DD/MM/YY HH:mm')}
-                                                    </Typography>
-                                                    :
-                                                    <Typography className={classes.text} variant="caption">
-                                                        {moment.unix(activity.startDate.seconds).format('DD/MM/YY HH:mm')}
-                                                    </Typography>
-                                                }
+                                                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                                    {Object.keys(activity.startDate).length === 0 ?
+                                                        <Typography className={classes.text} color="textSecondary" variant="caption">
+                                                            {moment(activity.startDate).format('DD/MM/YY HH:mm')}
+                                                        </Typography>
+                                                        :
+                                                        <Typography className={classes.text} color="textSecondary" variant="caption">
+                                                            {moment.unix(activity.startDate.seconds).format('DD/MM/YY HH:mm')}
+                                                        </Typography>
+                                                    }
+                                                    {activity.endDate ?
+                                                        Object.keys(activity.endDate).length === 0 ?
+                                                            <Typography className={classes.text} color="textSecondary" variant="caption">
+                                                                {moment(activity.endDate).format('DD/MM/YY HH:mm')}
+                                                            </Typography>
+                                                            :
+                                                            <Typography className={classes.text} color="textSecondary" variant="caption">
+                                                                {moment.unix(activity.endDate.seconds).format('DD/MM/YY HH:mm')}
+                                                            </Typography>
+                                                        :
+                                                        null
+                                                    }
+                                                </div>
                                             </td>
                                             <td style={{ width: '5%' }}>
                                                 <IconButton
