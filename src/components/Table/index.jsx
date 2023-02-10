@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import moment from 'moment';
-import { Typography, Pagination, Stack, FormControl, Select, MenuItem } from '@mui/material';
+import clsx from 'clsx';
+import { Typography, Pagination, Stack, FormControl, Select, MenuItem, Divider } from '@mui/material';
 import { Progress } from 'rsuite';
 import { useSelector } from 'react-redux';
 import { ThemeContext } from '../../utils/themeContext';
@@ -50,22 +51,22 @@ const Table = ({ entriesPerPage, setEntriesPerPage }) => {
                 <thead>
                     <tr>
                         <th>
-                            <Typography className={[classes.text, classes.bold]} variant="subtitle1">Created</Typography>
+                            <Typography className={clsx(classes.text, classes.title)} variant="subtitle2">Created At</Typography>
                         </th>
                         <th>
-                            <Typography className={[classes.text, classes.bold]} variant="subtitle1">Job Title</Typography>
+                            <Typography className={clsx(classes.text, classes.title)} variant="subtitle2">Job Title</Typography>
                         </th>
                         <th>
-                            <Typography className={[classes.text, classes.bold]} variant="subtitle1">Company</Typography>
+                            <Typography className={clsx(classes.text, classes.title)} variant="subtitle2">Company</Typography>
                         </th>
                         <th>
-                            <Typography className={[classes.text, classes.bold]} variant="subtitle1">Status</Typography>
+                            <Typography className={clsx(classes.text, classes.title)} variant="subtitle2">Status</Typography>
                         </th>
                         <th>
-                            <Typography className={[classes.text, classes.bold]} variant="subtitle1">Progress</Typography>
+                            <Typography className={clsx(classes.text, classes.title)} variant="subtitle2">Progress</Typography>
                         </th>
                         <th>
-                            <Typography className={[classes.text, classes.bold]} variant="subtitle1">Link</Typography>
+                            <Typography className={clsx(classes.text, classes.title)} variant="subtitle2">Link</Typography>
                         </th>
                     </tr>
                 </thead>
@@ -73,7 +74,7 @@ const Table = ({ entriesPerPage, setEntriesPerPage }) => {
                     {data.currentData().map((job) => {
                         return (
                             <tr key={job.id}>
-                                <td>
+                                <td className="created">
                                     {Object.keys(job.created).length === 0 ?
                                         <Typography className={classes.text} variant='body2'>
                                             {moment(job.created).format('DD/MM/YYYY')}
@@ -84,17 +85,17 @@ const Table = ({ entriesPerPage, setEntriesPerPage }) => {
                                         </Typography>
                                     }
                                 </td>
-                                <td>
+                                <td className="title">
                                     <Typography className={classes.text} variant='body2'>{job.title}</Typography>
                                 </td>
-                                <td>
+                                <td className="company">
                                     <Typography className={classes.text} variant='body2'>{job.company}</Typography>
                                 </td>
-                                <td>
+                                <td className="status">
                                     <Typography className={classes.text} variant='body2'>{job.status}</Typography>
                                 </td>
-                                <td>
-                                    {/* {renderProgressLine(job.status)} */}
+                                <td className="progress">
+                                    {renderProgressLine(job.status)}
                                 </td>
                                 <td>
                                     <a
@@ -103,7 +104,7 @@ const Table = ({ entriesPerPage, setEntriesPerPage }) => {
                                         rel="noreferrer"
                                         className={`link link-${theme}`}
                                     >
-                                        {job.link}
+                                        <Typography className={classes.text} variant='body2'>{job.link}</Typography>
                                     </a>
                                 </td>
                             </tr>
@@ -111,18 +112,25 @@ const Table = ({ entriesPerPage, setEntriesPerPage }) => {
                     })}
                 </tbody>
             </table>
-            <div className="form-control">
-                <Typography>Entries per page:</Typography>
-                <FormControl variant="outlined">
-                    <Select
-                        value={entriesPerPage}
-                        onChange={handleEntriesChange}
-                    >
-                        <MenuItem value={5}>5</MenuItem>
-                        <MenuItem value={10}>10</MenuItem>
-                        <MenuItem value={15}>15</MenuItem>
-                    </Select>
-                </FormControl>
+            <Divider className={classes.divider} />
+            <div className="actions">
+                <div className="form-control">
+                    <Typography className={classes.text}>Entries per page:</Typography>
+                    <FormControl variant="outlined">
+                        <Select
+                            value={entriesPerPage}
+                            onChange={handleEntriesChange}
+                            className={classes.select}
+                            inputProps={{
+                                className: classes.text
+                            }}
+                        >
+                            <MenuItem value={5} className={classes.text}>5</MenuItem>
+                            <MenuItem value={10} className={classes.text}>10</MenuItem>
+                            <MenuItem value={15} className={classes.text}>15</MenuItem>
+                        </Select>
+                    </FormControl>
+                </div>
                 <Stack spacing={2}>
                     <Pagination
                         count={count}

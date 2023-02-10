@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import moment from 'moment/moment';
+import clsx from 'clsx';
 import { Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { AiOutlineLink } from 'react-icons/ai';
@@ -67,7 +68,7 @@ const JobCard = ({ job, setJob, provided, onOpenJob, index, setOpenAlertDialog, 
                 <div className="details">
                     <Typography
                         variant="subtitle1"
-                        className={[classes.text, classes.bold]}
+                        className={clsx(classes.text, classes.bold)}
                         gutterBottom
                     >
                         {job.title}

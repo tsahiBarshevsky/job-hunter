@@ -17,7 +17,7 @@
     .stats-header
         display: flex
         justify-content: space-between
-        align-items: center
+        align-items: flex-start
         width: 100%
         padding: 15px 0
         cursor: default
@@ -47,8 +47,19 @@
             align-items: center
             justify-content: flex-start
 
+            @media screen and ( max-width: $xs )
+                flex-direction: column
+                align-items: flex-start
+                justify-content: flex-start
+
     .box-light
         background-color: $box-light
 
     .box-dark
         background-color: $box-dark
+
+.stats-container-light
+    background-color: $background-light
+
+.stats-container-dark
+    background-color: $background-dark

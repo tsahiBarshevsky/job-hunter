@@ -6,9 +6,22 @@ export default makeStyles(() => ({
             fontFamily: `'Poppins', sans-serif`
         }
     },
-    bold: {
+    title: {
         '&&': {
-            fontWeight: 'bold'
+            fontWeight: 'bold',
+            letterSpacing: 1.5
+        }
+    },
+    divider: {
+        '&&': {
+            marginBottom: 10
+        }
+    },
+    select: {
+        '&&': {
+            margin: '0 10px',
+            borderRadius: 10,
+            height: 40
         }
     }
 }));

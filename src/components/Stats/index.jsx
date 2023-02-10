@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import moment from 'moment';
+import clsx from 'clsx';
 import { Typography, FormControl, Select, MenuItem } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useAuth } from '../../utils/context';
@@ -85,10 +86,10 @@ const Stats = ({ currentYear, setCurrentYear, entriesPerPage, setEntriesPerPage 
     }
 
     return (
-        <div className="stats-container">
+        <div className={`stats-container stats-container-${theme}`}>
             <div className="stats-header">
-                <Typography className={[classes.text, classes.bold]} variant="h6">
-                    {user.displayName ? user.displayName : user.email}'s stats
+                <Typography className={clsx(classes.text, classes.bold)} variant="h6">
+                    {user.displayName ? user.displayName : user.email}'s metrics
                 </Typography>
             </div>
             <div className="statistics">

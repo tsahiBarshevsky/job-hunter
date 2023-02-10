@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import clsx from 'clsx';
 import update from 'immutability-helper';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import { useSelector, useDispatch } from 'react-redux';
@@ -150,11 +151,11 @@ const Jobs = ({ setJob, setOpenInsertionDialog, setOpenJobDialog, setOpenAlertDi
     }
 
     return (
-        <div className="jobs-container">
+        <div className={`jobs-container jobs-container-${theme}`}>
             <div className="jobs-header">
                 <Typography
                     variant="h6"
-                    className={[classes.text, classes.bold]}
+                    className={clsx(classes.text, classes.bold)}
                 >
                     Hey, {user.displayName ? user.displayName : user.email}!
                 </Typography>
