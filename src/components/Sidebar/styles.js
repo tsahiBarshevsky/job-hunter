@@ -6,6 +6,11 @@ export default makeStyles(() => ({
             fontFamily: `'Poppins', sans-serif`
         }
     },
+    mobileText: {
+        '@media (max-width: 400px)': {
+            display: 'none'
+        }
+    },
     logo: {
         '&&': {
             fontFamily: `'Ephesis', sans-serif`,

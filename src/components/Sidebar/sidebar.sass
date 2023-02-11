@@ -154,7 +154,7 @@
             flex-direction: column
             justify-content: center
             align-items: center
-            width: 100%
+            width: 25%
             height: $sidebar-mobile-height
             user-select: none
             padding: 5px 0 0
@@ -164,6 +164,9 @@
             .mobile-icon
                 font-size: 18px
                 margin-bottom: 5px
+
+                @media screen and ( max-width: $vs )
+                    font-size: 20px
 
         .mobile-link-light
             &:hover

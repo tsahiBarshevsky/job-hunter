@@ -15,6 +15,7 @@ import './sidebar.sass';
 // Firebase
 import { signOut } from 'firebase/auth';
 import { authentication } from '../../utils/firebase';
+import clsx from 'clsx';
 
 const Sidebar = ({ activeTab, setActiveTab }) => {
     const { user } = useAuth();
@@ -66,7 +67,7 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
                         className={activeTab === 'tab2' ? `link link-${theme} active active-${theme}` : `link link-${theme}`}
                     >
                         <IoStatsChart className="icon" />
-                        <Typography className={classes.text}>Statistics</Typography>
+                        <Typography className={classes.text}>Metrics</Typography>
                     </li>
                 </ul>
             </div>
@@ -109,14 +110,14 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
                     className={activeTab === 'tab1' ? `mobile-link mobile-link-${theme} active active-${theme}` : `mobile-link mobile-link-${theme}`}
                 >
                     <MdDashboard className="mobile-icon" />
-                    <Typography className={classes.text} variant="subtitle2">Jobs Board</Typography>
+                    <Typography className={clsx(classes.text, classes.mobileText)} variant="caption">Jobs Board</Typography>
                 </li>
                 <li
                     onClick={() => setActiveTab('tab2')}
                     className={activeTab === 'tab2' ? `mobile-link mobile-link-${theme} active active-${theme}` : `mobile-link mobile-link-${theme}`}
                 >
                     <IoStatsChart className="mobile-icon" />
-                    <Typography className={classes.text} variant="subtitle2">Statistics</Typography>
+                    <Typography className={clsx(classes.text, classes.mobileText)} variant="caption">Metrics</Typography>
                 </li>
                 <li
                     onClick={toggleTheme}
@@ -127,14 +128,14 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
                         :
                         <BsFillMoonFill className="mobile-icon" />
                     }
-                    <Typography className={classes.text} variant="subtitle2">Switch Theme</Typography>
+                    <Typography className={clsx(classes.text, classes.mobileText)} variant="caption">Switch Theme</Typography>
                 </li>
                 <li
                     onClick={onSignOut}
                     className={`mobile-link mobile-link-${theme}`}
                 >
                     <FiLogOut className="mobile-icon" />
-                    <Typography className={classes.text} variant="subtitle2">Sign Out</Typography>
+                    <Typography className={clsx(classes.text, classes.mobileText)} variant="caption">Sign Out</Typography>
                 </li>
             </ul>
         </div>
