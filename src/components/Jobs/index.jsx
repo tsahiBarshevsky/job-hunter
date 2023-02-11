@@ -157,7 +157,7 @@ const Jobs = ({ setJob, setOpenInsertionDialog, setOpenJobDialog, setOpenAlertDi
                     variant="h6"
                     className={clsx(classes.text, classes.bold)}
                 >
-                    Hey, {user.displayName ? user.displayName : user.email}!
+                    {user.displayName ? user.displayName : user.email}'s jobs
                 </Typography>
                 <Button
                     variant="contained"
@@ -169,7 +169,7 @@ const Jobs = ({ setJob, setOpenInsertionDialog, setOpenJobDialog, setOpenAlertDi
                     Add job
                 </Button>
             </div>
-            <div className="dnd-container">
+            <div className={`dnd-container dnd-container-${theme}`}>
                 <DragDropContext onDragEnd={(result) => onDragEnd(result, jobs)}>
                     {Object.entries(jobs).map(([columnId, column], index) => {
                         return (
@@ -216,7 +216,22 @@ const Jobs = ({ setJob, setOpenInsertionDialog, setOpenJobDialog, setOpenAlertDi
                                                         )
                                                 }}
                                             >
-                                                <div className="scrollable">
+                                                <div
+                                                    className={
+                                                        theme === 'light' ?
+                                                            (snapshot.isDraggingOver ?
+                                                                "scrollable scrollable-dragging-light scrollable-light"
+                                                                :
+                                                                "scrollable scrollable-light"
+                                                            ) : (
+                                                                snapshot.isDraggingOver ?
+                                                                    "scrollable scrollable-dragging-dark scrollable-dark"
+                                                                    :
+                                                                    "scrollable scrollable-dark"
+
+                                                            )
+                                                    }
+                                                >
                                                     {column.items.map((item, index) => {
                                                         return (
                                                             <Draggable

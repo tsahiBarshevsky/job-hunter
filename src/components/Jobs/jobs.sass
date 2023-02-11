@@ -88,6 +88,32 @@
                     padding: 15px 15px 0
                     overflow-y: auto
 
+                // scrollable scrollbar
+                .scrollable::-webkit-scrollbar
+                    width: 16px
+
+                .scrollable-light::-webkit-scrollbar-thumb
+                    background: $thumb-color-light
+                    border-radius: $scrollbar-border-radius
+                    border: 5px solid lightgrey
+
+                .scrollable-dragging-light::-webkit-scrollbar-thumb
+                    border: 5px solid #A9A9A9
+
+                .scrollable-light::-webkit-scrollbar-track
+                    background: transparent
+
+                .scrollable-dark::-webkit-scrollbar-thumb
+                    background: $thumb-color-dark
+                    border-radius: $scrollbar-border-radius
+                    border: 5px solid #313537
+
+                .scrollable-dragging-dark::-webkit-scrollbar-thumb
+                    border: 5px solid #494f52
+
+                .scrollable-dark::-webkit-scrollbar-track
+                    background: transparent
+
             .droppable-light
                 border-left: 2px solid rgba(black, 0.25)
                 border-bottom: 2px solid rgba(black, 0.25)
@@ -97,6 +123,26 @@
                 border-left: 2px solid rgba(white, 0.25)
                 border-bottom: 2px solid rgba(white, 0.25)
                 border-right: 2px solid rgba(white, 0.25)
+
+    // dnd container scrollbar
+    .dnd-container::-webkit-scrollbar
+        height: 7px
+
+    .dnd-container-light::-webkit-scrollbar-thumb
+        background: $thumb-color-light
+        border-radius: $scrollbar-border-radius
+
+    .dnd-container-light::-webkit-scrollbar-track
+        background: $background-light
+        border-radius: 0px
+
+    .dnd-container-dark::-webkit-scrollbar-thumb
+        background: $thumb-color-dark
+        border-radius: $scrollbar-border-radius
+
+    .dnd-container-dark::-webkit-scrollbar-track
+        background: $background-dark
+        border-radius: 0px
 
 .jobs-container-light
     background-color: $background-light
