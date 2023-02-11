@@ -7,7 +7,7 @@ export default makeStyles(() => ({
         }
     },
     mobileText: {
-        '@media (max-width: 400px)': {
+        '@media (max-width: 500px)': {
             display: 'none'
         }
     },

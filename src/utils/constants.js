@@ -1,3 +1,4 @@
+// List of possible statues
 const statuses = [
     { id: 0, name: 'Wishlist' },
     { id: 1, name: 'Applied' },
@@ -8,6 +9,7 @@ const statuses = [
     { id: 6, name: 'Not Answered' }
 ];
 
+// List of categories for activites
 const categories = [
     { id: 0, category: 'got a phone', color: '#0d47a1' },
     { id: 1, category: 'phone interview', color: '#0d47a1' },
@@ -22,8 +24,20 @@ const categories = [
     { id: 10, category: 'candidacy removal', color: '#e65100' }
 ];
 
+// CSV file headers
+const headers = [
+    { label: "ID", key: "id" },
+    { label: "Created At", key: "created" },
+    { label: "Job Title", key: "title" },
+    { label: "Company", key: "company" },
+    { label: "Status", key: "status" },
+    { label: "Link", key: "link" }
+];
+
+// Text editor toolbar
 const toolbar = ['bold', 'italic', '|', 'link', 'bulletedList', 'numberedList', '|', 'undo', 'redo'];
 
+// List of months for chart
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-export { statuses, categories, toolbar, months };
+export { statuses, categories, toolbar, months, headers };
