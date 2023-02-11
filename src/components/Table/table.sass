@@ -6,7 +6,7 @@
     overflow-x: auto
     overflow-y: hidden
     cursor: default
-    padding-top: 5px
+    padding: 5px 0
 
     #jobs
         border-collapse: collapse
@@ -31,7 +31,10 @@
             text-align: left
             border-bottom: 1px solid #414350
 
-        tr:nth-child(even)
+        .entry-light:nth-child(even)
+            background-color: #41435009
+
+        .entry-dark:nth-child(even)
             background-color: #4143501e
 
         .created
@@ -66,3 +69,23 @@
 
             @media screen and ( max-width: $xs )
                 margin-bottom: 10px
+
+// table container scrollbar
+.table-container::-webkit-scrollbar
+    height: 6px
+
+.table-container-light::-webkit-scrollbar-thumb
+    background: $thumb-color-light
+    border-radius: $scrollbar-border-radius
+
+.table-container-light::-webkit-scrollbar-track
+    background: $box-light
+    border-radius: 0px
+
+.table-container-dark::-webkit-scrollbar-thumb
+    background: $thumb-color-dark
+    border-radius: $scrollbar-border-radius
+
+.table-container-dark::-webkit-scrollbar-track
+    background: $box-dark
+    border-radius: 0px

@@ -46,7 +46,7 @@ const Table = ({ entriesPerPage, setEntriesPerPage }) => {
     }
 
     return (
-        <div className="table-container">
+        <div className={`table-container table-container-${theme}`}>
             <table id="jobs">
                 <thead>
                     <tr>
@@ -73,7 +73,7 @@ const Table = ({ entriesPerPage, setEntriesPerPage }) => {
                 <tbody>
                     {data.currentData().map((job) => {
                         return (
-                            <tr key={job.id}>
+                            <tr key={job.id} className={`entry entry-${theme}`}>
                                 <td className="created">
                                     {Object.keys(job.created).length === 0 ?
                                         <Typography className={classes.text} variant='body2'>
