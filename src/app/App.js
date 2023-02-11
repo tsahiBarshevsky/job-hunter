@@ -9,19 +9,18 @@ import './App.sass';
 
 export const App = () => {
     const { theme } = useContext(ThemeContext);
-    const darkTheme = createTheme({
+    const appTheme = createTheme({
         palette: {
             mode: theme,
         },
     });
 
     return (
-        <ThemeProvider theme={darkTheme}>
+        <ThemeProvider theme={appTheme}>
             <CssBaseline />
             <Router>
                 <Routes>
                     <Route
-                        exact
                         path="/"
                         element={
                             <AuthProvider>
@@ -30,7 +29,6 @@ export const App = () => {
                         }
                     />
                     <Route
-                        exact
                         path="/dashboard"
                         element={
                             <AuthProvider>

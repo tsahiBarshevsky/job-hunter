@@ -3,17 +3,20 @@ import clsx from 'clsx';
 import moment from 'moment';
 import { CSVLink } from "react-csv";
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Button } from '@mui/material';
 import { MdDashboard } from 'react-icons/md';
 import { IoStatsChart } from 'react-icons/io5';
 import { IoMdSettings } from 'react-icons/io';
 import { FiLogOut } from 'react-icons/fi';
+import { BiUser } from 'react-icons/bi';
 import { BsSunFill, BsFillMoonFill } from 'react-icons/bs';
 import { AiOutlineCloudDownload } from 'react-icons/ai';
 import { useAuth } from '../../utils/context';
 import { ThemeContext } from '../../utils/themeContext';
 import { headers } from '../../utils/constants';
+import { resetJobs } from '../../store/actions/jobs';
+import { resetStats } from '../../store/actions/stats';
 import Menu from '../Menu';
 import useStyles from './styles';
 import './sidebar.sass';
@@ -30,6 +33,7 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
     const open = Boolean(anchorEl);
     const navigate = useNavigate();
     const classes = useStyles();
+    const dispatch = useDispatch();
 
     const csvReport = {
         data: stats.map(row => ({ ...row, created: moment.unix(row.created.seconds).format("DD/MM/YYYY HH:mm") })),
@@ -49,6 +53,10 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
         handleClose();
         signOut(authentication)
             .then(() => navigate('/'))
+            .then(() => {
+                dispatch(resetJobs());
+                dispatch(resetStats());
+            })
             .catch((e) => {
                 console.log(e);
             });
@@ -86,20 +94,26 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
                     aria-expanded={open ? 'true' : undefined}
                     onClick={handleClick}
                     disableRipple
-                    className={`options options-${theme}`}
+                    className={`options options-${theme} ${user.displayName ? `display-name` : `email`}`}
                 >
                     <div className="wrapper">
-                        <img
-                            src={user.photoURL}
-                            alt={user.displayName}
-                            className="user-image"
-                        />
+                        {user.photoURL ?
+                            <img
+                                src={user.photoURL}
+                                alt={user.displayName}
+                                className="user-image"
+                            />
+                            :
+                            <div className={`user-avatar user-avatar-${theme}`}>
+                                <BiUser className="icon" />
+                            </div>
+                        }
                         <Typography
                             className={classes.text}
                             variant="caption"
                             noWrap
                         >
-                            {user.displayName}
+                            {user.displayName ? user.displayName : user.email}
                         </Typography>
                     </div>
                     <IoMdSettings />

@@ -38,9 +38,16 @@ const removeStat = (index) => {
     }
 };
 
+const resetStats = () => {
+    return {
+        type: 'RESET_STATS'
+    }
+};
+
 export {
     addNewStat,
     updateStatus,
     updateStat,
-    removeStat
+    removeStat,
+    resetStats
 };

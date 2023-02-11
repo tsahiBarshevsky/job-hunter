@@ -124,41 +124,58 @@ const Stats = ({ currentYear, setCurrentYear, entriesPerPage, setEntriesPerPage 
             </div>
             <div className={`box box-${theme}`}>
                 <Typography className={classes.text} variant="subtitle1">Jobs Overview</Typography>
-                <Table
-                    entriesPerPage={entriesPerPage}
-                    setEntriesPerPage={setEntriesPerPage}
-                />
+                {stats.length > 0 ?
+                    <Table
+                        entriesPerPage={entriesPerPage}
+                        setEntriesPerPage={setEntriesPerPage}
+                    />
+                    :
+                    <div className="no-records">
+                        <Typography className={classes.text}>There are no records to display</Typography>
+                    </div>
+                }
             </div>
             <div className={`box box-${theme}`}>
-                <div className="form-control">
-                    <FormControl variant="outlined">
-                        <Select
-                            value={currentYear}
-                            onChange={(event) => setCurrentYear(event.target.value)}
-                            className={classes.select}
-                            inputProps={{
-                                className: classes.text
-                            }}
-                        >
-                            {[...new Set(stats.map((item) => { return extractYears(item) }))].reverse().map((item) => {
-                                return (
-                                    <MenuItem
-                                        key={item}
-                                        value={item}
-                                        className={classes.text}
-                                    >
-                                        {item}
-                                    </MenuItem>
-                                )
-                            })}
-                        </Select>
-                    </FormControl>
-                    <Typography className={classes.text} variant="subtitle1">Monthly Jobs Applications Activity</Typography>
-                </div>
-                <Chart
-                    currentYear={currentYear}
-                    setCurrentYear={setCurrentYear}
-                />
+                {stats.length > 0 ?
+                    <>
+                        <div className="form-control">
+                            <FormControl variant="outlined">
+                                <Select
+                                    value={currentYear}
+                                    onChange={(event) => setCurrentYear(event.target.value)}
+                                    className={classes.select}
+                                    inputProps={{
+                                        className: classes.text
+                                    }}
+                                >
+                                    {[...new Set(stats.map((item) => { return extractYears(item) }))].reverse().map((item) => {
+                                        return (
+                                            <MenuItem
+                                                key={item}
+                                                value={item}
+                                                className={classes.text}
+                                            >
+                                                {item}
+                                            </MenuItem>
+                                        )
+                                    })}
+                                </Select>
+                            </FormControl>
+                            <Typography className={classes.text} variant="subtitle1">Monthly Jobs Applications Activity</Typography>
+                        </div>
+                        <Chart
+                            currentYear={currentYear}
+                            setCurrentYear={setCurrentYear}
+                        />
+                    </>
+                    :
+                    <>
+                        <Typography className={classes.text} variant="subtitle1">{new Date().getFullYear()} Monthly Jobs Applications Activity</Typography>
+                        <div className="no-records">
+                            <Typography className={classes.text}>There is no activity yet</Typography>
+                        </div>
+                    </>
+                }
             </div>
         </div>
     )

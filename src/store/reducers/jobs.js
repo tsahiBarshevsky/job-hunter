@@ -181,6 +181,8 @@ const jobsReducer = (state = INITIAL_STATE, action) => {
                     }
                 }
             });
+        case 'RESET_JOBS':
+            return INITIAL_STATE;
         default:
             return state;
     }

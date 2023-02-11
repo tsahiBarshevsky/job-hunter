@@ -32,6 +32,8 @@ const statsReducer = (state = INITIAL_STATE, action) => {
             return update(state, {
                 $splice: [[action.payload.index, 1]]
             });
+        case 'RESET_STATS':
+            return INITIAL_STATE;
         default:
             return state;
     }

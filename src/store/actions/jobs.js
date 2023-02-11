@@ -148,6 +148,12 @@ const removeContact = (status, index, contactIndex) => {
     }
 };
 
+const resetJobs = () => {
+    return {
+        type: "RESET_JOBS"
+    }
+}
+
 export {
     addNewJob,
     addStepToTimeline,
@@ -161,5 +167,6 @@ export {
     removeActivity,
     addNewContact,
     updateContact,
-    removeContact
+    removeContact,
+    resetJobs
 };
