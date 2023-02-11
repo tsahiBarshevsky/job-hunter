@@ -61,6 +61,26 @@
         height: 100%
         overflow-y: auto
 
+    // job details scrollbar
+    .note-card-content::-webkit-scrollbar
+        width: 16px
+
+    .note-card-content-light::-webkit-scrollbar-track
+        background: white
+
+    .note-card-content-light::-webkit-scrollbar-thumb
+        background-color: $thumb-color-light
+        border-radius: 20px
+        border: 5px solid white
+
+    .note-card-content-dark::-webkit-scrollbar-track
+        background: #383838
+
+    .note-card-content-dark::-webkit-scrollbar-thumb
+        background-color: $thumb-color-dark
+        border-radius: 20px
+        border: 5px solid #383838
+
     .note-card-date
         display: flex
         align-items: flex-end

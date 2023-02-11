@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import moment from 'moment';
 import clsx from 'clsx';
 import { Timeline } from 'rsuite';
 import { Dialog, Typography, Divider, IconButton } from '@mui/material';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import { ThemeContext } from '../../utils/themeContext';
 import useStyles from './styles';
 import "rsuite/dist/rsuite.min.css";
 import './jobDialog.sass';
@@ -16,6 +17,7 @@ import Contacts from '../Contacts';
 import Activities from '../Activities';
 
 const JobDialog = ({ job, setJob, setMode, setSelectedContact, open, setOpen, setOpenActivityDialog, setOpenContactDialog, setOpenAlertDialog, setOrigin }) => {
+    const { theme } = useContext(ThemeContext);
     const [activeTab, setActiveTab] = useState('tab1');
     const classes = useStyles();
 
@@ -76,7 +78,7 @@ const JobDialog = ({ job, setJob, setMode, setSelectedContact, open, setOpen, se
             classes={{ paper: classes.paper }}
         >
             <div className="container">
-                <div className="job-details">
+                <div className={`job-details job-details-${theme}`}>
                     <div className="header">
                         <div>
                             <Typography

@@ -1,7 +1,7 @@
 import React from 'react';
 import update from 'immutability-helper';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
-import { Button, Typography } from '@mui/material';
+import { Button, Divider, Typography } from '@mui/material';
 import { FiUsers } from 'react-icons/fi';
 import { makeStyles } from '@mui/styles';
 import { useSelector, useDispatch } from 'react-redux';
@@ -105,6 +105,7 @@ const Contacts = ({ job, setJob, setMode, setSelectedContact, setOpenJobDialog, 
                             Add contact
                         </Button>
                     </div>
+                    <Divider className="divider" />
                     <div className="contacts">
                         {job.contacts.map((contact) => {
                             return (

@@ -11,7 +11,7 @@
         width: 75%
         height: 85vh
         padding: 20
-        background-color: rgba(white, 0.1)
+        // background-color: rgba(white, 0.1)
         padding: 15px 20px
         overflow-y: auto
 
@@ -23,6 +23,26 @@
             align-items: baseline
             justify-content: space-between
             margin-bottom: 10px
+
+    // job details scrollbar
+    .job-details::-webkit-scrollbar
+        width: 16px
+
+    .job-details-light::-webkit-scrollbar-track
+        background: white
+
+    .job-details-light::-webkit-scrollbar-thumb
+        background-color: $thumb-color-light
+        border-radius: 20px
+        border: 5px solid white
+
+    .job-details-dark::-webkit-scrollbar-track
+        background: #383838
+
+    .job-details-dark::-webkit-scrollbar-thumb
+        background-color: $thumb-color-dark
+        border-radius: 20px
+        border: 5px solid #383838
 
     .timeline
         width: 25%
@@ -38,3 +58,14 @@
 
         @media screen and ( max-width: 800px)
             display: none
+
+    .timeline::-webkit-scrollbar
+        width: 16px
+
+    .timeline::-webkit-scrollbar-track
+        background: $primary-color
+
+    .timeline::-webkit-scrollbar-thumb
+        background-color: rgba(black, 0.1)
+        border-radius: 20px
+        border: 5px solid $primary-color

@@ -48,7 +48,7 @@ const NoteCard = ({ note, setMode, setTitle, setText, setNoteID, onRemoveNote })
                     </button>
                 </div>
             </div>
-            <div className="note-card-content">
+            <div className={`note-card-content note-card-content-${theme}`}>
                 <Typography className={classes.text}>
                     {parse(note.text)}
                 </Typography>
