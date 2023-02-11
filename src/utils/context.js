@@ -16,8 +16,6 @@ export const AuthProvider = ({ children }) => {
         authentication.onAuthStateChanged((user) => {
             setUser(user);
             setLoading(false);
-            if (user && (location.pathname === '/' || location.pathname === '/registration'))
-                navigate('/dashboard');
         });
     }, [user, navigate, location]);
 

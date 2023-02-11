@@ -17,7 +17,7 @@ import Stat4 from '../../assets/weekly-calendar.png';
 import Table from '../Table';
 import Chart from '../Chart';
 
-const Stats = ({ currentYear, setCurrentYear, entriesPerPage, setEntriesPerPage }) => {
+const Stats = ({ currentYear, setCurrentYear, entriesPerPage, setEntriesPerPage, displayName }) => {
     const { user } = useAuth();
     const { theme } = useContext(ThemeContext);
     const jobs = useSelector(state => state.jobs);
@@ -88,9 +88,15 @@ const Stats = ({ currentYear, setCurrentYear, entriesPerPage, setEntriesPerPage 
     return (
         <div className={`stats-container stats-container-${theme}`}>
             <div className="stats-header">
-                <Typography className={clsx(classes.text, classes.bold)} variant="h6">
-                    {user.displayName ? user.displayName : user.email}'s metrics
-                </Typography>
+                {!displayName ?
+                    <Typography className={clsx(classes.text, classes.bold)} variant="h6">
+                        {user.displayName ? user.displayName : user.email}'s metrics
+                    </Typography>
+                    :
+                    <Typography className={clsx(classes.text, classes.bold)} variant="h6">
+                        {displayName}'s metrics
+                    </Typography>
+                }
             </div>
             <div className="statistics">
                 <StatBox

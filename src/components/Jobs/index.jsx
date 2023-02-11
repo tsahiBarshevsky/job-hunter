@@ -24,7 +24,7 @@ import { HiOutlineThumbDown, HiOutlineThumbUp } from 'react-icons/hi';
 import { doc, updateDoc } from 'firebase/firestore/lite';
 import { db } from '../../utils/firebase';
 
-const Jobs = ({ setJob, setOpenInsertionDialog, setOpenJobDialog, setOpenAlertDialog, setOrigin }) => {
+const Jobs = ({ setJob, setOpenInsertionDialog, setOpenJobDialog, setOpenAlertDialog, setOrigin, displayName }) => {
     const { user } = useAuth();
     const { theme } = useContext(ThemeContext);
     const jobs = useSelector(state => state.jobs);
@@ -153,12 +153,21 @@ const Jobs = ({ setJob, setOpenInsertionDialog, setOpenJobDialog, setOpenAlertDi
     return (
         <div className={`jobs-container jobs-container-${theme}`}>
             <div className="jobs-header">
-                <Typography
-                    variant="h6"
-                    className={clsx(classes.text, classes.bold)}
-                >
-                    {user.displayName ? user.displayName : user.email}'s jobs
-                </Typography>
+                {!displayName ?
+                    <Typography
+                        variant="h6"
+                        className={clsx(classes.text, classes.bold)}
+                    >
+                        {user.displayName ? user.displayName : user.email}'s jobs
+                    </Typography>
+                    :
+                    <Typography
+                        variant="h6"
+                        className={clsx(classes.text, classes.bold)}
+                    >
+                        {displayName}'s jobs
+                    </Typography>
+                }
                 <Button
                     variant="contained"
                     className={classes.button}

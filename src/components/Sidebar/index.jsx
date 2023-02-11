@@ -25,7 +25,7 @@ import './sidebar.sass';
 import { signOut } from 'firebase/auth';
 import { authentication } from '../../utils/firebase';
 
-const Sidebar = ({ activeTab, setActiveTab }) => {
+const Sidebar = ({ activeTab, setActiveTab, displayName }) => {
     const { user } = useAuth();
     const { theme, toggleTheme } = useContext(ThemeContext);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -94,7 +94,7 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
                     aria-expanded={open ? 'true' : undefined}
                     onClick={handleClick}
                     disableRipple
-                    className={`options options-${theme} ${user.displayName ? `display-name` : `email`}`}
+                    className={`options options-${theme} ${user.displayName || displayName ? `display-name` : `email`}`}
                 >
                     <div className="wrapper">
                         {user.photoURL ?
@@ -108,13 +108,23 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
                                 <BiUser className="icon" />
                             </div>
                         }
-                        <Typography
-                            className={classes.text}
-                            variant="caption"
-                            noWrap
-                        >
-                            {user.displayName ? user.displayName : user.email}
-                        </Typography>
+                        {!displayName ?
+                            <Typography
+                                className={classes.text}
+                                variant="caption"
+                                noWrap
+                            >
+                                {user.displayName ? user.displayName : user.email}
+                            </Typography>
+                            :
+                            <Typography
+                                className={classes.text}
+                                variant="caption"
+                                noWrap
+                            >
+                                {displayName}
+                            </Typography>
+                        }
                     </div>
                     <IoMdSettings />
                 </Button>

@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback, useState } from 'react';
 import moment from 'moment/moment';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAuth } from '../../utils/context';
 import { ActivityDialog, AlertDialog, ContactDialog, InsertionDialog, JobDialog, Jobs, Sidebar, Stats } from '../../components';
@@ -12,6 +12,8 @@ import { db } from '../../utils/firebase';
 
 const DashboardPage = () => {
     const { user } = useAuth();
+    const { state } = useLocation();
+    const { displayName } = state || {};
     const [activeTab, setActiveTab] = useState('tab1');
     const [currentYear, setCurrentYear] = useState(moment().year());
     const [entriesPerPage, setEntriesPerPage] = useState(10);
@@ -117,6 +119,7 @@ const DashboardPage = () => {
                 <Sidebar
                     activeTab={activeTab}
                     setActiveTab={setActiveTab}
+                    displayName={displayName}
                 />
                 {activeTab === 'tab1' ?
                     <Jobs
@@ -125,6 +128,7 @@ const DashboardPage = () => {
                         setOpenJobDialog={setOpenJobDialog}
                         setOpenAlertDialog={setOpenAlertDialog}
                         setOrigin={setOrigin}
+                        displayName={displayName}
                     />
                     :
                     <Stats
@@ -132,6 +136,7 @@ const DashboardPage = () => {
                         setCurrentYear={setCurrentYear}
                         entriesPerPage={entriesPerPage}
                         setEntriesPerPage={setEntriesPerPage}
+                        displayName={displayName}
                     />
                 }
             </div>

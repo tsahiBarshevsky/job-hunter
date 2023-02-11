@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, TextField, InputAdornment } from '@mui/material';
 import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 
 // Firebase
 import { authentication } from '../../utils/firebase';
@@ -12,7 +13,6 @@ import {
     updateProfile
 } from "firebase/auth";
 
-
 const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -20,10 +20,12 @@ const LoginPage = () => {
     const [lastName, setLastName] = useState('');
     const [disabled, setDisabled] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate();
     const provider = new GoogleAuthProvider();
 
     const onSignInWithGoogle = () => {
         signInWithPopup(authentication, provider)
+            .then(() => navigate('/dashboard'))
             .catch((error) => {
                 alert(error.message);
             });
@@ -37,6 +39,10 @@ const LoginPage = () => {
                     displayName: `${firstName.trim()} ${lastName.trim()}`
                 });
             })
+            .then(() => {
+                const displayName = `${firstName.trim()} ${lastName.trim()}`;
+                navigate('/dashboard', { state: { displayName } })
+            })
             .catch((error) => {
                 alert(error.message);
                 setDisabled(false);
@@ -46,6 +52,7 @@ const LoginPage = () => {
     const onSignIn = (event) => {
         event.preventDefault();
         signInWithEmailAndPassword(authentication, email.trim(), password.trim())
+            .then(() => navigate('/dashboard'))
             .catch((error) => {
                 alert(error.message);
                 setDisabled(false);
