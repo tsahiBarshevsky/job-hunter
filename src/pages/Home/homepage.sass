@@ -6,17 +6,24 @@
     justify-content: center
     align-items: center
     width: 100vw
-    height: 100vh
+    min-height: 100vh
     cursor: default
 
     .left-container
         display: flex
-        flex-direction: column
-        align-items: center
-        justify-content: flex-start
         position: relative
-        width: 36%
-        height: 100%
+        flex-direction: column
+        justify-content: center
+        align-items: center
+        width: 40%
+        min-height: 100vh
+
+        // @media screen and ( max-width: $md )
+        //     width: 50%
+
+        @media screen and ( max-width: $sm )
+            width: 100%
+            padding: 15px
 
         .switch
             position: absolute
@@ -30,7 +37,6 @@
             justify-content: center
             width: 100%
             height: 100%
-            border-right: 1px solid #fff
 
             .input-wrapper
                 width: 285px
@@ -82,8 +88,40 @@
                 margin-top: 25px
 
     .right-container
-        width: 65%
-        height: 100%
+        display: flex
+        flex-direction: column
+        position: relative
+        flex-direction: column
+        justify-content: space-between
+        align-items: center
+        color: white
+        background-color: rgba(pink, 0.2)
+        width: 60%
+        min-height: 100vh
+        z-index: 2
+        padding: 15px 25px
+
+        // &::after
+        //     content: ''
+        //     display: block
+        //     position: absolute
+        //     left: 0
+        //     top: 0
+        //     width: 100%
+        //     height: 100%
+        //     // opacity: 0.07
+        //     background-image: url(https://img.freepik.com/free-vector/dark-minimal-hexagons-background_79603-1455.jpg?w=1380&t=st=1676206295~exp=1676206895~hmac=ece80f1c0280151bbf7c18f2187e60d1aea5ddad662b0cecd24dffcb09d3159b)
+        //     background-repeat: no-repeat
+        //     background-position: center center
+        //     background-size: cover
+        //     pointer-events: none
+            // filter: blur(1px)
+
+        // @media screen and ( max-width: $md )
+        //     width: 50%
+
+        @media screen and ( max-width: $sm )
+            display: none
 
 .homepage-container-light
     background-color: $background-light
