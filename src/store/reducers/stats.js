@@ -24,7 +24,9 @@ const statsReducer = (state = INITIAL_STATE, action) => {
                     $merge: {
                         title: action.payload.title,
                         company: action.payload.company,
-                        link: action.payload.link
+                        link: action.payload.link,
+                        location: action.payload.location,
+                        salary: action.payload.salary
                     }
                 }
             });

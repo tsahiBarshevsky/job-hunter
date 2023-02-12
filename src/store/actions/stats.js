@@ -17,14 +17,16 @@ const updateStatus = (index, status) => {
     }
 };
 
-const updateStat = (index, title, company, link) => {
+const updateStat = (index, title, company, location, salary, link) => {
     return {
         type: 'UPDATE_STAT',
         payload: {
             index: index,
             title: title,
             company: company,
-            link: link
+            link: link,
+            location: location,
+            salary: salary
         }
     }
 };

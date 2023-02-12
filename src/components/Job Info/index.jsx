@@ -60,7 +60,7 @@ const JobInfo = ({ job, handleClose, setOpenAlertDialog, setOrigin }) => {
                 deadline: deadline ? new Date(deadline) : null
             };
             dispatch(updateJob(job.status, index, editedJob)); // Update store
-            dispatch(updateStat(statIndex, title, company, url)); // Update store
+            dispatch(updateStat(statIndex, title, company, location, salary, url)); // Update store
             handleClose();
             toast.success(`${title} edited successfully`);
         }

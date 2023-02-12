@@ -37,7 +37,13 @@ const Sidebar = ({ activeTab, setActiveTab, displayName }) => {
     const dispatch = useDispatch();
 
     const csvReport = {
-        data: stats.map(row => ({ ...row, created: moment.unix(row.created.seconds).format("DD/MM/YYYY HH:mm") })),
+        data: stats.map(row => ({
+            ...row,
+            created: Object.keys(row.created).length === 0 ?
+                moment(row.created).format('DD/MM/YYYY HH:mm')
+                :
+                moment.unix(row.created.seconds).format("DD/MM/YYYY HH:mm")
+        })),
         headers: headers,
         filename: `${user.email} jobs.csv`
     };

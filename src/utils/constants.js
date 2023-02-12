@@ -31,6 +31,8 @@ const headers = [
     { label: "Job Title", key: "title" },
     { label: "Company", key: "company" },
     { label: "Status", key: "status" },
+    { label: "Location", key: "location" },
+    { label: "Salary", key: "salary" },
     { label: "Link", key: "link" }
 ];
 

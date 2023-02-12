@@ -104,7 +104,9 @@ const DashboardPage = () => {
                         title: data.title,
                         company: data.company,
                         status: data.status,
-                        link: data.url
+                        link: data.url,
+                        location: data.location,
+                        salary: data.salary
                     });
                 });
             dispatch({ type: 'SET_STATS', stats: arr });

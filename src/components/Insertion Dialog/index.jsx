@@ -81,8 +81,10 @@ const InsertionDialog = ({ open, setOpen }) => {
                 title: job.title,
                 company: job.company,
                 status: job.status,
-                link: job.url
-            }))
+                link: job.url,
+                location: job.location,
+                salary: job.salary
+            }));
             handleClose();
         }
         catch (error) {

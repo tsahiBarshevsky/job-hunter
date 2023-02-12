@@ -21,6 +21,11 @@ const useStyles = makeStyles(() => ({
             marginRight: 10
         }
     },
+    completed: {
+        '&&': {
+            textDecoration: 'line-through'
+        }
+    },
     chip: {
         '&&': {
             color: 'white',
@@ -65,7 +70,7 @@ const ActivityCard = ({ index, activity, handleCompletedChange, onRemoveActivity
             </div>
             <div className="activity-card-content">
                 <Typography
-                    className={classes.text}
+                    className={clsx(classes.text, activity.completed && classes.completed)}
                     variant="subtitle1"
                     gutterBottom
                 >
