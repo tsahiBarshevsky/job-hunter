@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import moment from 'moment';
 import clsx from 'clsx';
+import { toast } from 'react-toastify';
 import { TextField, Typography, Button } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -64,6 +65,7 @@ const JobInfo = ({ job, handleClose, setOpenAlertDialog, setOrigin }) => {
         }
         catch (error) {
             console.log(error.message);
+            toast.error('An unexpected error occurred');
         }
     }
 

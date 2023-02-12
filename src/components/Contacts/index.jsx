@@ -1,6 +1,7 @@
 import React from 'react';
 import update from 'immutability-helper';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
+import { toast } from 'react-toastify';
 import { Button, Divider, Typography } from '@mui/material';
 import { FiUsers } from 'react-icons/fi';
 import { makeStyles } from '@mui/styles';
@@ -72,7 +73,8 @@ const Contacts = ({ job, setJob, setMode, setSelectedContact, setOpenJobDialog, 
             setJob(updatedJob);
         }
         catch (error) {
-            console.log(error.message)
+            console.log(error.message);
+            toast.error('An unexpected error occurred');
         }
     }
 

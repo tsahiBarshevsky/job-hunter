@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { toast } from 'react-toastify';
 import { Dialog, DialogTitle, DialogContent, Button, Typography } from '@mui/material';
 import { useSelector, useDispatch } from "react-redux";
 import { removeJob } from '../../store/actions/jobs';
@@ -26,6 +27,7 @@ const AlertDialog = ({ open, setOpen, job, setJob, setOpenJobDialog, origin }) =
 
     const onRemoveJob = async () => {
         try {
+            const title = job.title;
             await deleteDoc(doc(db, "jobs", job.id));
             const index = jobs[job.status].items.findIndex((item) => item.id === job.id);
             const statIndex = stats.findIndex((item) => item.id === job.id);
@@ -33,9 +35,11 @@ const AlertDialog = ({ open, setOpen, job, setJob, setOpenJobDialog, origin }) =
             dispatch(removeStat(statIndex)); // Update store
             setOpen(false);
             setJob({});
+            toast.success(`${title} deleted successfully`);
         }
         catch (error) {
-            console.log(error.message)
+            console.log(error.message);
+            toast.error('An unexpected error occurred');
         }
     }
 

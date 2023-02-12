@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import moment from 'moment';
 import update from 'immutability-helper';
 import clsx from 'clsx';
+import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
 import { useSelector, useDispatch } from 'react-redux';
 import { categories } from '../../utils/constants';
@@ -94,6 +95,7 @@ const ActivityDialog = ({ open, setOpen, job, setJob, setOpenJobDialog }) => {
             }
             catch (error) {
                 console.log(error.message);
+                toast.error('An unexpected error occurred');
             }
         }
     }

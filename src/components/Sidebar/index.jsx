@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import clsx from 'clsx';
 import moment from 'moment';
+import { toast } from 'react-toastify';
 import { CSVLink } from "react-csv";
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -57,8 +58,9 @@ const Sidebar = ({ activeTab, setActiveTab, displayName }) => {
                 dispatch(resetJobs());
                 dispatch(resetStats());
             })
-            .catch((e) => {
-                console.log(e);
+            .catch((error) => {
+                console.log(error.message);
+                toast.error('An unexpected error occurred');
             });
     }
 

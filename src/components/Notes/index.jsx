@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import update from 'immutability-helper';
+import { toast } from 'react-toastify';
 import { TextField, Button, Divider } from '@mui/material';
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
@@ -64,6 +65,7 @@ const Notes = ({ job, setJob }) => {
         }
         catch (error) {
             console.log(error.message);
+            toast.error('An unexpected error occurred');
         }
     }
 
@@ -93,7 +95,8 @@ const Notes = ({ job, setJob }) => {
             onCancelEditMode();
         }
         catch (error) {
-            console.log(error.message)
+            console.log(error.message);
+            toast.error('An unexpected error occurred');
         }
     }
 
@@ -118,7 +121,8 @@ const Notes = ({ job, setJob }) => {
             setJob(updatedJob);
         }
         catch (error) {
-            console.log(error.message)
+            console.log(error.message);
+            toast.error('An unexpected error occurred');
         }
     }
 

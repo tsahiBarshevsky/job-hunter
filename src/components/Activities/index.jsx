@@ -1,6 +1,7 @@
 import React from "react";
 import update from 'immutability-helper';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
+import { toast } from 'react-toastify';
 import { Typography, Button, Divider } from '@mui/material';
 import { makeStyles } from "@mui/styles";
 import { GoListUnordered } from 'react-icons/go';
@@ -92,6 +93,7 @@ const Activities = ({ job, setJob, setOpenJobDialog, setOpenActivityDialog }) =>
         }
         catch (error) {
             console.log(error.message);
+            toast.error('An unexpected error occurred');
         }
     }
 
@@ -116,7 +118,8 @@ const Activities = ({ job, setJob, setOpenJobDialog, setOpenActivityDialog }) =>
             setJob(updatedJob);
         }
         catch (error) {
-            console.log(error.message)
+            console.log(error.message);
+            toast.error('An unexpected error occurred');
         }
     }
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import update from 'immutability-helper';
 import clsx from 'clsx';
+import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dialog, DialogTitle, DialogContent, Button, IconButton, TextField, Typography } from '@mui/material';
@@ -78,6 +79,7 @@ const ContactDialog = ({ mode, selectedContact, job, setJob, open, setOpen, setO
         }
         catch (error) {
             console.log(error.message);
+            toast.error('An unexpected error occurred');
         }
     }
 
@@ -116,13 +118,13 @@ const ContactDialog = ({ mode, selectedContact, job, setJob, open, setOpen, setO
             handleClose();
         }
         catch (error) {
-            console.log(error.message)
+            console.log(error.message);
+            toast.error('An unexpected error occurred');
         }
     }
 
     useEffect(() => {
         if (mode === 'editing') {
-            console.log('he')
             setFirstName(selectedContact.firstName);
             setLastName(selectedContact.lastName);
             setRole(selectedContact.role);

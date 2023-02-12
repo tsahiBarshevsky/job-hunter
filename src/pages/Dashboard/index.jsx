@@ -1,10 +1,24 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useCallback, useState, useContext } from 'react';
 import moment from 'moment/moment';
+import { toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAuth } from '../../utils/context';
-import { ActivityDialog, AlertDialog, ContactDialog, InsertionDialog, JobDialog, Jobs, Sidebar, Stats } from '../../components';
+import { ThemeContext } from '../../utils/themeContext';
 import './dashboard.sass';
+
+// Components
+import {
+    ActivityDialog,
+    AlertDialog,
+    ContactDialog,
+    InsertionDialog,
+    JobDialog,
+    Jobs,
+    Sidebar,
+    Stats
+} from '../../components';
 
 // Firebase
 import { collection, query, where, getDocs } from 'firebase/firestore/lite';
@@ -14,6 +28,7 @@ const DashboardPage = () => {
     const { user } = useAuth();
     const { state } = useLocation();
     const { displayName } = state || {};
+    const { theme } = useContext(ThemeContext);
     const [activeTab, setActiveTab] = useState('tab1');
     const [currentYear, setCurrentYear] = useState(moment().year());
     const [entriesPerPage, setEntriesPerPage] = useState(10);
@@ -102,6 +117,7 @@ const DashboardPage = () => {
         }
         catch (error) {
             console.log(error.message);
+            toast.error('An unexpected error occurred');
         }
     }, [dispatch, user]);
 
@@ -180,6 +196,18 @@ const DashboardPage = () => {
                 setJob={setJob}
                 setOpenJobDialog={setOpenJobDialog}
                 origin={origin}
+            />
+            <ToastContainer
+                position="bottom-left"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme={theme}
             />
         </>
     )

@@ -5,6 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { DashboardPage, HomePage } from '../pages';
 import { AuthProvider } from '../utils/context';
 import { ThemeContext } from '../utils/themeContext';
+import 'react-toastify/dist/ReactToastify.css';
 import './App.sass';
 
 export const App = () => {
