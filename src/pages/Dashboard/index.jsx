@@ -1,5 +1,6 @@
 import React, { useEffect, useCallback, useState, useContext } from 'react';
 import moment from 'moment/moment';
+import { PropagateLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -29,6 +30,7 @@ const DashboardPage = () => {
     const { state } = useLocation();
     const { displayName } = state || {};
     const { theme } = useContext(ThemeContext);
+    const [loaded, setLoaded] = useState(false);
     const [activeTab, setActiveTab] = useState('tab1');
     const [currentYear, setCurrentYear] = useState(moment().year());
     const [entriesPerPage, setEntriesPerPage] = useState(10);
@@ -114,8 +116,12 @@ const DashboardPage = () => {
             const weekStart = now.clone().startOf('week');
             const weekEnd = now.clone().endOf('week');
             dispatch({ type: 'SET_WEEK', week: { start: weekStart, end: weekEnd } });
+            setTimeout(() => {
+                setLoaded(true);
+            }, 500);
         }
         catch (error) {
+            setLoaded(false);
             console.log(error.message);
             toast.error('An unexpected error occurred');
         }
@@ -129,7 +135,7 @@ const DashboardPage = () => {
         fetchData();
     }, [navigate, user, fetchData]);
 
-    return user && Object.keys(jobs).length > 0 && Object.keys(week).length > 0 && (
+    return user && loaded ? (
         <>
             <div className="dashboard-container">
                 <Sidebar
@@ -210,6 +216,10 @@ const DashboardPage = () => {
                 theme={theme}
             />
         </>
+    ) : (
+        <div className={`loading-container loading-container-${theme}`}>
+            <PropagateLoader color={theme === 'light' ? 'black' : 'white'} />
+        </div>
     )
 }
 

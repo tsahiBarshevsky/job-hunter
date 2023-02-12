@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Emoji from 'react-emoji-render';
 import clsx from 'clsx';
 import { PulseLoader } from "react-spinners";
@@ -23,8 +23,10 @@ import {
     signInWithEmailAndPassword,
     updateProfile
 } from "firebase/auth";
+import { useAuth } from '../../utils/context';
 
 const HomePage = () => {
+    const { user } = useAuth();
     const { theme, toggleTheme } = useContext(ThemeContext);
     const [mode, setMode] = useState('login');
     const [email, setEmail] = useState('');
@@ -78,6 +80,11 @@ const HomePage = () => {
                 setDisabled(false);
             })
     }
+
+    useEffect(() => {
+        if (user)
+            navigate('/dashboard');
+    }, [user, navigate]);
 
     return (
         <>
