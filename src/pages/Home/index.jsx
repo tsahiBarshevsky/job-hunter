@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Button, TextField, InputAdornment, Typography } from '@mui/material';
 import { MdOutlineAlternateEmail, MdLock, MdVisibility, MdVisibilityOff } from 'react-icons/md';
 import { FcGoogle } from 'react-icons/fc';
+import { BiUser } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
 import { ThemeContext } from '../../utils/themeContext';
 import { Switch } from '../../components';
@@ -21,6 +22,7 @@ import clsx from 'clsx';
 
 const HomePage = () => {
     const { theme, toggleTheme } = useContext(ThemeContext);
+    const [mode, setMode] = useState('login');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [firstName, setFirstName] = useState('');
@@ -30,6 +32,12 @@ const HomePage = () => {
     const navigate = useNavigate();
     const classes = useStyles();
     const provider = new GoogleAuthProvider();
+
+    const toggleMode = (mode) => {
+        setMode(mode);
+        setEmail('');
+        setPassword('');
+    }
 
     const onSignInWithGoogle = () => {
         signInWithPopup(authentication, provider)
@@ -78,91 +86,220 @@ const HomePage = () => {
                     />
                 </div>
                 <div className="auth-container">
-                    <form onSubmit={onSignIn}>
-                        <Typography className={classes.text}>Email Address</Typography>
-                        <div className={`input-wrapper input-wrapper-${theme} wrapper-space`}>
-                            <TextField
-                                required
-                                autoFocus
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                className={classes.input}
-                                autoComplete="off"
-                                placeholder="john@email.com"
-                                type="email"
-                                variant="standard"
-                                InputProps={{
-                                    disableUnderline: true,
-                                    startAdornment: (<MdOutlineAlternateEmail className="start-adornment" />),
-                                    classes: {
-                                        input: classes.text
-                                    }
-                                }}
-                            />
-                        </div>
-                        <Typography className={classes.text}>Password</Typography>
-                        <div className={`input-wrapper input-wrapper-${theme}`}>
-                            <TextField
-                                required
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                className={classes.input}
-                                autoComplete="off"
-                                placeholder="6+ characters required"
-                                type={showPassword ? "text" : "password"}
-                                variant="standard"
-                                InputProps={{
-                                    disableUnderline: true,
-                                    startAdornment: (< MdLock className="start-adornment" />),
-                                    endAdornment: (
-                                        <InputAdornment position="end"
-                                            onClick={() => setShowPassword(!showPassword)}>
-                                            {showPassword ?
-                                                <MdVisibilityOff className="eye" />
-                                                :
-                                                <MdVisibility className="eye" />
-                                            }
-                                        </InputAdornment>
-                                    ),
-                                    classes: {
-                                        input: classes.text
-                                    }
-                                }}
-                            />
-                        </div>
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            className={classes.button}
-                        >
-                            Sign In
-                        </Button>
-                        <Typography className={`or or-${theme}`}>
-                            <span className={`span span-${theme}`}>Or</span>
-                        </Typography>
-                        <Button
-                            variant="contained"
-                            className={clsx(classes.google, theme === 'light' ? classes.googleLight : classes.googleDark)}
-                            startIcon={<FcGoogle />}
-                            onClick={onSignInWithGoogle}
-                        >
-                            Sign In With Google
-                        </Button>
-                        <div className="message">
-                            <Typography className={classes.text} variant="caption">
-                                Don't have an account yet?
+                    {mode === 'login' ?
+                        <form onSubmit={onSignIn}>
+                            <Typography className={classes.text}>Email Address</Typography>
+                            <div className={`input-wrapper input-wrapper-${theme} wrapper-space`}>
+                                <TextField
+                                    required
+                                    autoFocus
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    className={classes.input}
+                                    autoComplete="off"
+                                    placeholder="john@email.com"
+                                    type="email"
+                                    variant="standard"
+                                    InputProps={{
+                                        disableUnderline: true,
+                                        startAdornment: (<MdOutlineAlternateEmail className="start-adornment" />),
+                                        classes: {
+                                            input: classes.text
+                                        }
+                                    }}
+                                />
+                            </div>
+                            <Typography className={classes.text}>Password</Typography>
+                            <div className={`input-wrapper input-wrapper-${theme}`}>
+                                <TextField
+                                    required
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    className={classes.input}
+                                    autoComplete="off"
+                                    placeholder="6+ characters required"
+                                    type={showPassword ? "text" : "password"}
+                                    variant="standard"
+                                    InputProps={{
+                                        disableUnderline: true,
+                                        startAdornment: (<MdLock className="start-adornment" />),
+                                        endAdornment: (
+                                            <InputAdornment position="end"
+                                                onClick={() => setShowPassword(!showPassword)}>
+                                                {showPassword ?
+                                                    <MdVisibilityOff className="eye" />
+                                                    :
+                                                    <MdVisibility className="eye" />
+                                                }
+                                            </InputAdornment>
+                                        ),
+                                        classes: {
+                                            input: classes.text
+                                        }
+                                    }}
+                                />
+                            </div>
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                className={classes.button}
+                            >
+                                Sign In
+                            </Button>
+                            <Typography className={`or or-${theme}`}>
+                                <span className={`span span-${theme}`}>Or</span>
                             </Typography>
                             <Button
-                                variant="text"
-                                disableRipple
-                                className={classes.switch}
+                                variant="contained"
+                                className={clsx(classes.google, theme === 'light' ? classes.googleLight : classes.googleDark)}
+                                startIcon={<FcGoogle />}
+                                onClick={onSignInWithGoogle}
                             >
-                                <Typography className={classes.text} variant="caption">
-                                    Create one!
-                                </Typography>
+                                Sign In With Google
                             </Button>
-                        </div>
-                    </form>
+                            <div className="message">
+                                <Typography className={classes.text} variant="caption">
+                                    Don't have an account yet?
+                                </Typography>
+                                <Button
+                                    variant="text"
+                                    disableRipple
+                                    className={classes.switch}
+                                    onClick={() => toggleMode('registration')}
+                                >
+                                    <Typography className={classes.text} variant="caption">
+                                        Create one!
+                                    </Typography>
+                                </Button>
+                            </div>
+                        </form>
+                        :
+                        <form onSubmit={onRegister}>
+                            <Typography className={classes.text}>Email Address</Typography>
+                            <div className={`input-wrapper input-wrapper-${theme} wrapper-space`}>
+                                <TextField
+                                    required
+                                    autoFocus
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    className={classes.input}
+                                    autoComplete="off"
+                                    placeholder="john@email.com"
+                                    type="email"
+                                    variant="standard"
+                                    InputProps={{
+                                        disableUnderline: true,
+                                        startAdornment: (<MdOutlineAlternateEmail className="start-adornment" />),
+                                        classes: {
+                                            input: classes.text
+                                        }
+                                    }}
+                                />
+                            </div>
+                            <Typography className={classes.text}>Password</Typography>
+                            <div className={`input-wrapper input-wrapper-${theme} wrapper-space`}>
+                                <TextField
+                                    required
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    className={classes.input}
+                                    autoComplete="off"
+                                    placeholder="6+ characters required"
+                                    type={showPassword ? "text" : "password"}
+                                    variant="standard"
+                                    InputProps={{
+                                        disableUnderline: true,
+                                        startAdornment: (< MdLock className="start-adornment" />),
+                                        endAdornment: (
+                                            <InputAdornment position="end"
+                                                onClick={() => setShowPassword(!showPassword)}>
+                                                {showPassword ?
+                                                    <MdVisibilityOff className="eye" />
+                                                    :
+                                                    <MdVisibility className="eye" />
+                                                }
+                                            </InputAdornment>
+                                        ),
+                                        classes: {
+                                            input: classes.text
+                                        }
+                                    }}
+                                />
+                            </div>
+                            <Typography className={classes.text}>First Name</Typography>
+                            <div className={`input-wrapper input-wrapper-${theme} wrapper-space`}>
+                                <TextField
+                                    required
+                                    value={firstName}
+                                    onChange={(e) => setFirstName(e.target.value)}
+                                    className={classes.input}
+                                    autoComplete="off"
+                                    placeholder="What's your first name?"
+                                    variant="standard"
+                                    InputProps={{
+                                        disableUnderline: true,
+                                        startAdornment: (<BiUser className="start-adornment" />),
+                                        classes: {
+                                            input: classes.text
+                                        }
+                                    }}
+                                />
+                            </div>
+                            <Typography className={classes.text}>Last Name</Typography>
+                            <div className={`input-wrapper input-wrapper-${theme} `}>
+                                <TextField
+                                    required
+                                    value={lastName}
+                                    onChange={(e) => setLastName(e.target.value)}
+                                    className={classes.input}
+                                    autoComplete="off"
+                                    placeholder="What's your last name?"
+                                    variant="standard"
+                                    InputProps={{
+                                        disableUnderline: true,
+                                        startAdornment: (<BiUser className="start-adornment" />),
+                                        classes: {
+                                            input: classes.text
+                                        }
+                                    }}
+                                />
+                            </div>
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                className={classes.button}
+                            >
+                                Sign Up
+                            </Button>
+                            <Typography className={`or or-${theme}`}>
+                                <span className={`span span-${theme}`}>Or</span>
+                            </Typography>
+                            <Button
+                                variant="contained"
+                                className={clsx(classes.google, theme === 'light' ? classes.googleLight : classes.googleDark)}
+                                startIcon={<FcGoogle />}
+                                onClick={onSignInWithGoogle}
+                            >
+                                Sign In With Google
+                            </Button>
+                            <div className="message">
+                                <Typography className={classes.text} variant="caption">
+                                    Already have an account?
+                                </Typography>
+                                <Button
+                                    variant="text"
+                                    disableRipple
+                                    className={classes.switch}
+                                    onClick={() => toggleMode('login')}
+                                >
+                                    <Typography className={classes.text} variant="caption">
+                                        Sign In!
+                                    </Typography>
+                                </Button>
+                            </div>
+                        </form>
+                    }
+
                 </div>
             </div >
             <div className="right-container">
