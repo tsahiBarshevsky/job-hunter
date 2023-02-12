@@ -6,3 +6,4 @@ export { default as ContactDialog } from './Contact Dialog';
 export { default as ActivityDialog } from './Activity Dialog';
 export { default as Stats } from './Stats';
 export { default as AlertDialog } from './Alert Dialog';
+export { default as Switch } from './Switch';

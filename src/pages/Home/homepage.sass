@@ -1,0 +1,91 @@
+@import '../../styles/_variables'
+
+.homepage-container
+    display: flex
+    flex-direction: row
+    justify-content: center
+    align-items: center
+    width: 100vw
+    height: 100vh
+    cursor: default
+
+    .left-container
+        display: flex
+        flex-direction: column
+        align-items: center
+        justify-content: flex-start
+        position: relative
+        width: 30%
+        height: 100%
+
+        .switch
+            position: absolute
+            top: 0
+            left: 0
+
+        .auth-container
+            display: flex
+            flex-direction: column
+            align-items: center
+            justify-content: center
+            width: 100%
+            height: 100%
+            border-right: 1px solid #fff
+
+            .input-wrapper
+                width: 275px
+                padding: 5px 10px
+                border-radius: 10px
+
+                .start-adornment
+                    font-size: 20px
+                    margin-right: 10px
+
+                .eye
+                    cursor: pointer
+
+            .input-wrapper-light
+                border: 2px solid rgba(black, 0.2)
+
+            .input-wrapper-dark
+                border: 2px solid rgba(white, 0.2)
+
+            .wrapper-space
+                margin-bottom: 10px
+
+            .or
+                width: 100%
+                text-align: center
+                line-height: 0.1em
+                margin: 20px 0
+                font-family: 'Poppins', sans-serif
+
+            .or-light
+                border-bottom: 1px solid rgba(black, 0.2)
+
+            .or-dark
+                border-bottom: 1px solid rgba(white, 0.2)
+
+            .or .span
+                padding: 0 10px
+
+            .or .span-light
+                background: $background-light
+
+            .or .span-dark
+                background: $background-dark
+
+            .message
+                display: flex
+                align-items: center
+                justify-content: center
+
+    .right-container
+        width: 70%
+        height: 100%
+
+.homepage-container-light
+    background-color: $background-light
+
+.homepage-container-dark
+    background-color: $background-dark

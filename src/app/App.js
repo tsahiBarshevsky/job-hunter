@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { DashboardPage, LoginPage } from '../pages';
+import { DashboardPage, HomePage } from '../pages';
 import { AuthProvider } from '../utils/context';
 import { ThemeContext } from '../utils/themeContext';
 import './App.sass';
@@ -24,7 +24,7 @@ export const App = () => {
                         path="/"
                         element={
                             <AuthProvider>
-                                <LoginPage />
+                                <HomePage />
                             </AuthProvider>
                         }
                     />
