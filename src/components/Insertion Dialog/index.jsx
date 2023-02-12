@@ -25,7 +25,7 @@ import clsx from 'clsx';
 const InsertionDialog = ({ open, setOpen }) => {
     const { user } = useAuth();
     const [title, setTitle] = useState('');
-    const [company, setCompany] = useState();
+    const [company, setCompany] = useState('');
     const [status, setStatus] = useState(null);
     const dispatch = useDispatch();
     const classes = useStyles();

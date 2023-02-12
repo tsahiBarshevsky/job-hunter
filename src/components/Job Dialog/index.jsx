@@ -3,11 +3,16 @@ import moment from 'moment';
 import clsx from 'clsx';
 import { Timeline } from 'rsuite';
 import { Dialog, Typography, Divider, IconButton } from '@mui/material';
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { ThemeContext } from '../../utils/themeContext';
 import useStyles from './styles';
 import "rsuite/dist/rsuite.min.css";
 import './jobDialog.sass';
+
+// Icons
+import { HiOutlineThumbDown, HiOutlineThumbUp } from "react-icons/hi";
+import { IoMdCreate } from "react-icons/io";
+import { MdWorkOutline } from 'react-icons/md';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
 // Components
 import Tabs from '../Tabs';
@@ -71,6 +76,21 @@ const JobDialog = ({ job, setJob, setMode, setSelectedContact, open, setOpen, se
         }
     }
 
+    const renderTimelineIcon = (step) => {
+        switch (step) {
+            case 'Job created':
+                return (<IoMdCreate className="icon" />);
+            case 'Got an offer':
+                return (<MdWorkOutline className="icon" />);
+            case 'Accepted!':
+                return (<HiOutlineThumbUp className="icon thumb-up" />);
+            case 'Rejected':
+                return (<HiOutlineThumbDown className="icon thumb-down" />);
+            default:
+                return null;
+        }
+    }
+
     return Object.keys(job).length > 0 && (
         <Dialog
             open={open}
@@ -115,7 +135,10 @@ const JobDialog = ({ job, setJob, setMode, setSelectedContact, open, setOpen, se
                     <Timeline>
                         {Object.keys(job).length > 0 && job.timeline.map((step, index) => {
                             return (
-                                <Timeline.Item key={index}>
+                                <Timeline.Item
+                                    key={index}
+                                    dot={renderTimelineIcon(step.action)}
+                                >
                                     <Typography
                                         className={clsx(classes.text, classes.timelineTitle)}
                                         variant="subtitle2"

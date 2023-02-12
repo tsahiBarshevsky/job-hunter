@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Avatar, Divider, Typography } from '@mui/material';
+import { Divider, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { FaSuitcase, FaLinkedinIn, FaFacebookF } from 'react-icons/fa';
 import { MdEdit } from 'react-icons/md';
@@ -34,7 +34,11 @@ const ContactCard = ({ contact, company, onRemoveContact, onOpenContactDialog })
         <div className={`contact-card-container contact-card-container-${theme}`}>
             <div className="contact-card-header">
                 <div className="user">
-                    <Avatar className={classes.avatar} />
+                    <img
+                        className="image"
+                        src={require('../../assets/call.png')}
+                        alt="avatar"
+                    />
                     <div>
                         <Typography
                             className={clsx(classes.text, classes.name)}

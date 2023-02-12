@@ -4,7 +4,7 @@ import { PropagateLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useAuth } from '../../utils/context';
 import { ThemeContext } from '../../utils/themeContext';
 import './dashboard.sass';
@@ -43,8 +43,6 @@ const DashboardPage = () => {
     const [openActivityDialog, setOpenActivityDialog] = useState(false);
     const [openAlertDialog, setOpenAlertDialog] = useState(false);
     const [origin, setOrigin] = useState('');
-    const jobs = useSelector(state => state.jobs);
-    const week = useSelector(state => state.week);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -133,6 +131,7 @@ const DashboardPage = () => {
             return;
         }
         fetchData();
+        document.title = `Job Hunter | ${user.displayName ? user.displayName : user.email}'s board`;
     }, [navigate, user, fetchData]);
 
     return user && loaded ? (

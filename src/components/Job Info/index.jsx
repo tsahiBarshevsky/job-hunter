@@ -62,6 +62,7 @@ const JobInfo = ({ job, handleClose, setOpenAlertDialog, setOrigin }) => {
             dispatch(updateJob(job.status, index, editedJob)); // Update store
             dispatch(updateStat(statIndex, title, company, url)); // Update store
             handleClose();
+            toast.success(`${title} edited successfully`);
         }
         catch (error) {
             console.log(error.message);

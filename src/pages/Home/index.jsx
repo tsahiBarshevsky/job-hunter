@@ -82,6 +82,7 @@ const HomePage = () => {
     }
 
     useEffect(() => {
+        document.title = `Job Hunter`;
         if (user)
             navigate('/dashboard');
     }, [user, navigate]);
