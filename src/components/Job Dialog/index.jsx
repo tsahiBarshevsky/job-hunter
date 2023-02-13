@@ -21,7 +21,18 @@ import Notes from '../Notes';
 import Contacts from '../Contacts';
 import Activities from '../Activities';
 
-const JobDialog = ({ job, setJob, setMode, setSelectedContact, open, setOpen, setOpenActivityDialog, setOpenContactDialog, setOpenAlertDialog, setOrigin }) => {
+const JobDialog = ({
+    job,
+    setJob,
+    setMode,
+    setSelectedContact,
+    open,
+    setOpen,
+    setOpenActivityDialog,
+    setOpenContactDialog,
+    setOpenAlertDialog,
+    setOrigin
+}) => {
     const { theme } = useContext(ThemeContext);
     const [activeTab, setActiveTab] = useState('tab1');
     const classes = useStyles();
@@ -132,32 +143,34 @@ const JobDialog = ({ job, setJob, setMode, setSelectedContact, open, setOpen, se
                 <div className="timeline">
                     <Typography className={classes.text} variant="h6">Timeline</Typography>
                     <Divider className={classes.divider} />
-                    <Timeline>
-                        {Object.keys(job).length > 0 && job.timeline.map((step, index) => {
-                            return (
-                                <Timeline.Item
-                                    key={index}
-                                    dot={renderTimelineIcon(step.action)}
-                                >
-                                    <Typography
-                                        className={clsx(classes.text, classes.timelineTitle)}
-                                        variant="subtitle2"
+                    {Object.keys(job).length > 0 &&
+                        <Timeline>
+                            {[...job.timeline].reverse().map((step, index) => {
+                                return (
+                                    <Timeline.Item
+                                        key={index}
+                                        dot={renderTimelineIcon(step.action)}
                                     >
-                                        {step.action}
-                                    </Typography>
-                                    {Object.keys(step.date).length === 0 ?
-                                        <Typography className={classes.date} variant="caption">
-                                            {moment(step.date).format('DD/MM/YYYY HH:mm:ss')}
+                                        <Typography
+                                            className={clsx(classes.text, classes.timelineTitle)}
+                                            variant="subtitle2"
+                                        >
+                                            {step.action}
                                         </Typography>
-                                        :
-                                        <Typography className={classes.date} variant="caption">
-                                            {moment.unix(step.date.seconds).format('DD/MM/YYYY HH:mm:ss')}
-                                        </Typography>
-                                    }
-                                </Timeline.Item>
-                            )
-                        })}
-                    </Timeline>
+                                        {Object.keys(step.date).length === 0 ?
+                                            <Typography className={classes.date} variant="caption">
+                                                {moment(step.date).format('DD/MM/YYYY HH:mm:ss')}
+                                            </Typography>
+                                            :
+                                            <Typography className={classes.date} variant="caption">
+                                                {moment.unix(step.date.seconds).format('DD/MM/YYYY HH:mm:ss')}
+                                            </Typography>
+                                        }
+                                    </Timeline.Item>
+                                )
+                            })}
+                        </Timeline>
+                    }
                 </div>
             </div>
         </Dialog>

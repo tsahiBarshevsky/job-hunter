@@ -10,7 +10,7 @@ const NotFound = () => {
     const classes = useStyles();
 
     useEffect(() => {
-        document.title = `Job Hunter | page not found`;
+        document.title = `Job Hunter | Page not found`;
     }, []);
 
     return (
