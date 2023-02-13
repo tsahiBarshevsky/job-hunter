@@ -1,4 +1,6 @@
 import React, { useContext } from "react";
+import clsx from "clsx";
+import { useLocation } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { Dialog, DialogTitle, DialogContent, Button, Typography } from '@mui/material';
 import { useSelector, useDispatch } from "react-redux";
@@ -10,12 +12,12 @@ import useStyles from './styles';
 // Firebase
 import { db } from '../../utils/firebase';
 import { doc, deleteDoc } from 'firebase/firestore/lite';
-import clsx from "clsx";
 
 const AlertDialog = ({ open, setOpen, job, setJob, setOpenJobDialog, origin }) => {
     const { theme } = useContext(ThemeContext);
     const jobs = useSelector(state => state.jobs);
     const stats = useSelector(state => state.stats);
+    const location = useLocation();
     const dispatch = useDispatch();
     const classes = useStyles();
 
@@ -28,7 +30,8 @@ const AlertDialog = ({ open, setOpen, job, setJob, setOpenJobDialog, origin }) =
     const onRemoveJob = async () => {
         try {
             const title = job.title;
-            await deleteDoc(doc(db, "jobs", job.id));
+            if (location.pathname !== '/demo')
+                await deleteDoc(doc(db, "jobs", job.id));
             const index = jobs[job.status].items.findIndex((item) => item.id === job.id);
             const statIndex = stats.findIndex((item) => item.id === job.id);
             dispatch(removeJob(job.status, index)); // Update store

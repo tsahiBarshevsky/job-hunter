@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import update from 'immutability-helper';
 import clsx from 'clsx';
+import { useLocation } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,6 +27,7 @@ const ContactDialog = ({ mode, selectedContact, job, setJob, open, setOpen, setO
     const [linkedin, setLinkedin] = useState('');
     const [facebook, setFacebook] = useState('');
     const jobs = useSelector(state => state.jobs);
+    const location = useLocation();
     const classes = useStyles();
     const dispatch = useDispatch();
 
@@ -68,10 +70,12 @@ const ContactDialog = ({ mode, selectedContact, job, setJob, open, setOpen, setO
                 contacts: { $push: [contact] },
                 timeline: { $push: [step] }
             });
-            await updateDoc(jobRef, {
-                contacts: updatedJob.contacts,
-                timeline: updatedJob.timeline
-            });
+            if (location.pathname !== '/demo') {
+                await updateDoc(jobRef, {
+                    contacts: updatedJob.contacts,
+                    timeline: updatedJob.timeline
+                });
+            }
             dispatch(addNewContact(job.status, index, contact));
             dispatch(addStepToTimeline(job.status, index, step));
             setJob(updatedJob);
@@ -112,7 +116,8 @@ const ContactDialog = ({ mode, selectedContact, job, setJob, open, setOpen, setO
                     }
                 }
             });
-            await updateDoc(jobRef, { contacts: updatedJob.contacts });
+            if (location.pathname !== '/demo')
+                await updateDoc(jobRef, { contacts: updatedJob.contacts });
             dispatch(updateContact(job.status, index, contact, contactIndex));
             setJob(updatedJob);
             handleClose();

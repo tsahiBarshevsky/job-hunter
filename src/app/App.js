@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { DashboardPage, HomePage, NotFound } from '../pages';
+import { DashboardPage, DemoPage, HomePage, NotFound } from '../pages';
 import { AuthProvider } from '../utils/context';
 import { ThemeContext } from '../utils/themeContext';
 import 'react-toastify/dist/ReactToastify.css';
@@ -34,6 +34,14 @@ export const App = () => {
                         element={
                             <AuthProvider>
                                 <DashboardPage />
+                            </AuthProvider>
+                        }
+                    />
+                    <Route
+                        path="/demo"
+                        element={
+                            <AuthProvider>
+                                <DemoPage />
                             </AuthProvider>
                         }
                     />

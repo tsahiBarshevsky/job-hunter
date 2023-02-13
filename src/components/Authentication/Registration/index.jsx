@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import clsx from 'clsx';
+import { Link } from "react-router-dom";
 import { PulseLoader } from "react-spinners";
 import { Button, TextField, InputAdornment, Typography } from '@mui/material';
 import { MdOutlineAlternateEmail, MdLock, MdVisibility, MdVisibilityOff } from 'react-icons/md';
@@ -196,6 +197,9 @@ const Registration = ({ toggleMode }) => {
                         </Typography>
                     </Button>
                 </div>
+                <Link to="/demo" state={"Demo user"}>
+                    Or view a demo board
+                </Link>
             </form>
         </div>
     )

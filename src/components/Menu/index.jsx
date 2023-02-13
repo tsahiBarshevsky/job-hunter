@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import moment from 'moment';
+import { useLocation } from 'react-router-dom';
 import { CSVLink } from "react-csv";
 import { useSelector } from 'react-redux';
 import { Menu as MuiMenu, Typography } from '@mui/material';
@@ -32,6 +33,7 @@ const useStyles = makeStyles(() => ({
 const Menu = ({ open, anchorEl, onSignOut, handleClose }) => {
     const { user } = useAuth();
     const { theme, toggleTheme } = useContext(ThemeContext);
+    const location = useLocation();
     const stats = useSelector(state => state.stats);
     const classes = useStyles();
 
@@ -44,7 +46,7 @@ const Menu = ({ open, anchorEl, onSignOut, handleClose }) => {
                 moment.unix(row.created.seconds).format("DD/MM/YYYY HH:mm")
         })),
         headers: headers,
-        filename: `${user.email} jobs.csv`
+        filename: user && location.pathname !== '/demo' ? `${user.email} jobs.csv` : 'demo user jobs.csv'
     };
 
     return (
@@ -62,21 +64,23 @@ const Menu = ({ open, anchorEl, onSignOut, handleClose }) => {
                 }
             }}
         >
-            <MenuItem onClick={onSignOut}>
-                <ListItemText
-                    primary={
-                        <Typography
-                            className={classes.text}
-                            variant="body2"
-                        >
-                            Sign Out
-                        </Typography>
-                    }
-                />
-                <ListItemIcon sx={{ justifyContent: 'right' }}>
-                    <LogoutRoundedIcon fontSize="small" />
-                </ListItemIcon>
-            </MenuItem>
+            {user && location.pathname !== '/demo' &&
+                <MenuItem onClick={onSignOut}>
+                    <ListItemText
+                        primary={
+                            <Typography
+                                className={classes.text}
+                                variant="body2"
+                            >
+                                Sign Out
+                            </Typography>
+                        }
+                    />
+                    <ListItemIcon sx={{ justifyContent: 'right' }}>
+                        <LogoutRoundedIcon fontSize="small" />
+                    </ListItemIcon>
+                </MenuItem>
+            }
             <MenuItem onClick={handleClose}>
                 <CSVLink {...csvReport} className={`csv-button csv-button-${theme}`}>
                     <Typography

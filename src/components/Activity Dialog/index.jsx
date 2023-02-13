@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import moment from 'moment';
 import update from 'immutability-helper';
 import clsx from 'clsx';
+import { useLocation } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
 import { useSelector, useDispatch } from 'react-redux';
@@ -42,6 +43,7 @@ const ActivityDialog = ({ open, setOpen, job, setJob, setOpenJobDialog }) => {
     const [startDate, setStartDate] = useState(moment());
     const [endDate, setEndDate] = useState(null);
     const [isCompleted, setIsCompleted] = useState(false);
+    const location = useLocation();
     const classes = useStyles();
     const dispatch = useDispatch();
 
@@ -84,10 +86,12 @@ const ActivityDialog = ({ open, setOpen, job, setJob, setOpenJobDialog }) => {
                     activites: { $push: [activity] },
                     timeline: { $push: [step] }
                 });
-                await updateDoc(jobRef, {
-                    activites: updatedJob.activites,
-                    timeline: updatedJob.timeline
-                });
+                if (location.pathname !== '/demo') {
+                    await updateDoc(jobRef, {
+                        activites: updatedJob.activites,
+                        timeline: updatedJob.timeline
+                    });
+                }
                 dispatch(addNewActivity(job.status, index, activity));
                 dispatch(addStepToTimeline(job.status, index, step));
                 setJob(updatedJob);

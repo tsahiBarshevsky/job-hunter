@@ -1,0 +1,19 @@
+@import '../../styles/_variables'
+
+.demo-container
+    display: flex
+    flex-direction: row
+    justify-content: flex-start
+    align-items: flex-start
+    width: 100%
+    height: 100vh
+
+    @media screen and ( max-width: $sm )
+        flex-direction: column-reverse
+
+.loading-container
+    display: flex
+    align-items: center
+    justify-content: center
+    width: 100vw
+    height: 100vh

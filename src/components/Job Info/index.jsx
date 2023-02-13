@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import moment from 'moment';
 import clsx from 'clsx';
+import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { TextField, Typography, Button } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -31,6 +32,7 @@ const JobInfo = ({ job, handleClose, setOpenAlertDialog, setOrigin }) => {
     const [deadline, setDeadline] = useState(null);
     const jobs = useSelector(state => state.jobs);
     const stats = useSelector(state => state.stats);
+    const route = useLocation();
     const dispatch = useDispatch();
     const classes = useStyles();
 
@@ -39,15 +41,17 @@ const JobInfo = ({ job, handleClose, setOpenAlertDialog, setOrigin }) => {
         const jobRef = doc(db, "jobs", job.id);
         try {
             // Update document on Firestore
-            await updateDoc(jobRef, {
-                title: title,
-                company: company,
-                location: location,
-                salary: salary,
-                url: url,
-                description: description,
-                deadline: deadline ? new Date(deadline) : null
-            });
+            if (route.pathname !== '/demo') {
+                await updateDoc(jobRef, {
+                    title: title,
+                    company: company,
+                    location: location,
+                    salary: salary,
+                    url: url,
+                    description: description,
+                    deadline: deadline ? new Date(deadline) : null
+                });
+            }
             const index = jobs[job.status].items.findIndex((item) => item.id === job.id);
             const statIndex = stats.findIndex((item) => item.id === job.id);
             const editedJob = {

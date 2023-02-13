@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { useAuth } from '../../utils/context';
 import { addNewJob } from '../../store/actions/jobs';
 import { addNewStat } from '../../store/actions/stats';
@@ -27,6 +28,7 @@ const InsertionDialog = ({ open, setOpen }) => {
     const [title, setTitle] = useState('');
     const [company, setCompany] = useState('');
     const [status, setStatus] = useState(null);
+    const location = useLocation();
     const dispatch = useDispatch();
     const classes = useStyles();
 
@@ -73,7 +75,9 @@ const InsertionDialog = ({ open, setOpen }) => {
             url: ''
         };
         try {
-            await setDoc(doc(db, 'jobs', job.id), job); // Add new doc
+            if (location.pathname !== '/demo') {
+                await setDoc(doc(db, 'jobs', job.id), job); // Add new doc
+            }
             dispatch(addNewJob(status, job)); // Update store
             dispatch(addNewStat({
                 id: job.id,

@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import moment from 'moment';
 import { toast } from 'react-toastify';
 import { CSVLink } from "react-csv";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Button } from '@mui/material';
 import { MdDashboard } from 'react-icons/md';
@@ -33,6 +33,7 @@ const Sidebar = ({ activeTab, setActiveTab, displayName }) => {
     const stats = useSelector(state => state.stats);
     const open = Boolean(anchorEl);
     const navigate = useNavigate();
+    const location = useLocation();
     const classes = useStyles();
     const dispatch = useDispatch();
 
@@ -45,7 +46,7 @@ const Sidebar = ({ activeTab, setActiveTab, displayName }) => {
                 moment.unix(row.created.seconds).format("DD/MM/YYYY HH:mm")
         })),
         headers: headers,
-        filename: `${user.email} jobs.csv`
+        filename: user && location.pathname !== '/demo' ? `${user.email} jobs.csv` : 'demo user jobs.csv'
     };
 
     const handleClick = (event) => {
@@ -73,10 +74,17 @@ const Sidebar = ({ activeTab, setActiveTab, displayName }) => {
     return (
         <div className={`sidebar-container sidebar-container-${theme}`}>
             <div className="wrapper">
-                <div style={{ marginBottom: 20 }}>
-                    <Typography className={classes.logo}>Job</Typography>
-                    <Typography className={classes.logo}>Hunter</Typography>
-                </div>
+                {location.pathname !== '/demo' ?
+                    <div className="logo">
+                        <Typography className={classes.logo}>Job</Typography>
+                        <Typography className={classes.logo}>Hunter</Typography>
+                    </div>
+                    :
+                    <Link to="/" className="logo link">
+                        <Typography className={classes.logo}>Job</Typography>
+                        <Typography className={classes.logo}>Hunter</Typography>
+                    </Link>
+                }
                 <ul className="links">
                     <li
                         onClick={() => setActiveTab('tab1')}
@@ -102,29 +110,22 @@ const Sidebar = ({ activeTab, setActiveTab, displayName }) => {
                     aria-expanded={open ? 'true' : undefined}
                     onClick={handleClick}
                     disableRipple
-                    className={`options options-${theme} ${user.displayName || displayName ? `display-name` : `email`}`}
+                    className={
+                        location.pathname !== '/demo' ?
+                            `options options-${theme} ${user.displayName || displayName ? `display-name` : `email`}`
+                            :
+                            `options options-${theme} display-name`
+                    }
                 >
-                    <div className="wrapper">
-                        {user.photoURL ?
-                            <img
-                                src={user.photoURL}
-                                alt={user.displayName}
-                                className="user-image"
-                            />
-                            :
+                    {location.pathname === '/demo' ?
+                        <div className="wrapper">
                             <div className={`user-avatar user-avatar-${theme}`}>
-                                <BiUser className="icon" />
+                                <img
+                                    src={require('../../assets/demo-avatar.png')}
+                                    alt="demo avatar"
+                                    className="demo-image"
+                                />
                             </div>
-                        }
-                        {!displayName ?
-                            <Typography
-                                className={classes.text}
-                                variant="caption"
-                                noWrap
-                            >
-                                {user.displayName ? user.displayName : user.email}
-                            </Typography>
-                            :
                             <Typography
                                 className={classes.text}
                                 variant="caption"
@@ -132,8 +133,39 @@ const Sidebar = ({ activeTab, setActiveTab, displayName }) => {
                             >
                                 {displayName}
                             </Typography>
-                        }
-                    </div>
+                        </div>
+                        :
+                        <div className="wrapper">
+                            {user.photoURL ?
+                                <img
+                                    src={user.photoURL}
+                                    alt={user.displayName}
+                                    className="user-image"
+                                />
+                                :
+                                <div className={`user-avatar user-avatar-${theme}`}>
+                                    <BiUser className="icon" />
+                                </div>
+                            }
+                            {!displayName ?
+                                <Typography
+                                    className={classes.text}
+                                    variant="caption"
+                                    noWrap
+                                >
+                                    {user.displayName ? user.displayName : user.email}
+                                </Typography>
+                                :
+                                <Typography
+                                    className={classes.text}
+                                    variant="caption"
+                                    noWrap
+                                >
+                                    {displayName}
+                                </Typography>
+                            }
+                        </div>
+                    }
                     <IoMdSettings />
                 </Button>
             </div>
@@ -175,13 +207,15 @@ const Sidebar = ({ activeTab, setActiveTab, displayName }) => {
                     }
                     <Typography className={clsx(classes.text, classes.mobileText)} variant="caption">Switch Theme</Typography>
                 </li>
-                <li
-                    onClick={onSignOut}
-                    className={`mobile-link mobile-link-${theme}`}
-                >
-                    <FiLogOut className="mobile-icon" />
-                    <Typography className={clsx(classes.text, classes.mobileText)} variant="caption">Sign Out</Typography>
-                </li>
+                {location.pathname !== '/demo' &&
+                    <li
+                        onClick={onSignOut}
+                        className={`mobile-link mobile-link-${theme}`}
+                    >
+                        <FiLogOut className="mobile-icon" />
+                        <Typography className={clsx(classes.text, classes.mobileText)} variant="caption">Sign Out</Typography>
+                    </li>
+                }
             </ul>
         </div>
     )

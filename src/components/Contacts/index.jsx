@@ -1,6 +1,7 @@
 import React from 'react';
 import update from 'immutability-helper';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
+import { useLocation } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { Button, Divider, Typography } from '@mui/material';
 import { FiUsers } from 'react-icons/fi';
@@ -41,6 +42,7 @@ const useStyles = makeStyles(() => ({
 
 const Contacts = ({ job, setJob, setMode, setSelectedContact, setOpenJobDialog, setOpenContactDialog }) => {
     const jobs = useSelector(state => state.jobs);
+    const location = useLocation();
     const dispatch = useDispatch();
     const classes = useStyles();
 
@@ -64,10 +66,12 @@ const Contacts = ({ job, setJob, setMode, setSelectedContact, setOpenJobDialog, 
                 contacts: { $splice: [[contactIndex, 1]] },
                 timeline: { $push: [step] }
             });
-            await updateDoc(jobRef, {
-                contacts: updatedJob.contacts,
-                timeline: updatedJob.timeline
-            });
+            if (location.pathname !== '/demo') {
+                await updateDoc(jobRef, {
+                    contacts: updatedJob.contacts,
+                    timeline: updatedJob.timeline
+                });
+            }
             dispatch(removeContact(job.status, index, contactIndex));
             dispatch(addStepToTimeline(job.status, index, step));
             setJob(updatedJob);

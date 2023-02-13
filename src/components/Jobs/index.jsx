@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import clsx from 'clsx';
 import update from 'immutability-helper';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
+import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Button } from '@mui/material';
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
@@ -29,6 +30,7 @@ const Jobs = ({ setJob, setOpenInsertionDialog, setOpenJobDialog, setOpenAlertDi
     const { theme } = useContext(ThemeContext);
     const jobs = useSelector(state => state.jobs);
     const stats = useSelector(state => state.stats);
+    const location = useLocation();
     const dispatch = useDispatch();
     const classes = useStyles();
 
@@ -122,16 +124,18 @@ const Jobs = ({ setJob, setOpenInsertionDialog, setOpenJobDialog, setOpenAlertDi
             const statIndex = stats.findIndex((stat) => stat.id === job.id);
             dispatch(updateStatus(statIndex, destination.droppableId));
             // Update firestore
-            const jobRef = doc(db, "jobs", job.id);
-            try {
-                await updateDoc(jobRef, {
-                    status: destination.droppableId,
-                    timeline: job.timeline
-                });
-            }
-            catch (error) {
-                alert(error.message);
-                dispatch({ type: 'SET_JOBS', jobs: dup });
+            if (location.pathname !== '/demo') {
+                const jobRef = doc(db, "jobs", job.id);
+                try {
+                    await updateDoc(jobRef, {
+                        status: destination.droppableId,
+                        timeline: job.timeline
+                    });
+                }
+                catch (error) {
+                    alert(error.message);
+                    dispatch({ type: 'SET_JOBS', jobs: dup });
+                }
             }
         }
         else {

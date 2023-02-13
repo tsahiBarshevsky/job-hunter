@@ -1,12 +1,12 @@
-import React, { useEffect, useCallback, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import moment from 'moment/moment';
+import { useLocation } from 'react-router-dom';
 import { PropagateLoader } from 'react-spinners';
-import { toast, ToastContainer } from 'react-toastify';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import { useDispatch } from 'react-redux';
-import { useAuth } from '../../utils/context';
 import { ThemeContext } from '../../utils/themeContext';
-import './dashboard.sass';
+import './demo.sass';
 
 // Components
 import {
@@ -20,15 +20,10 @@ import {
     Stats
 } from '../../components';
 
-// Firebase
-import { collection, query, where, getDocs } from 'firebase/firestore/lite';
-import { db } from '../../utils/firebase';
-
-const DashboardPage = () => {
-    const { user } = useAuth();
+const DemoPage = () => {
+    const { theme } = useContext(ThemeContext);
     const { state } = useLocation();
     const { displayName } = state || {};
-    const { theme } = useContext(ThemeContext);
     const [loaded, setLoaded] = useState(false);
     const [activeTab, setActiveTab] = useState('tab1');
     const [currentYear, setCurrentYear] = useState(moment().year());
@@ -42,107 +37,82 @@ const DashboardPage = () => {
     const [openActivityDialog, setOpenActivityDialog] = useState(false);
     const [openAlertDialog, setOpenAlertDialog] = useState(false);
     const [origin, setOrigin] = useState('');
-    const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const fetchData = useCallback(async () => {
-        const jobsRef = collection(db, "jobs");
-        const q = query(jobsRef, where("owner", "==", user.uid));
-        try {
-            const querySnapshot = await getDocs(q);
-            // console.log(JSON.stringify(querySnapshot.docs.map((doc) => doc.data())));
-            const data =
-                querySnapshot.docs
-                    .sort((a, b) => { return a.data().created - b.data().created })
-                    .map((doc) => doc.data())
+    useEffect(() => {
+        document.title = `Job Hunter | Demo board`;
+        fetch('array.json', {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
+            .then((response) => {
+                return response.json();
+            })
+            .then((json) => {
+                const data = json
+                    .sort((a, b) => { return a.created - b.created })
                     .reduce((r, a) => {
                         r[a.status] = r[a.status] || [];
                         r[a.status].push(a);
                         return r;
                     }, Object.create(null));
-            const columns = {
-                "Wishlist": {
-                    name: "Wishlist",
-                    items: data['Wishlist'] || []
-                },
-                "Applied": {
-                    name: "Applied",
-                    items: data['Applied'] || []
-                },
-                "In Progress": {
-                    name: "In Progress",
-                    items: data['In Progress'] || []
-                },
-                "Offered": {
-                    name: "Offered",
-                    items: data['Offered'] || []
-                },
-                "Rejected": {
-                    name: "Rejected",
-                    items: data['Rejected'] || []
-                },
-                "Accepted": {
-                    name: "Accepted",
-                    items: data['Accepted'] || []
-                },
-                "Not Answered": {
-                    name: "Not Answered",
-                    items: data['Not Answered'] || []
-                }
-            };
-            dispatch({ type: 'SET_JOBS', jobs: columns });
+                const columns = {
+                    "Wishlist": {
+                        name: "Wishlist",
+                        items: data['Wishlist'] || []
+                    },
+                    "Applied": {
+                        name: "Applied",
+                        items: data['Applied'] || []
+                    },
+                    "In Progress": {
+                        name: "In Progress",
+                        items: data['In Progress'] || []
+                    },
+                    "Offered": {
+                        name: "Offered",
+                        items: data['Offered'] || []
+                    },
+                    "Rejected": {
+                        name: "Rejected",
+                        items: data['Rejected'] || []
+                    },
+                    "Accepted": {
+                        name: "Accepted",
+                        items: data['Accepted'] || []
+                    },
+                    "Not Answered": {
+                        name: "Not Answered",
+                        items: data['Not Answered'] || []
+                    }
+                };
+                dispatch({ type: 'SET_JOBS', jobs: columns });
+                dispatch({ type: 'SET_STATS', stats: json });
 
-            // Build jobs array for data table and chart
-            const arr = [];
-            querySnapshot.docs
-                .sort((a, b) => { return a.data().created - b.data().created })
-                .forEach((doc) => {
-                    const data = doc.data();
-                    arr.push({
-                        id: data.id,
-                        created: data.created,
-                        title: data.title,
-                        company: data.company,
-                        status: data.status,
-                        link: data.url,
-                        location: data.location,
-                        salary: data.salary
-                    });
-                });
-            dispatch({ type: 'SET_STATS', stats: arr });
+                // Get current week
+                const now = moment();
+                const weekStart = now.clone().startOf('week');
+                const weekEnd = now.clone().endOf('week');
+                dispatch({ type: 'SET_WEEK', week: { start: weekStart, end: weekEnd } });
+                setTimeout(() => {
+                    setLoaded(true);
+                }, 500);
+            })
+            .catch((error) => {
+                console.log(error.message);
+                toast.error('An unexpected error occurred');
+            });
+    }, [dispatch]);
 
-            // Get current week
-            const now = moment();
-            const weekStart = now.clone().startOf('week');
-            const weekEnd = now.clone().endOf('week');
-            dispatch({ type: 'SET_WEEK', week: { start: weekStart, end: weekEnd } });
-            setTimeout(() => {
-                setLoaded(true);
-            }, 500);
-        }
-        catch (error) {
-            setLoaded(false);
-            console.log(error.message);
-            toast.error('An unexpected error occurred');
-        }
-    }, [dispatch, user]);
-
-    useEffect(() => {
-        if (!user) {
-            navigate('/');
-            return;
-        }
-        fetchData();
-        document.title = `Job Hunter | ${user.displayName ? user.displayName : user.email}'s board`;
-    }, [navigate, user, fetchData]);
-
-    return user && loaded ? (
+    return loaded ? (
         <>
-            <div className="dashboard-container">
+            <div className="demo-container">
                 <Sidebar
                     activeTab={activeTab}
                     setActiveTab={setActiveTab}
-                    displayName={displayName}
+                    displayName={displayName ? displayName : "User demo"}
                 />
                 {activeTab === 'tab1' ?
                     <Jobs
@@ -151,7 +121,7 @@ const DashboardPage = () => {
                         setOpenJobDialog={setOpenJobDialog}
                         setOpenAlertDialog={setOpenAlertDialog}
                         setOrigin={setOrigin}
-                        displayName={displayName}
+                        displayName={displayName ? displayName : "User demo"}
                     />
                     :
                     <Stats
@@ -159,7 +129,7 @@ const DashboardPage = () => {
                         setCurrentYear={setCurrentYear}
                         entriesPerPage={entriesPerPage}
                         setEntriesPerPage={setEntriesPerPage}
-                        displayName={displayName}
+                        displayName={displayName ? displayName : "User demo"}
                     />
                 }
             </div>
@@ -218,10 +188,24 @@ const DashboardPage = () => {
             />
         </>
     ) : (
-        <div className={`loading-container loading-container-${theme}`}>
-            <PropagateLoader color={theme === 'light' ? 'black' : 'white'} />
-        </div>
+        <>
+            <div className={`loading-container loading-container-${theme}`}>
+                <PropagateLoader color={theme === 'light' ? 'black' : 'white'} />
+            </div>
+            <ToastContainer
+                position="bottom-left"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme={theme}
+            />
+        </>
     )
 }
 
-export default DashboardPage;
+export default DemoPage;

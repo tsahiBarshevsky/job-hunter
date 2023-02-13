@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import update from 'immutability-helper';
+import clsx from 'clsx';
+import { useLocation } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { TextField, Button, Divider } from '@mui/material';
 import { v4 as uuidv4 } from 'uuid';
@@ -15,7 +17,6 @@ import './notes.sass';
 // Firebase
 import { db } from '../../utils/firebase';
 import { doc, updateDoc } from 'firebase/firestore/lite';
-import clsx from 'clsx';
 
 const Notes = ({ job, setJob }) => {
     const [mode, setMode] = useState('insertion');
@@ -23,6 +24,7 @@ const Notes = ({ job, setJob }) => {
     const [text, setText] = useState('');
     const [noteID, setNoteID] = useState('');
     const jobs = useSelector(state => state.jobs);
+    const location = useLocation();
     const dispatch = useDispatch();
     const classes = useStyles();
 
@@ -55,10 +57,12 @@ const Notes = ({ job, setJob }) => {
                 notes: { $push: [note] },
                 timeline: { $push: [step] }
             });
-            await updateDoc(jobRef, {
-                notes: updatedJob.notes,
-                timeline: updatedJob.timeline
-            });
+            if (location.pathname !== '/demo') {
+                await updateDoc(jobRef, {
+                    notes: updatedJob.notes,
+                    timeline: updatedJob.timeline
+                });
+            }
             dispatch(addNewNote(job.status, index, note));
             setJob(updatedJob);
             resetForm();
@@ -89,7 +93,8 @@ const Notes = ({ job, setJob }) => {
                     }
                 }
             });
-            await updateDoc(jobRef, { notes: updatedJob.notes });
+            if (location.pathname !== '/demo')
+                await updateDoc(jobRef, { notes: updatedJob.notes });
             dispatch(updateNote(job.status, index, note, noteIndex));
             setJob(updatedJob);
             onCancelEditMode();
@@ -113,10 +118,12 @@ const Notes = ({ job, setJob }) => {
                 notes: { $splice: [[noteIndex, 1]] },
                 timeline: { $push: [step] }
             });
-            await updateDoc(jobRef, {
-                notes: updatedJob.notes,
-                timeline: updatedJob.timeline
-            });
+            if (location.pathname !== '/demo') {
+                await updateDoc(jobRef, {
+                    notes: updatedJob.notes,
+                    timeline: updatedJob.timeline
+                });
+            }
             dispatch(removeNote(job.status, index, noteIndex));
             setJob(updatedJob);
         }

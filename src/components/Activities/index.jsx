@@ -1,6 +1,7 @@
 import React from "react";
 import update from 'immutability-helper';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
+import { useLocation } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { Typography, Button, Divider } from '@mui/material';
 import { makeStyles } from "@mui/styles";
@@ -42,6 +43,7 @@ const useStyles = makeStyles(() => ({
 
 const Activities = ({ job, setJob, setOpenJobDialog, setOpenActivityDialog }) => {
     const jobs = useSelector(state => state.jobs);
+    const location = useLocation();
     const dispatch = useDispatch();
     const classes = useStyles();
 
@@ -70,10 +72,12 @@ const Activities = ({ job, setJob, setOpenJobDialog, setOpenActivityDialog }) =>
                     },
                     timeline: { $push: [step] }
                 });
-                await updateDoc(jobRef, {
-                    activites: updatedJob.activites,
-                    timeline: updatedJob.timeline
-                });
+                if (location.pathname !== '/demo') {
+                    await updateDoc(jobRef, {
+                        activites: updatedJob.activites,
+                        timeline: updatedJob.timeline
+                    });
+                }
                 dispatch(addStepToTimeline(job.status, index, step));
             }
             else {
@@ -86,7 +90,9 @@ const Activities = ({ job, setJob, setOpenJobDialog, setOpenActivityDialog }) =>
                         }
                     }
                 });
-                await updateDoc(jobRef, { activites: updatedJob.activites });
+                if (location.pathname !== '/demo') {
+                    await updateDoc(jobRef, { activites: updatedJob.activites });
+                }
             }
             dispatch(updateActivityCompleted(job.status, index, activityIndex, isCompleted));
             setJob(updatedJob);
@@ -109,10 +115,12 @@ const Activities = ({ job, setJob, setOpenJobDialog, setOpenActivityDialog }) =>
                 activites: { $splice: [[activityIndex, 1]] },
                 timeline: { $push: [step] }
             });
-            await updateDoc(jobRef, {
-                activites: updatedJob.activites,
-                timeline: updatedJob.timeline
-            });
+            if (location.pathname !== '/demo') {
+                await updateDoc(jobRef, {
+                    activites: updatedJob.activites,
+                    timeline: updatedJob.timeline
+                });
+            }
             dispatch(removeActivity(job.status, index, activityIndex));
             dispatch(addStepToTimeline(job.status, index, step));
             setJob(updatedJob);
