@@ -2,126 +2,35 @@
 
 .homepage-container
     display: flex
-    flex-direction: row
+    flex-direction: column
     justify-content: center
     align-items: center
     width: 100vw
     min-height: 100vh
+    padding: 25px
     cursor: default
+    position: relative
 
-    .left-container
-        display: flex
-        position: relative
-        flex-direction: column
-        justify-content: center
-        align-items: center
-        width: 40%
-        min-height: 100vh
+    &::before
+        content: ''
+        display: block
+        position: absolute
+        left: 0
+        top: 0
+        width: 100%
+        height: 100%
+        opacity: 0.15
+        background-image: url('../../assets/background.jpg')
+        background-repeat: no-repeat
+        background-position: center center
+        background-size: cover
+        pointer-events: none
+        filter: blur(0.7px)
 
-        // @media screen and ( max-width: $md )
-        //     width: 50%
-
-        @media screen and ( max-width: $sm )
-            width: 100%
-            padding: 15px
-
-        .switch
-            position: absolute
-            top: 0
-            left: 0
-
-        .auth-container
-            display: flex
-            flex-direction: column
-            align-items: center
-            justify-content: center
-            width: 100%
-            height: 100%
-
-            .input-wrapper
-                width: 285px
-                padding: 5px 10px
-                border-radius: 10px
-
-                .start-adornment
-                    font-size: 20px
-                    margin-right: 10px
-
-                .eye
-                    cursor: pointer
-
-            .input-wrapper-light
-                border: 2px solid rgba(black, 0.2)
-
-            .input-wrapper-dark
-                border: 2px solid rgba(white, 0.2)
-
-            .wrapper-space
-                margin-bottom: 10px
-
-            .or
-                width: 100%
-                text-align: center
-                line-height: 0.1em
-                margin: 20px 0
-                font-family: 'Poppins', sans-serif
-
-            .or-light
-                border-bottom: 1px solid rgba(black, 0.2)
-
-            .or-dark
-                border-bottom: 1px solid rgba(white, 0.2)
-
-            .or .span
-                padding: 0 10px
-
-            .or .span-light
-                background: $background-light
-
-            .or .span-dark
-                background: $background-dark
-
-            .message
-                display: flex
-                align-items: center
-                justify-content: center
-                margin-top: 25px
-
-    .right-container
-        display: flex
-        flex-direction: column
-        position: relative
-        flex-direction: column
-        justify-content: space-between
-        align-items: center
-        color: white
-        background-color: rgba(pink, 0.2)
-        width: 60%
-        min-height: 100vh
-        z-index: 2
-        padding: 15px 25px
-
-        // &::after
-        //     content: ''
-        //     display: block
-        //     position: absolute
-        //     left: 0
-        //     top: 0
-        //     width: 100%
-        //     height: 100%
-        //     // opacity: 0.07
-        //     background-image: url(https://img.freepik.com/free-vector/dark-minimal-hexagons-background_79603-1455.jpg?w=1380&t=st=1676206295~exp=1676206895~hmac=ece80f1c0280151bbf7c18f2187e60d1aea5ddad662b0cecd24dffcb09d3159b)
-        //     background-repeat: no-repeat
-        //     background-position: center center
-        //     background-size: cover
-        //     pointer-events: none
-            // filter: blur(1px)
-
-        // @media screen and ( max-width: $md )
-        //     width: 50%
-
-        @media screen and ( max-width: $sm )
-            display: none
+    .switch
+        position: absolute
+        top: 0
+        left: 0
 
 .homepage-container-light
     background-color: $background-light
