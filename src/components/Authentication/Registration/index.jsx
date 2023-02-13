@@ -73,7 +73,7 @@ const Registration = ({ toggleMode }) => {
             >
                 A powerful job tracker
             </Typography>
-            <form onSubmit={onRegister}>
+            <form className="auth-form" onSubmit={onRegister}>
                 <Typography className={classes.text}>Email Address</Typography>
                 <div className={`input-wrapper input-wrapper-${theme} wrapper-space`}>
                     <TextField
@@ -197,9 +197,13 @@ const Registration = ({ toggleMode }) => {
                         </Typography>
                     </Button>
                 </div>
-                <Link to="/demo" state={"Demo user"}>
-                    Or view a demo board
-                </Link>
+                <div className="link-wrapper">
+                    <Link to="/demo" state={"Demo user"} className={`link link-${theme}`}>
+                        <Typography className={classes.text} variant="caption">
+                            Or view a demo board
+                        </Typography>
+                    </Link>
+                </div>
             </form>
         </div>
     )

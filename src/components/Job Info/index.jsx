@@ -8,6 +8,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { useSelector, useDispatch } from 'react-redux';
+import { FaShekelSign } from 'react-icons/fa';
 import { CKEditor as TextEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { updateJob } from '../../store/actions/jobs';
@@ -169,8 +170,9 @@ const JobInfo = ({ job, handleClose, setOpenAlertDialog, setOrigin }) => {
                         inputProps={{ min: 1 }}
                         autoComplete="off"
                         placeholder="Salary"
-                        className={classes.input}
+                        className={clsx(classes.input, classes.salary)}
                         InputProps={{
+                            endAdornment: (<FaShekelSign />),
                             classes: {
                                 input: classes.text
                             }

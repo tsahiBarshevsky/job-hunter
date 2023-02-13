@@ -9,10 +9,14 @@
     border: 2px solid rgba(black, 0.1)
 
 .auth-box
+    width: 400px
     padding: 25px
     z-index: 2
     border-radius: 15px
     box-shadow: 0 3px 5px -1px rgba(black, 0.25)
+
+    @media screen and ( max-width: 500px )
+        width: 100%
 
     .input-wrapper
         width: 100%
@@ -62,3 +66,18 @@
         align-items: center
         justify-content: center
         margin-top: 25px
+
+    .link-wrapper
+        display: flex
+        align-items: center
+        justify-content: center
+        margin-top: -10px
+
+        .link
+            text-decoration: underline
+
+        .link-light
+            color: black
+
+        .link-dark
+            color: white
