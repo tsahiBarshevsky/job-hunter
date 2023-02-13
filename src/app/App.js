@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { DashboardPage, HomePage } from '../pages';
+import { DashboardPage, HomePage, NotFound } from '../pages';
 import { AuthProvider } from '../utils/context';
 import { ThemeContext } from '../utils/themeContext';
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,8 +12,8 @@ export const App = () => {
     const { theme } = useContext(ThemeContext);
     const appTheme = createTheme({
         palette: {
-            mode: theme,
-        },
+            mode: theme
+        }
     });
 
     return (
@@ -36,6 +36,10 @@ export const App = () => {
                                 <DashboardPage />
                             </AuthProvider>
                         }
+                    />
+                    <Route
+                        path="*"
+                        element={<NotFound />}
                     />
                 </Routes>
             </Router>
