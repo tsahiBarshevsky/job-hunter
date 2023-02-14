@@ -11,10 +11,7 @@
     cursor: default
 
     @media screen and ( max-width: $sm )
-        flex-direction: row
-        width: 100%
-        height: $sidebar-mobile-height
-        padding: 0
+        display: none
 
     .wrapper
         width: 100%
@@ -41,9 +38,6 @@
         justify-content: flex-start
         margin: 0
         padding: 0
-
-        @media screen and ( max-width: $sm )
-            display: none
 
         .link
             display: flex
@@ -152,81 +146,6 @@
 
         .email
             text-transform: lowercase
-
-    .mobile-links
-        display: none
-
-        @media screen and ( max-width: $sm )
-            display: flex
-            justify-content: center
-            align-items: center
-            width: 100%
-            margin: 0
-            padding: 0
-
-        .mobile-link
-            display: flex
-            flex-direction: column
-            justify-content: center
-            align-items: center
-            width: 25%
-            height: $sidebar-mobile-height
-            user-select: none
-            padding: 5px 0 0
-            cursor: pointer
-            transition: all 0.5s
-
-            .mobile-icon,
-                font-size: 18px
-                margin-bottom: 5px
-
-                @media screen and ( max-width: 500px )
-                    font-size: 20px
-
-            .csv-button
-                display: flex
-                flex-direction: column
-                justify-content: center
-                align-items: center
-
-                #cloud
-                    font-size: 25px
-
-                @media screen and ( max-width: 500px )
-                    font-size: 20px
-
-            .csv-button-light
-                color: #666666
-
-                &:hover
-                    color: #666666
-                    text-decoration: none
-
-            .csv-button-dark
-                color: white
-
-                &:hover
-                    color: white
-                    text-decoration: none
-
-        .mobile-link-light
-            &:hover
-                background-color: #043a711f
-
-        .mobile-link-dark
-            &:hover
-                background-color: #043a7152
-
-        .mobile-link.active
-            cursor: default
-
-        .mobile-link.active-light
-            color: #1355ba
-            background-color: #043a711f
-
-        .mobile-link.active-dark
-            color: #98c1fa
-            background-color: #043a7152
 
 .sidebar-container-light
     background-color: #d9dbe2

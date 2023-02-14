@@ -1,5 +1,6 @@
 import React, { useEffect, useCallback, useState, useContext } from 'react';
 import moment from 'moment/moment';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { PropagateLoader } from 'react-spinners';
 import { toast, ToastContainer } from 'react-toastify';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -10,6 +11,7 @@ import './dashboard.sass';
 
 // Components
 import {
+    SwipeableMenu,
     ActivityDialog,
     AlertDialog,
     ContactDialog,
@@ -29,6 +31,7 @@ const DashboardPage = () => {
     const { state } = useLocation();
     const { displayName } = state || {};
     const { theme } = useContext(ThemeContext);
+    const [openDrawer, setOpenDrawer] = useState(false);
     const [loaded, setLoaded] = useState(false);
     const [activeTab, setActiveTab] = useState('tab1');
     const [currentYear, setCurrentYear] = useState(moment().year());
@@ -44,6 +47,11 @@ const DashboardPage = () => {
     const [origin, setOrigin] = useState('');
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const matches = useMediaQuery('(max-width: 960px)');
+
+    const toggleDrawer = (open) => {
+        setOpenDrawer(open);
+    }
 
     const fetchData = useCallback(async () => {
         const jobsRef = collection(db, "jobs");
@@ -139,6 +147,15 @@ const DashboardPage = () => {
     return user && loaded ? (
         <>
             <div className="dashboard-container">
+                {matches &&
+                    <SwipeableMenu
+                        open={openDrawer}
+                        toggleDrawer={toggleDrawer}
+                        activeTab={activeTab}
+                        setActiveTab={setActiveTab}
+                        displayName={displayName}
+                    />
+                }
                 <Sidebar
                     activeTab={activeTab}
                     setActiveTab={setActiveTab}

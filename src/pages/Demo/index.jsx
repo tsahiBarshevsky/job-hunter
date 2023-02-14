@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import moment from 'moment/moment';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { useLocation } from 'react-router-dom';
 import { PropagateLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
@@ -10,6 +11,7 @@ import './demo.sass';
 
 // Components
 import {
+    SwipeableMenu,
     ActivityDialog,
     AlertDialog,
     ContactDialog,
@@ -24,6 +26,7 @@ const DemoPage = () => {
     const { theme } = useContext(ThemeContext);
     const { state } = useLocation();
     const { displayName } = state || {};
+    const [openDrawer, setOpenDrawer] = useState(false);
     const [loaded, setLoaded] = useState(false);
     const [activeTab, setActiveTab] = useState('tab1');
     const [currentYear, setCurrentYear] = useState(moment().year());
@@ -38,6 +41,11 @@ const DemoPage = () => {
     const [openAlertDialog, setOpenAlertDialog] = useState(false);
     const [origin, setOrigin] = useState('');
     const dispatch = useDispatch();
+    const matches = useMediaQuery('(max-width: 960px)');
+
+    const toggleDrawer = (open) => {
+        setOpenDrawer(open);
+    }
 
     useEffect(() => {
         document.title = `Job Hunter | Demo board`;
@@ -109,10 +117,19 @@ const DemoPage = () => {
     return loaded ? (
         <>
             <div className="demo-container">
+                {matches &&
+                    <SwipeableMenu
+                        open={openDrawer}
+                        toggleDrawer={toggleDrawer}
+                        activeTab={activeTab}
+                        setActiveTab={setActiveTab}
+                        displayName={displayName ? displayName : "Demo user"}
+                    />
+                }
                 <Sidebar
                     activeTab={activeTab}
                     setActiveTab={setActiveTab}
-                    displayName={displayName ? displayName : "User demo"}
+                    displayName={displayName ? displayName : "Demo user"}
                 />
                 {activeTab === 'tab1' ?
                     <Jobs
@@ -121,7 +138,7 @@ const DemoPage = () => {
                         setOpenJobDialog={setOpenJobDialog}
                         setOpenAlertDialog={setOpenAlertDialog}
                         setOrigin={setOrigin}
-                        displayName={displayName ? displayName : "User demo"}
+                        displayName={displayName ? displayName : "Demo user"}
                     />
                     :
                     <Stats
@@ -129,7 +146,7 @@ const DemoPage = () => {
                         setCurrentYear={setCurrentYear}
                         entriesPerPage={entriesPerPage}
                         setEntriesPerPage={setEntriesPerPage}
-                        displayName={displayName ? displayName : "User demo"}
+                        displayName={displayName ? displayName : "Demo user"}
                     />
                 }
             </div>

@@ -1,0 +1,136 @@
+@import '../../styles/_variables'
+
+.main-wrapper
+    display: flex
+    flex-direction: column
+    align-items: center
+    width: 100%
+
+    .logo
+        margin-bottom: 20px
+
+    .logo-link
+        color: white
+        text-decoration: none
+
+    .link
+        display: flex
+        align-items: center
+        justify-content: flex-start
+        width: 90%
+        padding: 10px 25px
+        list-style: none
+        text-align: center
+        cursor: pointer
+        margin: 5px 0
+        border-radius: 10px
+        transition: all 0.5s
+        text-transform: capitalize
+
+        .icon
+            font-size: 20px
+            margin-right: 20px
+
+        .csv-button
+            display: flex
+            flex-direction: row
+            align-items: center
+            justify-content: flex-start
+            text-decoration: none
+            transition: all 0.5s
+
+            #cloud
+                font-size: 20px
+                margin-right: 20px
+
+        .csv-button-light
+            color: black
+
+        .csv-button-dark
+            color: white
+
+    .link-light
+        color: black
+
+        &:hover
+            background-color: #043a711f
+
+    .link-dark
+        color: white
+
+        &:hover
+            background-color: #043a7152
+
+    .link.active
+        cursor: default
+
+    .link.active-light
+        color: #1355ba
+        background-color: #043a711f
+
+    .link.active-dark
+        color: #98c1fa
+        background-color: #043a7152
+
+.user-wrapper
+    display: flex
+    align-items: center
+    justify-content: space-between
+    width: 90%
+    padding: 5px
+    border-radius: 10px
+    margin-bottom: 10px
+    cursor: default
+
+    .wrapper
+        display: flex
+        flex-direction: row
+        align-items: center
+        justify-content: flex-start
+        width: fit-content
+        overflow: hidden
+        text-overflow: ellipsis
+        margin-right: 7px
+
+        .user-image
+            width: 25px
+            height: 25px
+            border-radius: 7px
+            margin-right: 10px
+
+        .user-avatar
+            display: flex
+            align-items: flex-end
+            justify-content: center
+            width: 25px
+            height: 25px
+            border-radius: 7px
+            margin-right: 10px
+
+            .icon
+                font-size: 20px
+
+            .demo-image
+                width: 22px
+                height: 22px
+                margin-bottom: 0.5px
+
+        .user-avatar-light
+            background-color: $box-light
+
+        .user-avatar-dark
+            background-color: $box-dark
+
+.user-wrapper-light
+    color: black
+    border: 1px solid rgba(black, 0.2)
+
+.user-wrapper-dark
+    color: white
+    border: 1px solid rgba(white, 0.2)
+
+.display-name
+    text-transform: capitalize
+
+.email
+    text-transform: lowercase
