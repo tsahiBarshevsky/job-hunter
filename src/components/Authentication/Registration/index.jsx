@@ -50,22 +50,22 @@ const Registration = ({ toggleMode }) => {
         event.preventDefault();
         const errors = formValidation();
         setErrors(errors);
-        // if (errors.email.length === 0 && errors.password.length === 0) {
-        // createUserWithEmailAndPassword(authentication, email.trim(), password.trim())
-        //     .then(async () => {
-        //         updateProfile(authentication.currentUser, {
-        //             displayName: `${firstName.trim()} ${lastName.trim()}`
-        //         });
-        //     })
-        //     .then(() => {
-        //         const displayName = `${firstName.trim()} ${lastName.trim()}`;
-        //         navigate('/dashboard', { state: { displayName } })
-        //     })
-        //     .catch((error) => {
-        //         notify(error.message);
-        //         setDisabled(false);
-        //     });
-        // }
+        if (errors.email.length === 0 && errors.password.length === 0) {
+            createUserWithEmailAndPassword(authentication, email.trim(), password.trim())
+                .then(async () => {
+                    updateProfile(authentication.currentUser, {
+                        displayName: `${firstName.trim()} ${lastName.trim()}`
+                    });
+                })
+                .then(() => {
+                    const displayName = `${firstName.trim()} ${lastName.trim()}`;
+                    navigate('/dashboard', { state: { displayName } })
+                })
+                .catch((error) => {
+                    notify(error.message);
+                    setDisabled(false);
+                });
+        }
     }
 
     const onSignInWithGoogle = () => {
