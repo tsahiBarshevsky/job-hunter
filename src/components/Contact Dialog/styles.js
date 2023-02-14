@@ -1,9 +1,16 @@
 import { makeStyles } from '@mui/styles';
+import { red } from '@mui/material/colors';
 
 export default makeStyles(() => ({
     text: {
         '&&': {
             fontFamily: `'Poppins', sans-serif`
+        }
+    },
+    error: {
+        '&&': {
+            fontFamily: `'Poppins', sans-serif`,
+            color: red[500]
         }
     },
     paper: {

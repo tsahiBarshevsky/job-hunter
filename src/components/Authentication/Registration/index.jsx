@@ -29,26 +29,43 @@ const Registration = ({ toggleMode }) => {
     const [lastName, setLastName] = useState('');
     const [disabled, setDisabled] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const [errors, setErrors] = useState({
+        email: '',
+        password: ''
+    });
     const navigate = useNavigate();
     const classes = useStyles();
     const provider = new GoogleAuthProvider();
 
+    const formValidation = () => {
+        let errors = {};
+        errors = {
+            email: !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email) && email.length > 0 ? "Invalid Email" : '',
+            password: password.length < 6 ? "Password too short" : ''
+        };
+        return errors;
+    }
+
     const onRegister = (event) => {
         event.preventDefault();
-        createUserWithEmailAndPassword(authentication, email.trim(), password.trim())
-            .then(async () => {
-                updateProfile(authentication.currentUser, {
-                    displayName: `${firstName.trim()} ${lastName.trim()}`
-                });
-            })
-            .then(() => {
-                const displayName = `${firstName.trim()} ${lastName.trim()}`;
-                navigate('/dashboard', { state: { displayName } })
-            })
-            .catch((error) => {
-                notify(error.message);
-                setDisabled(false);
-            });
+        const errors = formValidation();
+        setErrors(errors);
+        // if (errors.email.length === 0 && errors.password.length === 0) {
+        // createUserWithEmailAndPassword(authentication, email.trim(), password.trim())
+        //     .then(async () => {
+        //         updateProfile(authentication.currentUser, {
+        //             displayName: `${firstName.trim()} ${lastName.trim()}`
+        //         });
+        //     })
+        //     .then(() => {
+        //         const displayName = `${firstName.trim()} ${lastName.trim()}`;
+        //         navigate('/dashboard', { state: { displayName } })
+        //     })
+        //     .catch((error) => {
+        //         notify(error.message);
+        //         setDisabled(false);
+        //     });
+        // }
     }
 
     const onSignInWithGoogle = () => {
@@ -74,8 +91,16 @@ const Registration = ({ toggleMode }) => {
                 A powerful job tracker
             </Typography>
             <form className="auth-form" onSubmit={onRegister}>
-                <Typography className={classes.text}>Email Address</Typography>
-                <div className={`input-wrapper input-wrapper-${theme} wrapper-space`}>
+                <div className="input-title">
+                    <Typography className={classes.text}>Email Address</Typography>
+                    <Typography className={classes.error} variant="caption">{errors.email}</Typography>
+                </div>
+                <div className={
+                    errors.email.length === 0 ?
+                        `input-wrapper input-wrapper-${theme} wrapper-space`
+                        :
+                        `input-wrapper input-wrapper-error-${theme} wrapper-space`
+                }>
                     <TextField
                         required
                         autoFocus
@@ -95,8 +120,16 @@ const Registration = ({ toggleMode }) => {
                         }}
                     />
                 </div>
-                <Typography className={classes.text}>Password</Typography>
-                <div className={`input-wrapper input-wrapper-${theme} wrapper-space`}>
+                <div className="input-title">
+                    <Typography className={classes.text}>Password</Typography>
+                    <Typography className={classes.error} variant="caption">{errors.password}</Typography>
+                </div>
+                <div className={
+                    errors.password.length === 0 ?
+                        `input-wrapper input-wrapper-${theme} wrapper-space`
+                        :
+                        `input-wrapper input-wrapper-error-${theme} wrapper-space`
+                }>
                     <TextField
                         required
                         value={password}

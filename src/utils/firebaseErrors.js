@@ -9,7 +9,7 @@ const notify = (message) => {
             toast.error('Bad email format');
             break;
         case 'Firebase: Error (auth/user-not-found).':
-            toast.error("Invalid email or doesn't exists");
+            toast.error("Invalid email or user doesn't exists");
             break;
         case 'Firebase: The password is invalid or the user does not have a password. (auth/wrong-password).':
             toast.error("Invalid or incorrect password");

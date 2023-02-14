@@ -26,10 +26,23 @@ const ContactDialog = ({ mode, selectedContact, job, setJob, open, setOpen, setO
     const [email, setEmail] = useState('');
     const [linkedin, setLinkedin] = useState('');
     const [facebook, setFacebook] = useState('');
+    const [errors, setErrors] = useState({
+        phone: '',
+        email: ''
+    });
     const jobs = useSelector(state => state.jobs);
     const location = useLocation();
     const classes = useStyles();
     const dispatch = useDispatch();
+
+    const formValidation = () => {
+        let errors = {};
+        errors = {
+            phone: !/^0\d([\d]{0,1})([-]{0,1})\d{7}$/.test(phone) && phone.length > 0 ? "Invalid Phone" : '',
+            email: !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email) && email.length > 0 ? "Invalid Email" : ''
+        };
+        return errors;
+    }
 
     const resetForm = () => {
         setFirstName('');
@@ -39,6 +52,10 @@ const ContactDialog = ({ mode, selectedContact, job, setJob, open, setOpen, setO
         setEmail('');
         setLinkedin('');
         setFacebook('');
+        setErrors({
+            phone: '',
+            email: ''
+        });
     }
 
     const handleClose = () => {
@@ -49,41 +66,45 @@ const ContactDialog = ({ mode, selectedContact, job, setJob, open, setOpen, setO
 
     const onAddNewContact = async (event) => {
         event.preventDefault();
-        const jobRef = doc(db, "jobs", job.id);
-        const contact = {
-            id: uuidv4(),
-            firstName: firstName,
-            lastName: lastName,
-            role: role,
-            phone: phone,
-            email: email,
-            linkedin: linkedin,
-            facebook: facebook
-        };
-        try {
-            const step = {
-                action: `Contact added: ${firstName} ${lastName}`,
-                date: new Date()
+        const errors = formValidation();
+        setErrors(errors);
+        if (errors.phone.length === 0 && errors.email.length === 0) {
+            const jobRef = doc(db, "jobs", job.id);
+            const contact = {
+                id: uuidv4(),
+                firstName: firstName,
+                lastName: lastName,
+                role: role,
+                phone: phone,
+                email: email,
+                linkedin: linkedin,
+                facebook: facebook
             };
-            const index = jobs[job.status].items.findIndex((item) => item.id === job.id);
-            const updatedJob = update(job, {
-                contacts: { $push: [contact] },
-                timeline: { $push: [step] }
-            });
-            if (location.pathname !== '/demo') {
-                await updateDoc(jobRef, {
-                    contacts: updatedJob.contacts,
-                    timeline: updatedJob.timeline
+            try {
+                const step = {
+                    action: `Contact added: ${firstName} ${lastName}`,
+                    date: new Date()
+                };
+                const index = jobs[job.status].items.findIndex((item) => item.id === job.id);
+                const updatedJob = update(job, {
+                    contacts: { $push: [contact] },
+                    timeline: { $push: [step] }
                 });
+                if (location.pathname !== '/demo') {
+                    await updateDoc(jobRef, {
+                        contacts: updatedJob.contacts,
+                        timeline: updatedJob.timeline
+                    });
+                }
+                dispatch(addNewContact(job.status, index, contact));
+                dispatch(addStepToTimeline(job.status, index, step));
+                setJob(updatedJob);
+                handleClose();
             }
-            dispatch(addNewContact(job.status, index, contact));
-            dispatch(addStepToTimeline(job.status, index, step));
-            setJob(updatedJob);
-            handleClose();
-        }
-        catch (error) {
-            console.log(error.message);
-            toast.error('An unexpected error occurred');
+            catch (error) {
+                console.log(error.message);
+                toast.error('An unexpected error occurred');
+            }
         }
     }
 
@@ -232,14 +253,17 @@ const ContactDialog = ({ mode, selectedContact, job, setJob, open, setOpen, setO
                     />
                     <div className="input-title">
                         <Typography className={classes.text} variant="subtitle1">Phone</Typography>
+                        <Typography className={classes.error} variant="caption">{errors.phone}</Typography>
                     </div>
                     <TextField
                         value={phone}
+                        error={errors.phone.length > 0}
                         onChange={(e) => setPhone(e.target.value)}
                         variant="outlined"
                         className={clsx(classes.input, classes.margin)}
                         autoComplete="off"
                         placeholder="Phone"
+                        type="tel"
                         inputProps={{ maxLength: 10 }}
                         InputProps={{
                             classes: {
@@ -249,14 +273,17 @@ const ContactDialog = ({ mode, selectedContact, job, setJob, open, setOpen, setO
                     />
                     <div className="input-title">
                         <Typography className={classes.text} variant="subtitle1">Email</Typography>
+                        <Typography className={classes.error} variant="caption">{errors.email}</Typography>
                     </div>
                     <TextField
                         value={email}
+                        error={errors.email.length > 0}
                         onChange={(e) => setEmail(e.target.value)}
                         variant="outlined"
                         className={clsx(classes.input, classes.margin)}
                         autoComplete="off"
                         placeholder="Email"
+                        type="email"
                         InputProps={{
                             classes: {
                                 input: classes.text

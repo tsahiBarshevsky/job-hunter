@@ -1,4 +1,5 @@
 import { makeStyles } from '@mui/styles';
+import { red } from '@mui/material/colors';
 
 export default makeStyles(() => ({
     text: {
@@ -6,12 +7,18 @@ export default makeStyles(() => ({
             fontFamily: `'Poppins', sans-serif`
         }
     },
+    error: {
+        '&&': {
+            fontFamily: `'Poppins', sans-serif`,
+            color: red[500]
+        }
+    },
     input: {
         '&&': {
             width: '100%'
         }
     },
-    salary:{
+    salary: {
         '& input[type=number]': {
             '-moz-appearance': 'textfield'
         },

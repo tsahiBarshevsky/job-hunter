@@ -24,18 +24,35 @@ const Login = ({ toggleMode }) => {
     const [password, setPassword] = useState('');
     const [disabled, setDisabled] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const [errors, setErrors] = useState({
+        email: '',
+        password: ''
+    });
     const navigate = useNavigate();
     const classes = useStyles();
     const provider = new GoogleAuthProvider();
 
+    const formValidation = () => {
+        let errors = {};
+        errors = {
+            email: !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email) && email.length > 0 ? "Invalid Email" : '',
+            password: password.length < 6 ? "Password too short" : ''
+        };
+        return errors;
+    }
+
     const onSignIn = (event) => {
         event.preventDefault();
-        signInWithEmailAndPassword(authentication, email.trim(), password.trim())
-            .then(() => navigate('/dashboard'))
-            .catch((error) => {
-                notify(error.message);
-                setDisabled(false);
-            })
+        const errors = formValidation();
+        setErrors(errors);
+        if (errors.email.length === 0 && errors.password.length === 0) {
+            signInWithEmailAndPassword(authentication, email.trim(), password.trim())
+                .then(() => navigate('/dashboard'))
+                .catch((error) => {
+                    notify(error.message);
+                    setDisabled(false);
+                })
+        }
     }
 
     const onSignInWithGoogle = () => {
@@ -61,8 +78,16 @@ const Login = ({ toggleMode }) => {
                 A powerful job tracker
             </Typography>
             <form onSubmit={onSignIn}>
-                <Typography className={classes.text}>Email Address</Typography>
-                <div className={`input-wrapper input-wrapper-${theme} wrapper-space`}>
+                <div className="input-title">
+                    <Typography className={classes.text}>Email Address</Typography>
+                    <Typography className={classes.error} variant="caption">{errors.email}</Typography>
+                </div>
+                <div className={
+                    errors.email.length === 0 ?
+                        `input-wrapper input-wrapper-${theme} wrapper-space`
+                        :
+                        `input-wrapper input-wrapper-error-${theme} wrapper-space`
+                }>
                     <TextField
                         required
                         autoFocus
@@ -82,8 +107,16 @@ const Login = ({ toggleMode }) => {
                         }}
                     />
                 </div>
-                <Typography className={classes.text}>Password</Typography>
-                <div className={`input-wrapper input-wrapper-${theme}`}>
+                <div className="input-title">
+                    <Typography className={classes.text}>Password</Typography>
+                    <Typography className={classes.error} variant="caption">{errors.password}</Typography>
+                </div>
+                <div className={
+                    errors.password.length === 0 ?
+                        `input-wrapper input-wrapper-${theme}`
+                        :
+                        `input-wrapper input-wrapper-error-${theme}`
+                }>
                     <TextField
                         required
                         value={password}

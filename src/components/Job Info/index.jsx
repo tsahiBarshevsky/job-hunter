@@ -31,19 +31,47 @@ const JobInfo = ({ job, handleClose, setOpenAlertDialog, setOrigin }) => {
     const [url, setUrl] = useState('');
     const [description, setDescription] = useState('');
     const [deadline, setDeadline] = useState(null);
+    const [errors, setErrors] = useState({
+        salary: '',
+        url: ''
+    });
     const jobs = useSelector(state => state.jobs);
     const stats = useSelector(state => state.stats);
     const route = useLocation();
     const dispatch = useDispatch();
     const classes = useStyles();
 
+    const formValidation = () => {
+        let errors = {};
+        errors = {
+            salary: salary <= 0 && salary.length > 0 ? "Must be a positive number" : '',
+            url: !/^(ftp|http|https):\/\/[^ "]+$/.test(url) && url.length > 0 ? "Invalid URL" : ''
+        };
+        return errors;
+    }
+
     const onEditJob = async (event) => {
         event.preventDefault();
-        const jobRef = doc(db, "jobs", job.id);
-        try {
-            // Update document on Firestore
-            if (route.pathname !== '/demo') {
-                await updateDoc(jobRef, {
+        const errors = formValidation();
+        setErrors(errors);
+        if (errors.salary.length === 0 && errors.url.length === 0) {
+            const jobRef = doc(db, "jobs", job.id);
+            try {
+                // Update document on Firestore
+                if (route.pathname !== '/demo') {
+                    await updateDoc(jobRef, {
+                        title: title,
+                        company: company,
+                        location: location,
+                        salary: salary,
+                        url: url,
+                        description: description,
+                        deadline: deadline ? new Date(deadline) : null
+                    });
+                }
+                const index = jobs[job.status].items.findIndex((item) => item.id === job.id);
+                const statIndex = stats.findIndex((item) => item.id === job.id);
+                const editedJob = {
                     title: title,
                     company: company,
                     location: location,
@@ -51,27 +79,16 @@ const JobInfo = ({ job, handleClose, setOpenAlertDialog, setOrigin }) => {
                     url: url,
                     description: description,
                     deadline: deadline ? new Date(deadline) : null
-                });
+                };
+                dispatch(updateJob(job.status, index, editedJob)); // Update store
+                dispatch(updateStat(statIndex, title, company, location, salary, url)); // Update store
+                handleClose();
+                toast.success(`${title} edited successfully`);
             }
-            const index = jobs[job.status].items.findIndex((item) => item.id === job.id);
-            const statIndex = stats.findIndex((item) => item.id === job.id);
-            const editedJob = {
-                title: title,
-                company: company,
-                location: location,
-                salary: salary,
-                url: url,
-                description: description,
-                deadline: deadline ? new Date(deadline) : null
-            };
-            dispatch(updateJob(job.status, index, editedJob)); // Update store
-            dispatch(updateStat(statIndex, title, company, location, salary, url)); // Update store
-            handleClose();
-            toast.success(`${title} edited successfully`);
-        }
-        catch (error) {
-            console.log(error.message);
-            toast.error('An unexpected error occurred');
+            catch (error) {
+                console.log(error.message);
+                toast.error('An unexpected error occurred');
+            }
         }
     }
 
@@ -161,13 +178,14 @@ const JobInfo = ({ job, handleClose, setOpenAlertDialog, setOrigin }) => {
                 <div className="input-wrapper space-left">
                     <div className="input-title">
                         <Typography className={classes.text} variant="subtitle1">Salary</Typography>
+                        <Typography className={classes.error} variant="caption">{errors.salary}</Typography>
                     </div>
                     <TextField
                         value={salary}
+                        error={errors.salary.length > 0}
                         onChange={(e) => setSalary(e.target.value)}
                         variant="outlined"
                         type="number"
-                        inputProps={{ min: 1 }}
                         autoComplete="off"
                         placeholder="Salary"
                         className={clsx(classes.input, classes.salary)}
@@ -182,9 +200,11 @@ const JobInfo = ({ job, handleClose, setOpenAlertDialog, setOrigin }) => {
                 <div className="input-wrapper space-right">
                     <div className="input-title">
                         <Typography className={classes.text} variant="subtitle1">URL</Typography>
+                        <Typography className={classes.error} variant="caption">{errors.url}</Typography>
                     </div>
                     <TextField
                         value={url}
+                        error={errors.url.length > 0}
                         onChange={(e) => setUrl(e.target.value)}
                         variant="outlined"
                         autoComplete="off"
