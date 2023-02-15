@@ -19,7 +19,8 @@ import {
     JobDialog,
     Jobs,
     Sidebar,
-    Stats
+    Stats,
+    ContactsTab
 } from '../../components';
 
 const DemoPage = () => {
@@ -40,6 +41,7 @@ const DemoPage = () => {
     const [openActivityDialog, setOpenActivityDialog] = useState(false);
     const [openAlertDialog, setOpenAlertDialog] = useState(false);
     const [origin, setOrigin] = useState('');
+    const [contactOrigin, setContactOrigin] = useState('');
     const dispatch = useDispatch();
     const matches = useMediaQuery('(max-width: 960px)');
 
@@ -131,24 +133,45 @@ const DemoPage = () => {
                     setActiveTab={setActiveTab}
                     displayName={displayName ? displayName : "Demo user"}
                 />
-                {activeTab === 'tab1' ?
-                    <Jobs
-                        setJob={setJob}
-                        setOpenInsertionDialog={setOpenInsertionDialog}
-                        setOpenJobDialog={setOpenJobDialog}
-                        setOpenAlertDialog={setOpenAlertDialog}
-                        setOrigin={setOrigin}
-                        displayName={displayName ? displayName : "Demo user"}
-                    />
-                    :
-                    <Stats
-                        currentYear={currentYear}
-                        setCurrentYear={setCurrentYear}
-                        entriesPerPage={entriesPerPage}
-                        setEntriesPerPage={setEntriesPerPage}
-                        displayName={displayName ? displayName : "Demo user"}
-                    />
-                }
+                {(() => {
+                    switch (activeTab) {
+                        case 'tab1':
+                            return (
+                                <Jobs
+                                    setJob={setJob}
+                                    setOpenInsertionDialog={setOpenInsertionDialog}
+                                    setOpenJobDialog={setOpenJobDialog}
+                                    setOpenAlertDialog={setOpenAlertDialog}
+                                    setOrigin={setOrigin}
+                                    setContactOrigin={setContactOrigin}
+                                    displayName={displayName ? displayName : "Demo user"}
+                                />
+                            );
+                        case 'tab2':
+                            return (
+                                <Stats
+                                    currentYear={currentYear}
+                                    setCurrentYear={setCurrentYear}
+                                    entriesPerPage={entriesPerPage}
+                                    setEntriesPerPage={setEntriesPerPage}
+                                    displayName={displayName ? displayName : "Demo user"}
+                                />
+                            );
+                        case 'tab3':
+                            return (
+                                <ContactsTab
+                                    displayName={displayName ? displayName : "Demo user"}
+                                    setMode={setMode}
+                                    setJob={setJob}
+                                    setSelectedContact={setSelectedContact}
+                                    setOpenContactDialog={setOpenContactDialog}
+                                    setContactOrigin={setContactOrigin}
+                                />
+                            );
+                        default:
+                            return null;
+                    }
+                })()}
             </div>
             {/* Dialogs */}
             <InsertionDialog
@@ -182,6 +205,7 @@ const DemoPage = () => {
                 open={openContactDialog}
                 setOpen={setOpenContactDialog}
                 setOpenJobDialog={setOpenJobDialog}
+                contactOrigin={contactOrigin}
             />
             <AlertDialog
                 open={openAlertDialog}

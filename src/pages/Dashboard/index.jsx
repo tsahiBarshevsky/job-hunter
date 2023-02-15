@@ -19,7 +19,8 @@ import {
     JobDialog,
     Jobs,
     Sidebar,
-    Stats
+    Stats,
+    ContactsTab
 } from '../../components';
 
 // Firebase
@@ -45,6 +46,7 @@ const DashboardPage = () => {
     const [openActivityDialog, setOpenActivityDialog] = useState(false);
     const [openAlertDialog, setOpenAlertDialog] = useState(false);
     const [origin, setOrigin] = useState('');
+    const [contactOrigin, setContactOrigin] = useState('');
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const matches = useMediaQuery('(max-width: 960px)');
@@ -161,24 +163,45 @@ const DashboardPage = () => {
                     setActiveTab={setActiveTab}
                     displayName={displayName}
                 />
-                {activeTab === 'tab1' ?
-                    <Jobs
-                        setJob={setJob}
-                        setOpenInsertionDialog={setOpenInsertionDialog}
-                        setOpenJobDialog={setOpenJobDialog}
-                        setOpenAlertDialog={setOpenAlertDialog}
-                        setOrigin={setOrigin}
-                        displayName={displayName}
-                    />
-                    :
-                    <Stats
-                        currentYear={currentYear}
-                        setCurrentYear={setCurrentYear}
-                        entriesPerPage={entriesPerPage}
-                        setEntriesPerPage={setEntriesPerPage}
-                        displayName={displayName}
-                    />
-                }
+                {(() => {
+                    switch (activeTab) {
+                        case 'tab1':
+                            return (
+                                <Jobs
+                                    setJob={setJob}
+                                    setOpenInsertionDialog={setOpenInsertionDialog}
+                                    setOpenJobDialog={setOpenJobDialog}
+                                    setOpenAlertDialog={setOpenAlertDialog}
+                                    setOrigin={setOrigin}
+                                    setContactOrigin={setContactOrigin}
+                                    displayName={displayName}
+                                />
+                            );
+                        case 'tab2':
+                            return (
+                                <Stats
+                                    currentYear={currentYear}
+                                    setCurrentYear={setCurrentYear}
+                                    entriesPerPage={entriesPerPage}
+                                    setEntriesPerPage={setEntriesPerPage}
+                                    displayName={displayName}
+                                />
+                            );
+                        case 'tab3':
+                            return (
+                                <ContactsTab
+                                    displayName={displayName}
+                                    setMode={setMode}
+                                    setJob={setJob}
+                                    setSelectedContact={setSelectedContact}
+                                    setOpenContactDialog={setOpenContactDialog}
+                                    setContactOrigin={setContactOrigin}
+                                />
+                            );
+                        default:
+                            return null;
+                    }
+                })()}
             </div>
             {/* Dialogs */}
             <InsertionDialog
@@ -212,6 +235,7 @@ const DashboardPage = () => {
                 open={openContactDialog}
                 setOpen={setOpenContactDialog}
                 setOpenJobDialog={setOpenJobDialog}
+                contactOrigin={contactOrigin}
             />
             <AlertDialog
                 open={openAlertDialog}

@@ -77,11 +77,11 @@ const Table = ({ entriesPerPage, setEntriesPerPage }) => {
                                 <td className="created">
                                     {Object.keys(job.created).length === 0 ?
                                         <Typography className={classes.text} variant='body2'>
-                                            {moment(job.created).format('DD/MM/YYYY')}
+                                            {moment(job.created).format('DD/MM/YYYY HH:mm')}
                                         </Typography>
                                         :
                                         <Typography className={classes.text} variant='body2'>
-                                            {moment.unix(job.created.seconds).format('DD/MM/YYYY')}
+                                            {moment.unix(job.created.seconds).format('DD/MM/YYYY HH:mm')}
                                         </Typography>
                                     }
                                 </td>

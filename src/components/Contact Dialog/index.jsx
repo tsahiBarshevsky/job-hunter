@@ -17,7 +17,7 @@ import './contactDialog.sass';
 import { db } from '../../utils/firebase';
 import { doc, updateDoc } from 'firebase/firestore/lite';
 
-const ContactDialog = ({ mode, selectedContact, job, setJob, open, setOpen, setOpenJobDialog }) => {
+const ContactDialog = ({ mode, selectedContact, job, setJob, open, setOpen, setOpenJobDialog, contactOrigin }) => {
     const { theme } = useContext(ThemeContext);
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -60,7 +60,8 @@ const ContactDialog = ({ mode, selectedContact, job, setJob, open, setOpen, setO
 
     const handleClose = () => {
         setOpen(false);
-        setOpenJobDialog(true);
+        if (contactOrigin === 'jobs')
+            setOpenJobDialog(true);
         resetForm();
     }
 
@@ -110,42 +111,46 @@ const ContactDialog = ({ mode, selectedContact, job, setJob, open, setOpen, setO
 
     const onEditContact = async (event) => {
         event.preventDefault();
-        const jobRef = doc(db, "jobs", job.id);
-        const contact = {
-            firstName: firstName,
-            lastName: lastName,
-            role: role,
-            phone: phone,
-            email: email,
-            linkedin: linkedin,
-            facebook: facebook
-        };
-        try {
-            const index = jobs[job.status].items.findIndex((item) => item.id === job.id);
-            const contactIndex = job.contacts.findIndex((item) => item.id === selectedContact.id);
-            const updatedJob = update(job, {
-                contacts: {
-                    [contactIndex]: {
-                        $merge: {
-                            firstName: firstName,
-                            lastName: lastName,
-                            phone: phone,
-                            email: email,
-                            linkedin: linkedin,
-                            facebook: facebook
+        const errors = formValidation();
+        setErrors(errors);
+        if (errors.phone.length === 0 && errors.email.length === 0) {
+            const jobRef = doc(db, "jobs", job.id);
+            const contact = {
+                firstName: firstName,
+                lastName: lastName,
+                role: role,
+                phone: phone,
+                email: email,
+                linkedin: linkedin,
+                facebook: facebook
+            };
+            try {
+                const index = jobs[job.status].items.findIndex((item) => item.id === job.id);
+                const contactIndex = job.contacts.findIndex((item) => item.id === selectedContact.id);
+                const updatedJob = update(job, {
+                    contacts: {
+                        [contactIndex]: {
+                            $merge: {
+                                firstName: firstName,
+                                lastName: lastName,
+                                phone: phone,
+                                email: email,
+                                linkedin: linkedin,
+                                facebook: facebook
+                            }
                         }
                     }
-                }
-            });
-            if (location.pathname !== '/demo')
-                await updateDoc(jobRef, { contacts: updatedJob.contacts });
-            dispatch(updateContact(job.status, index, contact, contactIndex));
-            setJob(updatedJob);
-            handleClose();
-        }
-        catch (error) {
-            console.log(error.message);
-            toast.error('An unexpected error occurred');
+                });
+                if (location.pathname !== '/demo')
+                    await updateDoc(jobRef, { contacts: updatedJob.contacts });
+                dispatch(updateContact(job.status, index, contact, contactIndex));
+                setJob(updatedJob);
+                handleClose();
+            }
+            catch (error) {
+                console.log(error.message);
+                toast.error('An unexpected error occurred');
+            }
         }
     }
 

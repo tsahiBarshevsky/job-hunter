@@ -7,6 +7,7 @@ import { MdDashboard } from 'react-icons/md';
 import { IoStatsChart } from 'react-icons/io5';
 import { IoMdSettings } from 'react-icons/io';
 import { BiUser } from 'react-icons/bi';
+import { FiUsers } from 'react-icons/fi';
 import { useAuth } from '../../utils/context';
 import { ThemeContext } from '../../utils/themeContext';
 import { resetJobs } from '../../store/actions/jobs';
@@ -79,6 +80,13 @@ const Sidebar = ({ activeTab, setActiveTab, displayName }) => {
                     >
                         <IoStatsChart className="icon" />
                         <Typography className={classes.text}>Metrics</Typography>
+                    </li>
+                    <li
+                        onClick={() => setActiveTab('tab3')}
+                        className={activeTab === 'tab3' ? `link link-${theme} active active-${theme}` : `link link-${theme}`}
+                    >
+                        <FiUsers className="icon" />
+                        <Typography className={classes.text}>Contacts</Typography>
                     </li>
                 </ul>
             </div>

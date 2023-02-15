@@ -10,7 +10,7 @@ import { MdDashboard } from 'react-icons/md';
 import { IoStatsChart } from 'react-icons/io5';
 import { AiOutlineCloudDownload } from 'react-icons/ai';
 import { BsSunFill, BsFillMoonFill } from 'react-icons/bs';
-import { FiLogOut } from 'react-icons/fi';
+import { FiLogOut, FiUsers } from 'react-icons/fi';
 import { BiUser } from 'react-icons/bi';
 import { resetJobs } from '../../store/actions/jobs';
 import { resetStats } from '../../store/actions/stats';
@@ -53,7 +53,6 @@ const useStyles = makeStyles(() => ({
 }));
 
 const SwipeableMenu = ({ open, toggleDrawer, activeTab, setActiveTab, displayName }) => {
-    console.log('displayName', displayName)
     const { user } = useAuth();
     const { theme, toggleTheme } = useContext(ThemeContext);
     const classes = useStyles();
@@ -137,8 +136,18 @@ const SwipeableMenu = ({ open, toggleDrawer, activeTab, setActiveTab, displayNam
                         }}
                         className={activeTab === 'tab2' ? `link link-${theme} active active-${theme}` : `link link-${theme}`}
                     >
-                        <IoStatsChart className="icon" />
+                        <FiUsers className="icon" />
                         <Typography className={classes.text}>Metrics</Typography>
+                    </ListItem>
+                    <ListItem
+                        onClick={() => {
+                            setActiveTab('tab3');
+                            toggleDrawer(false);
+                        }}
+                        className={activeTab === 'tab3' ? `link link-${theme} active active-${theme}` : `link link-${theme}`}
+                    >
+                        <IoStatsChart className="icon" />
+                        <Typography className={classes.text}>Contacts</Typography>
                     </ListItem>
                     <ListItem className="link">
                         <CSVLink {...csvReport} className={`csv-button csv-button-${theme}`}>

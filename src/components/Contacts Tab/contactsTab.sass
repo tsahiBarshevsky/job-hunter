@@ -1,0 +1,46 @@
+@import '../../styles/_variables'
+
+.contacts-tab-container
+    display: flex
+    flex-direction: column
+    justify-content: flex-start
+    align-items: flex-start
+    width: calc( 100% - #{$sidebar-width} )
+    height: 100vh
+    padding: 0 20px 10px 20px
+    overflow-y: auto
+
+    @media screen and ( max-width: $sm )
+        width: 100%
+
+    .contacts-tab-header
+        display: flex
+        align-items: flex-start
+        justify-content: space-between
+        width: 100%
+        padding: 15px 0
+        cursor: default
+
+    .cards
+        display: grid
+        grid-template-columns: repeat(6, 1fr)
+        grid-column-gap: 15px
+        grid-row-gap: 10px
+
+        @media screen and ( max-width: 1630px )
+            grid-template-columns: repeat(4, 1fr)
+
+        @media screen and ( max-width: 1265px )
+            grid-template-columns: repeat(3, 1fr)
+
+        @media screen and ( max-width: 700px )
+            grid-template-columns: repeat(2, 1fr)
+
+        @media screen and ( max-width: $xs )
+            grid-template-columns: repeat(1, 1fr)
+
+.contacts-tab-container-light
+    background-color: $background-light
+
+.contacts-tab-container-dark
+    background-color: $background-dark
