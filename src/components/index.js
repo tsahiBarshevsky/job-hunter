@@ -11,3 +11,4 @@ export { default as Login } from './Authentication/Login';
 export { default as Registration } from './Authentication/Registration';
 export { default as SwipeableMenu } from './Swipeable Menu';
 export { default as ContactsTab } from './Contacts Tab';
+export { default as ActivitiesTab } from './Activities Tabs';

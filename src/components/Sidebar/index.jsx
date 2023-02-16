@@ -8,6 +8,7 @@ import { IoStatsChart } from 'react-icons/io5';
 import { IoMdSettings } from 'react-icons/io';
 import { BiUser } from 'react-icons/bi';
 import { FiUsers } from 'react-icons/fi';
+import { GoListUnordered } from 'react-icons/go';
 import { useAuth } from '../../utils/context';
 import { ThemeContext } from '../../utils/themeContext';
 import { resetJobs } from '../../store/actions/jobs';
@@ -87,6 +88,13 @@ const Sidebar = ({ activeTab, setActiveTab, displayName }) => {
                     >
                         <FiUsers className="icon" />
                         <Typography className={classes.text}>Contacts</Typography>
+                    </li>
+                    <li
+                        onClick={() => setActiveTab('tab4')}
+                        className={activeTab === 'tab4' ? `link link-${theme} active active-${theme}` : `link link-${theme}`}
+                    >
+                        <GoListUnordered className="icon" />
+                        <Typography className={classes.text}>Activities</Typography>
                     </li>
                 </ul>
             </div>

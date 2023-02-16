@@ -11,6 +11,7 @@ import { IoStatsChart } from 'react-icons/io5';
 import { AiOutlineCloudDownload } from 'react-icons/ai';
 import { BsSunFill, BsFillMoonFill } from 'react-icons/bs';
 import { FiLogOut, FiUsers } from 'react-icons/fi';
+import { GoListUnordered } from 'react-icons/go';
 import { BiUser } from 'react-icons/bi';
 import { resetJobs } from '../../store/actions/jobs';
 import { resetStats } from '../../store/actions/stats';
@@ -148,6 +149,16 @@ const SwipeableMenu = ({ open, toggleDrawer, activeTab, setActiveTab, displayNam
                     >
                         <IoStatsChart className="icon" />
                         <Typography className={classes.text}>Contacts</Typography>
+                    </ListItem>
+                    <ListItem
+                        onClick={() => {
+                            setActiveTab('tab4');
+                            toggleDrawer(false);
+                        }}
+                        className={activeTab === 'tab4' ? `link link-${theme} active active-${theme}` : `link link-${theme}`}
+                    >
+                        <GoListUnordered className="icon" />
+                        <Typography className={classes.text}>Activities</Typography>
                     </ListItem>
                     <ListItem className="link">
                         <CSVLink {...csvReport} className={`csv-button csv-button-${theme}`}>

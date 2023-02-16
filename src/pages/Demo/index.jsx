@@ -20,7 +20,8 @@ import {
     Jobs,
     Sidebar,
     Stats,
-    ContactsTab
+    ContactsTab,
+    ActivitiesTab
 } from '../../components';
 
 const DemoPage = () => {
@@ -166,6 +167,12 @@ const DemoPage = () => {
                                     setSelectedContact={setSelectedContact}
                                     setOpenContactDialog={setOpenContactDialog}
                                     setContactOrigin={setContactOrigin}
+                                />
+                            );
+                        case 'tab4':
+                            return (
+                                <ActivitiesTab
+                                    displayName={displayName ? displayName : "Demo user"}
                                 />
                             );
                         default:

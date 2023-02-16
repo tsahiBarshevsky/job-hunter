@@ -20,7 +20,8 @@ import {
     Jobs,
     Sidebar,
     Stats,
-    ContactsTab
+    ContactsTab,
+    ActivitiesTab
 } from '../../components';
 
 // Firebase
@@ -196,6 +197,12 @@ const DashboardPage = () => {
                                     setSelectedContact={setSelectedContact}
                                     setOpenContactDialog={setOpenContactDialog}
                                     setContactOrigin={setContactOrigin}
+                                />
+                            );
+                        case 'tab4':
+                            return (
+                                <ActivitiesTab
+                                    displayName={displayName}
                                 />
                             );
                         default:
