@@ -27,7 +27,7 @@ const StyledBadge = styled(Badge)(() => ({
 }));
 
 const Tabs = ({ activeTab, setActiveTab, job }) => {
-    const activites = job.activites.length;
+    const activities = job.activities.length;
     const notes = job.notes.length;
     const contacts = job.contacts.length;
     const classes = useStyles();
@@ -50,7 +50,7 @@ const Tabs = ({ activeTab, setActiveTab, job }) => {
                     onClick={() => onChangeTab('tab2')}
                     className={activeTab === 'tab2' ? "tab-link active" : "tab-link"}
                 >
-                    <StyledBadge badgeContent={activites} max={9}>
+                    <StyledBadge badgeContent={activities} max={9}>
                         <GoListUnordered size={20} />
                         <Typography className={classes.text} variant="subtitle2">Activities</Typography>
                     </StyledBadge>
@@ -85,7 +85,7 @@ const Tabs = ({ activeTab, setActiveTab, job }) => {
                     onClick={() => onChangeTab('tab2')}
                     className={activeTab === 'tab2' ? "tab-mobile-link active" : "tab-mobile-link"}
                 >
-                    <StyledBadge badgeContent={activites} max={9}>
+                    <StyledBadge badgeContent={activities} max={9}>
                         <GoListUnordered size={20} />
                     </StyledBadge>
                 </li>

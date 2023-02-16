@@ -63,7 +63,7 @@ const Activities = ({ job, setJob, setOpenJobDialog, setOpenActivityDialog }) =>
                     date: new Date()
                 };
                 updatedJob = update(job, {
-                    activites: {
+                    activities: {
                         [activityIndex]: {
                             $merge: {
                                 completed: isCompleted
@@ -74,7 +74,7 @@ const Activities = ({ job, setJob, setOpenJobDialog, setOpenActivityDialog }) =>
                 });
                 if (location.pathname !== '/demo') {
                     await updateDoc(jobRef, {
-                        activites: updatedJob.activites,
+                        activities: updatedJob.activities,
                         timeline: updatedJob.timeline
                     });
                 }
@@ -82,7 +82,7 @@ const Activities = ({ job, setJob, setOpenJobDialog, setOpenActivityDialog }) =>
             }
             else {
                 updatedJob = update(job, {
-                    activites: {
+                    activities: {
                         [activityIndex]: {
                             $merge: {
                                 completed: isCompleted
@@ -91,7 +91,7 @@ const Activities = ({ job, setJob, setOpenJobDialog, setOpenActivityDialog }) =>
                     }
                 });
                 if (location.pathname !== '/demo') {
-                    await updateDoc(jobRef, { activites: updatedJob.activites });
+                    await updateDoc(jobRef, { activities: updatedJob.activities });
                 }
             }
             dispatch(updateActivityCompleted(job.status, index, activityIndex, isCompleted));
@@ -112,12 +112,12 @@ const Activities = ({ job, setJob, setOpenJobDialog, setOpenActivityDialog }) =>
             };
             const index = jobs[job.status].items.findIndex((item) => item.id === job.id);
             const updatedJob = update(job, {
-                activites: { $splice: [[activityIndex, 1]] },
+                activities: { $splice: [[activityIndex, 1]] },
                 timeline: { $push: [step] }
             });
             if (location.pathname !== '/demo') {
                 await updateDoc(jobRef, {
-                    activites: updatedJob.activites,
+                    activities: updatedJob.activities,
                     timeline: updatedJob.timeline
                 });
             }
@@ -133,7 +133,7 @@ const Activities = ({ job, setJob, setOpenJobDialog, setOpenActivityDialog }) =>
 
     return Object.keys(job).length > 0 && (
         <div className="activities-container">
-            {job.activites.length === 0 ?
+            {job.activities.length === 0 ?
                 <div className="no-activities">
                     <GoListUnordered className="icon" />
                     <Typography className={classes.text}>
@@ -161,8 +161,8 @@ const Activities = ({ job, setJob, setOpenJobDialog, setOpenActivityDialog }) =>
                         </Button>
                     </div>
                     <Divider className="divider" />
-                    <div className="activites">
-                        {job.activites.map((activity, index) => {
+                    <div className="activities">
+                        {job.activities.map((activity, index) => {
                             return (
                                 <ActivityCard
                                     key={activity.id}

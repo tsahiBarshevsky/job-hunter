@@ -104,7 +104,7 @@ const Table = ({ entriesPerPage, setEntriesPerPage }) => {
                                         rel="noreferrer"
                                         className={`link link-${theme}`}
                                     >
-                                        <Typography className={classes.text} variant='body2'>{job.link}</Typography>
+                                        <Typography className={classes.text} variant='body2'>{job.url}</Typography>
                                     </a>
                                 </td>
                             </tr>

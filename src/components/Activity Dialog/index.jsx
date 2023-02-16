@@ -83,12 +83,12 @@ const ActivityDialog = ({ open, setOpen, job, setJob, setOpenJobDialog }) => {
                 };
                 const index = jobs[job.status].items.findIndex((item) => item.id === job.id);
                 const updatedJob = update(job, {
-                    activites: { $push: [activity] },
+                    activities: { $push: [activity] },
                     timeline: { $push: [step] }
                 });
                 if (location.pathname !== '/demo') {
                     await updateDoc(jobRef, {
-                        activites: updatedJob.activites,
+                        activities: updatedJob.activities,
                         timeline: updatedJob.timeline
                     });
                 }

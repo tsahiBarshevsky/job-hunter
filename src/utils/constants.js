@@ -9,7 +9,7 @@ const statuses = [
     { id: 6, name: 'Not Answered' }
 ];
 
-// List of categories for activites
+// List of categories for activities
 const categories = [
     { id: 0, category: 'got a phone', color: '#0d47a1' },
     { id: 1, category: 'phone interview', color: '#0d47a1' },

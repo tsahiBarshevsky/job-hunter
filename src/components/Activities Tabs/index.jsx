@@ -76,7 +76,7 @@ const ActivitiesTab = ({ displayName, toggleDrawer }) => {
 
     const handleCompletedChange = async (title, isCompleted, jobID, activityID, status) => {
         const job = jobs[status].items.find((item) => item.id === jobID);
-        const activityIndex = job.activites.findIndex((item) => item.id === activityID);
+        const activityIndex = job.activities.findIndex((item) => item.id === activityID);
         const jobRef = doc(db, "jobs", job.id);
         try {
             var updatedJob = {};
@@ -87,7 +87,7 @@ const ActivitiesTab = ({ displayName, toggleDrawer }) => {
                     date: new Date()
                 };
                 updatedJob = update(job, {
-                    activites: {
+                    activities: {
                         [activityIndex]: {
                             $merge: {
                                 completed: isCompleted
@@ -98,7 +98,7 @@ const ActivitiesTab = ({ displayName, toggleDrawer }) => {
                 });
                 if (location.pathname !== '/demo') {
                     await updateDoc(jobRef, {
-                        activites: updatedJob.activites,
+                        activities: updatedJob.activities,
                         timeline: updatedJob.timeline
                     });
                 }
@@ -106,7 +106,7 @@ const ActivitiesTab = ({ displayName, toggleDrawer }) => {
             }
             else {
                 updatedJob = update(job, {
-                    activites: {
+                    activities: {
                         [activityIndex]: {
                             $merge: {
                                 completed: isCompleted
@@ -115,7 +115,7 @@ const ActivitiesTab = ({ displayName, toggleDrawer }) => {
                     }
                 });
                 if (location.pathname !== '/demo') {
-                    await updateDoc(jobRef, { activites: updatedJob.activites });
+                    await updateDoc(jobRef, { activities: updatedJob.activities });
                 }
             }
             dispatch(updateActivityCompleted(job.status, index, activityIndex, isCompleted));
@@ -130,13 +130,13 @@ const ActivitiesTab = ({ displayName, toggleDrawer }) => {
         const arr = [];
         Object.keys(jobs).forEach((status) => {
             jobs[status].items.map((job) =>
-                job.activites.length > 0 &&
+                job.activities.length > 0 &&
                 arr.push({
                     jobID: job.id,
                     title: job.title,
                     status: job.status,
                     company: job.company,
-                    activites: job.activites
+                    activities: job.activities
                 })
             );
         });
@@ -190,7 +190,7 @@ const ActivitiesTab = ({ displayName, toggleDrawer }) => {
                         <tbody>
                             {activities.map((item) => {
                                 return (
-                                    [...item.activites].filter(filterActivities).map((activity, index) => {
+                                    [...item.activities].filter(filterActivities).map((activity, index) => {
                                         return (
                                             <tr key={activity.id}>
                                                 <td style={{ width: 50 }}>

@@ -1,9 +1,7 @@
 [
   {
     "salary": "",
-    "contacts": [
-
-    ],
+    "contacts": [],
     "description": "",
     "deadline": null,
     "title": "Last Year",
@@ -30,12 +28,8 @@
         "action": "Moved to Wishlist"
       }
     ],
-    "activites": [
-
-    ],
-    "notes": [
-
-    ],
+    "activities": [],
+    "notes": [],
     "url": "",
     "id": "0ebb3490-0a2d-40c8-8e5a-85fe95fd5750",
     "status": "Wishlist",
@@ -48,12 +42,8 @@
     "location": ""
   },
   {
-    "notes": [
-
-    ],
-    "activites": [
-
-    ],
+    "notes": [],
+    "activities": [],
     "title": "2023 job",
     "id": "29ed6709-e2fd-44f4-b61b-d49da08c912c",
     "url": "",
@@ -305,20 +295,16 @@
     ],
     "owner": "uxxRips6FGdrDH4Ky5m5l8pZiRH3",
     "deadline": null,
-    "contacts": [
-
-    ],
+    "contacts": [],
     "location": "",
     "salary": "",
     "company": "Company",
-    "notes": [
-
-    ],
+    "notes": [],
     "id": "2b9c99b0-8ed2-4d4c-93f8-d1162a2c6283",
     "status": "Accepted",
     "url": "",
     "title": "Chart",
-    "activites": [
+    "activities": [
       {
         "completed": false,
         "title": "Phone call",
@@ -525,19 +511,13 @@
     "status": "Applied",
     "description": "",
     "owner": "uxxRips6FGdrDH4Ky5m5l8pZiRH3",
-    "contacts": [
-
-    ],
-    "activites": [
-
-    ],
+    "contacts": [],
+    "activities": [],
     "deadline": {
       "seconds": 1675548000,
       "nanoseconds": 0
     },
-    "notes": [
-
-    ]
+    "notes": []
   },
   {
     "created": {
@@ -545,12 +525,8 @@
       "nanoseconds": 192000000
     },
     "title": "Check",
-    "activites": [
-
-    ],
-    "notes": [
-
-    ],
+    "activities": [],
+    "notes": [],
     "url": "",
     "deadline": null,
     "description": "",
@@ -592,9 +568,7 @@
         }
       }
     ],
-    "contacts": [
-
-    ],
+    "contacts": [],
     "id": "50dfd317-285d-4b06-870f-5013295518d6",
     "company": "Check",
     "location": "",
@@ -605,14 +579,10 @@
     "salary": "",
     "owner": "uxxRips6FGdrDH4Ky5m5l8pZiRH3",
     "location": "",
-    "activity": [
-
-    ],
+    "activity": [],
     "url": "https://www.instagram.com/fulltrunkofficial/",
     "description": "",
-    "notes": [
-
-    ],
+    "notes": [],
     "title": "Job 3",
     "timeline": [
       {
@@ -638,12 +608,8 @@
       }
     ],
     "status": "Applied",
-    "contacts": [
-
-    ],
-    "activites": [
-
-    ],
+    "contacts": [],
+    "activities": [],
     "deadline": null,
     "id": "517812c1-40b1-4c3c-9c27-f748d547af95",
     "company": "Company",
@@ -658,23 +624,17 @@
       "nanoseconds": 49000000
     },
     "url": "",
-    "activites": [
-
-    ],
+    "activities": [],
     "company": "ccc",
     "owner": "uxxRips6FGdrDH4Ky5m5l8pZiRH3",
     "status": "Wishlist",
     "title": "Over a year",
     "location": "",
-    "notes": [
-
-    ],
+    "notes": [],
     "salary": "",
     "id": "7ebd6746-eb11-4f17-8533-12582579f12f",
     "deadline": null,
-    "contacts": [
-
-    ],
+    "contacts": [],
     "description": "",
     "timeline": [
       {
@@ -704,9 +664,7 @@
     "salary": "",
     "title": "Job to check",
     "status": "Not Answered",
-    "notes": [
-
-    ],
+    "notes": [],
     "timeline": [
       {
         "action": "Job created",
@@ -752,13 +710,9 @@
       "nanoseconds": 538000000
     },
     "deadline": null,
-    "activites": [
-
-    ],
+    "activities": [],
     "owner": "uxxRips6FGdrDH4Ky5m5l8pZiRH3",
-    "contacts": [
-
-    ],
+    "contacts": [],
     "id": "944ca787-4004-4fc9-9f52-9541cb2f0e34",
     "description": ""
   },
@@ -937,7 +891,7 @@
     "url": "",
     "status": "Applied",
     "id": "a9eade5f-c5b3-4022-ab25-ed6237769139",
-    "activites": [
+    "activities": [
       {
         "title": "Activity",
         "completed": true,
@@ -967,15 +921,11 @@
       "seconds": 1675503801,
       "nanoseconds": 901000000
     },
-    "notes": [
-
-    ],
+    "notes": [],
     "url": "",
     "company": "Comany",
     "owner": "uxxRips6FGdrDH4Ky5m5l8pZiRH3",
-    "contacts": [
-
-    ],
+    "contacts": [],
     "timeline": [
       {
         "date": {
@@ -1017,9 +967,7 @@
     "deadline": null,
     "salary": "130000",
     "status": "In Progress",
-    "activites": [
-
-    ],
+    "activities": [],
     "location": "Tel Aviv",
     "title": "New job",
     "id": "abce4779-7ca3-4b53-8338-190fd0c132b1"
@@ -1031,15 +979,9 @@
     "url": "",
     "status": "Wishlist",
     "company": "local",
-    "contacts": [
-
-    ],
-    "activites": [
-
-    ],
-    "notes": [
-
-    ],
+    "contacts": [],
+    "activities": [],
+    "notes": [],
     "owner": "uxxRips6FGdrDH4Ky5m5l8pZiRH3",
     "created": {
       "seconds": 1676228671,
@@ -1062,21 +1004,15 @@
     "company": "Comapmy",
     "id": "d65e97e5-d968-4706-a2ce-fe3ac7541cc7",
     "location": "",
-    "activites": [
-
-    ],
+    "activities": [],
     "deadline": null,
     "title": "Job 4",
-    "notes": [
-
-    ],
+    "notes": [],
     "salary": "",
     "description": "",
     "owner": "uxxRips6FGdrDH4Ky5m5l8pZiRH3",
     "url": "",
-    "contacts": [
-
-    ],
+    "contacts": [],
     "created": {
       "seconds": 1675178563,
       "nanoseconds": 853000000

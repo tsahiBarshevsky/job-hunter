@@ -100,7 +100,7 @@ const jobsReducer = (state = INITIAL_STATE, action) => {
                 [action.payload.status]: {
                     items: {
                         [action.payload.index]: {
-                            activites: {
+                            activities: {
                                 $push: [action.payload.activity]
                             }
                         }
@@ -112,7 +112,7 @@ const jobsReducer = (state = INITIAL_STATE, action) => {
                 [action.payload.status]: {
                     items: {
                         [action.payload.index]: {
-                            activites: {
+                            activities: {
                                 [action.payload.activityIndex]: {
                                     $merge: {
                                         completed: action.payload.completed
@@ -128,7 +128,7 @@ const jobsReducer = (state = INITIAL_STATE, action) => {
                 [action.payload.status]: {
                     items: {
                         [action.payload.index]: {
-                            activites: {
+                            activities: {
                                 $splice: [[action.payload.activityIndex, 1]]
                             }
                         }

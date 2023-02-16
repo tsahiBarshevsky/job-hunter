@@ -55,7 +55,7 @@ const InsertionDialog = ({ open, setOpen }) => {
             else
                 action = 'Job created';
         const job = {
-            activites: [],
+            activities: [],
             company: company,
             contacts: [],
             created: new Date(),
