@@ -1,11 +1,13 @@
 import React, { useContext } from 'react';
 import moment from 'moment';
 import clsx from 'clsx';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { Typography, FormControl, Select, MenuItem } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useAuth } from '../../utils/context';
 import { ThemeContext } from '../../utils/themeContext';
 import StatBox from '../Stat Box';
+import MobileHeader from '../Mobile Header';
 import useStyles from './styles';
 import './stats.sass';
 
@@ -17,12 +19,13 @@ import Stat4 from '../../assets/weekly-calendar.png';
 import Table from '../Table';
 import Chart from '../Chart';
 
-const Stats = ({ currentYear, setCurrentYear, entriesPerPage, setEntriesPerPage, displayName }) => {
+const Stats = ({ currentYear, setCurrentYear, entriesPerPage, setEntriesPerPage, displayName, toggleDrawer }) => {
     const { user } = useAuth();
     const { theme } = useContext(ThemeContext);
     const jobs = useSelector(state => state.jobs);
     const stats = useSelector(state => state.stats);
     const week = useSelector(state => state.week);
+    const matches = useMediaQuery('(max-width: 960px)');
     const classes = useStyles();
 
     const calculateTotalJobs = () => {
@@ -87,17 +90,26 @@ const Stats = ({ currentYear, setCurrentYear, entriesPerPage, setEntriesPerPage,
 
     return (
         <div className={`stats-container stats-container-${theme}`}>
-            <div className="stats-header">
-                {!displayName ?
-                    <Typography className={clsx(classes.text, classes.bold)} variant="h6">
-                        {user.displayName ? user.displayName : user.email}'s metrics
-                    </Typography>
-                    :
-                    <Typography className={clsx(classes.text, classes.bold)} variant="h6">
-                        {displayName}'s metrics
-                    </Typography>
-                }
-            </div>
+            {!matches ?
+                <div className="stats-header">
+                    {!displayName ?
+                        <Typography className={clsx(classes.text, classes.bold)} variant="h6">
+                            {user.displayName ? user.displayName : user.email}'s metrics
+                        </Typography>
+                        :
+                        <Typography className={clsx(classes.text, classes.bold)} variant="h6">
+                            {displayName}'s metrics
+                        </Typography>
+                    }
+                </div>
+                :
+                <div className="stats-header">
+                    <MobileHeader
+                        tab="Metrics"
+                        toggleDrawer={toggleDrawer}
+                    />
+                </div>
+            }
             <div className="statistics">
                 <StatBox
                     title="Total Jobs"

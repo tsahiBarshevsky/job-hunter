@@ -176,6 +176,7 @@ const DashboardPage = () => {
                                     setOrigin={setOrigin}
                                     setContactOrigin={setContactOrigin}
                                     displayName={displayName}
+                                    toggleDrawer={toggleDrawer}
                                 />
                             );
                         case 'tab2':
@@ -186,6 +187,7 @@ const DashboardPage = () => {
                                     entriesPerPage={entriesPerPage}
                                     setEntriesPerPage={setEntriesPerPage}
                                     displayName={displayName}
+                                    toggleDrawer={toggleDrawer}
                                 />
                             );
                         case 'tab3':
@@ -197,12 +199,14 @@ const DashboardPage = () => {
                                     setSelectedContact={setSelectedContact}
                                     setOpenContactDialog={setOpenContactDialog}
                                     setContactOrigin={setContactOrigin}
+                                    toggleDrawer={toggleDrawer}
                                 />
                             );
                         case 'tab4':
                             return (
                                 <ActivitiesTab
                                     displayName={displayName}
+                                    toggleDrawer={toggleDrawer}
                                 />
                             );
                         default:

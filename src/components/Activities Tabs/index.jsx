@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import clsx from 'clsx';
 import moment from 'moment';
 import update from 'immutability-helper';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { toast } from 'react-toastify';
 import { makeStyles } from '@mui/styles';
 import { useLocation } from 'react-router-dom';
@@ -11,6 +12,7 @@ import { ThemeContext } from '../../utils/themeContext';
 import { useAuth } from '../../utils/context';
 import { categories } from '../../utils/constants';
 import { updateActivityCompleted, addStepToTimeline } from "../../store/actions/jobs";
+import MobileHeader from '../Mobile Header';
 import './activitiesTab.sass';
 
 // Firebase
@@ -37,11 +39,12 @@ const useStlyes = makeStyles(() => ({
     }
 }));
 
-const ActivitiesTab = ({ displayName }) => {
+const ActivitiesTab = ({ displayName, toggleDrawer }) => {
     const { user } = useAuth();
     const { theme } = useContext(ThemeContext);
     const [activities, setActivities] = useState([]);
     const jobs = useSelector(state => state.jobs);
+    const matches = useMediaQuery('(max-width: 960px)');
     const location = useLocation();
     const dispatch = useDispatch();
     const classes = useStlyes();
@@ -117,29 +120,38 @@ const ActivitiesTab = ({ displayName }) => {
 
     return (
         <div className={`activities-tab-container activities-tab-container-${theme}`}>
-            <div className="activities-tab-header">
-                {!displayName ?
-                    <Typography
-                        variant="h6"
-                        className={clsx(classes.text, classes.bold)}
-                    >
-                        {user.displayName ? user.displayName : user.email}'s activities
-                    </Typography>
-                    :
-                    <Typography
-                        variant="h6"
-                        className={clsx(classes.text, classes.bold)}
-                    >
-                        {displayName}'s activities
-                    </Typography>
-                }
-            </div>
+            {!matches ?
+                <div className="activities-tab-header">
+                    {!displayName ?
+                        <Typography
+                            variant="h6"
+                            className={clsx(classes.text, classes.bold)}
+                        >
+                            {user.displayName ? user.displayName : user.email}'s activities
+                        </Typography>
+                        :
+                        <Typography
+                            variant="h6"
+                            className={clsx(classes.text, classes.bold)}
+                        >
+                            {displayName}'s activities
+                        </Typography>
+                    }
+                </div>
+                :
+                <div className="activities-tab-header">
+                    <MobileHeader
+                        tab="Activities"
+                        toggleDrawer={toggleDrawer}
+                    />
+                </div>
+            }
             <div className={`activities-table-container activities-table-container-${theme}`}>
                 <table id="activities">
                     <tbody>
                         {activities.map((item) => {
                             return (
-                                item.activites.concat(item.activites, item.activites, item.activites).map((activity, index) => {
+                                item.activites.map((activity, index) => {
                                     return (
                                         <tr key={activity.id}>
                                             <td style={{ width: 50 }}>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import clsx from 'clsx';
 import update from 'immutability-helper';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { toast } from 'react-toastify';
 import { makeStyles } from '@mui/styles';
 import { useLocation } from 'react-router-dom';
@@ -10,6 +11,7 @@ import { ThemeContext } from '../../utils/themeContext';
 import { useAuth } from '../../utils/context';
 import { removeContact, addStepToTimeline } from '../../store/actions/jobs';
 import ContactCard from '../Contact Card';
+import MobileHeader from '../Mobile Header';
 import './contactsTab.sass';
 
 // Firebase
@@ -29,11 +31,12 @@ const useStlyes = makeStyles(() => ({
     },
 }));
 
-const ContactsTab = ({ displayName, setMode, setJob, setSelectedContact, setOpenContactDialog, setContactOrigin }) => {
+const ContactsTab = ({ displayName, setMode, setJob, setSelectedContact, setOpenContactDialog, setContactOrigin, toggleDrawer }) => {
     const { user } = useAuth();
     const { theme } = useContext(ThemeContext);
     const [contacts, setContacts] = useState([]);
     const jobs = useSelector(state => state.jobs);
+    const matches = useMediaQuery('(max-width: 960px)');
     const location = useLocation();
     const dispatch = useDispatch();
     const classes = useStlyes();
@@ -92,23 +95,32 @@ const ContactsTab = ({ displayName, setMode, setJob, setSelectedContact, setOpen
 
     return (
         <div className={`contacts-tab-container contacts-tab-container-${theme}`}>
-            <div className="contacts-tab-header">
-                {!displayName ?
-                    <Typography
-                        variant="h6"
-                        className={clsx(classes.text, classes.bold)}
-                    >
-                        {user.displayName ? user.displayName : user.email}'s contacts
-                    </Typography>
-                    :
-                    <Typography
-                        variant="h6"
-                        className={clsx(classes.text, classes.bold)}
-                    >
-                        {displayName}'s contacts
-                    </Typography>
-                }
-            </div>
+            {!matches ?
+                <div className="contacts-tab-header">
+                    {!displayName ?
+                        <Typography
+                            variant="h6"
+                            className={clsx(classes.text, classes.bold)}
+                        >
+                            {user.displayName ? user.displayName : user.email}'s contacts
+                        </Typography>
+                        :
+                        <Typography
+                            variant="h6"
+                            className={clsx(classes.text, classes.bold)}
+                        >
+                            {displayName}'s contacts
+                        </Typography>
+                    }
+                </div>
+                :
+                <div className="contacts-tab-header">
+                    <MobileHeader
+                        tab="Contacts"
+                        toggleDrawer={toggleDrawer}
+                    />
+                </div>
+            }
             <div className="cards">
                 {contacts.map((item, index) => {
                     return (

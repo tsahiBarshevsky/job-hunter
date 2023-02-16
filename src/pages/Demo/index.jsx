@@ -146,6 +146,7 @@ const DemoPage = () => {
                                     setOrigin={setOrigin}
                                     setContactOrigin={setContactOrigin}
                                     displayName={displayName ? displayName : "Demo user"}
+                                    toggleDrawer={toggleDrawer}
                                 />
                             );
                         case 'tab2':
@@ -156,6 +157,7 @@ const DemoPage = () => {
                                     entriesPerPage={entriesPerPage}
                                     setEntriesPerPage={setEntriesPerPage}
                                     displayName={displayName ? displayName : "Demo user"}
+                                    toggleDrawer={toggleDrawer}
                                 />
                             );
                         case 'tab3':
@@ -167,12 +169,14 @@ const DemoPage = () => {
                                     setSelectedContact={setSelectedContact}
                                     setOpenContactDialog={setOpenContactDialog}
                                     setContactOrigin={setContactOrigin}
+                                    toggleDrawer={toggleDrawer}
                                 />
                             );
                         case 'tab4':
                             return (
                                 <ActivitiesTab
                                     displayName={displayName ? displayName : "Demo user"}
+                                    toggleDrawer={toggleDrawer}
                                 />
                             );
                         default:

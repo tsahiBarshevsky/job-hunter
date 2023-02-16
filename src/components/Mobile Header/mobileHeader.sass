@@ -1,0 +1,44 @@
+@import '../../styles/_variables'
+
+.mobile-header-container
+    display: flex
+    flex-direction: row
+    align-items: center
+    justify-content: space-between
+    width: 100%
+    border-radius: 10px
+    padding: 5px
+    box-shadow: 0 3px 5px -1px rgba(black, 0.25)
+
+    .user-image
+        width: 30px
+        height: 30px
+        border-radius: 10px
+
+    .user-avatar
+        display: flex
+        align-items: flex-end
+        justify-content: center
+        width: 30px
+        height: 30px
+        border-radius: 10px
+
+        .icon
+            font-size: 24px
+
+        .demo-image
+            width: 25px
+            height: 25px
+            margin-bottom: 0.5px
+
+    .user-avatar-light
+        background-color: #d9dbe2
+
+    .user-avatar-dark
+        background-color: #0f0f0f
+
+.mobile-header-container-light
+    background-color: $box-light
+
+.mobile-header-container-dark
+    background-color: $box-dark

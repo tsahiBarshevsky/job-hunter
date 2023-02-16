@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import clsx from 'clsx';
 import update from 'immutability-helper';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Button } from '@mui/material';
@@ -11,6 +12,8 @@ import { ThemeContext } from '../../utils/themeContext';
 import { addStepToTimeline } from '../../store/actions/jobs';
 import { updateStatus } from '../../store/actions/stats';
 import JobCard from '../Job Card';
+import MobileHeader from '../Mobile Header';
+import InsertionButton from '../Insertion Button';
 import useStyles from './styles';
 import './jobs.sass';
 
@@ -25,11 +28,12 @@ import { HiOutlineThumbDown, HiOutlineThumbUp } from 'react-icons/hi';
 import { doc, updateDoc } from 'firebase/firestore/lite';
 import { db } from '../../utils/firebase';
 
-const Jobs = ({ setJob, setOpenInsertionDialog, setOpenJobDialog, setOpenAlertDialog, setOrigin, setContactOrigin, displayName }) => {
+const Jobs = ({ setJob, setOpenInsertionDialog, setOpenJobDialog, setOpenAlertDialog, setOrigin, setContactOrigin, displayName, toggleDrawer }) => {
     const { user } = useAuth();
     const { theme } = useContext(ThemeContext);
     const jobs = useSelector(state => state.jobs);
     const stats = useSelector(state => state.stats);
+    const matches = useMediaQuery('(max-width: 960px)');
     const location = useLocation();
     const dispatch = useDispatch();
     const classes = useStyles();
@@ -157,32 +161,42 @@ const Jobs = ({ setJob, setOpenInsertionDialog, setOpenJobDialog, setOpenAlertDi
 
     return (
         <div className={`jobs-container jobs-container-${theme}`}>
-            <div className="jobs-header">
-                {!displayName ?
-                    <Typography
-                        variant="h6"
-                        className={clsx(classes.text, classes.bold)}
+            {matches && <InsertionButton onClick={() => setOpenInsertionDialog(true)} />}
+            {!matches ?
+                <div className="jobs-header">
+                    {!displayName ?
+                        <Typography
+                            variant="h6"
+                            className={clsx(classes.text, classes.bold)}
+                        >
+                            {user.displayName ? user.displayName : user.email}'s jobs
+                        </Typography>
+                        :
+                        <Typography
+                            variant="h6"
+                            className={clsx(classes.text, classes.bold)}
+                        >
+                            {displayName}'s jobs
+                        </Typography>
+                    }
+                    <Button
+                        variant="contained"
+                        className={classes.button}
+                        endIcon={<AddRoundedIcon />}
+                        disableRipple
+                        onClick={() => setOpenInsertionDialog(true)}
                     >
-                        {user.displayName ? user.displayName : user.email}'s jobs
-                    </Typography>
-                    :
-                    <Typography
-                        variant="h6"
-                        className={clsx(classes.text, classes.bold)}
-                    >
-                        {displayName}'s jobs
-                    </Typography>
-                }
-                <Button
-                    variant="contained"
-                    className={classes.button}
-                    endIcon={<AddRoundedIcon />}
-                    disableRipple
-                    onClick={() => setOpenInsertionDialog(true)}
-                >
-                    Add job
-                </Button>
-            </div>
+                        Add job
+                    </Button>
+                </div>
+                :
+                <div className="jobs-header">
+                    <MobileHeader
+                        tab="Jobs"
+                        toggleDrawer={toggleDrawer}
+                    />
+                </div>
+            }
             <div className={`dnd-container dnd-container-${theme}`}>
                 <DragDropContext onDragEnd={(result) => onDragEnd(result, jobs)}>
                     {Object.entries(jobs).map(([columnId, column], index) => {
@@ -280,7 +294,7 @@ const Jobs = ({ setJob, setOpenInsertionDialog, setOpenJobDialog, setOpenAlertDi
                     })}
                 </DragDropContext>
             </div>
-        </div>
+        </div >
     )
 }
 
