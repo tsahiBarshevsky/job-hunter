@@ -21,8 +21,12 @@ const categories = [
     { id: 7, category: 'office test', color: '#1b5e20' },
     { id: 8, category: 'accept offer', color: '#e65100' },
     { id: 9, category: 'decline offer', color: '#e65100' },
-    { id: 10, category: 'candidacy removal', color: '#e65100' }
+    { id: 10, category: 'candidacy removal', color: '#e65100' },
+    { id: 11, category: 'other', color: '#880e4f' }
 ];
+
+// List of activities filters
+const filters = ['all', 'interviews', 'offers', 'tests', 'completed'];
 
 // CSV file headers
 const headers = [
@@ -42,4 +46,4 @@ const toolbar = ['bold', 'italic', '|', 'link', 'bulletedList', 'numberedList', 
 // List of months for chart
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-export { statuses, categories, toolbar, months, headers };
+export { statuses, categories, toolbar, months, headers, filters };

@@ -10,7 +10,7 @@ import { Typography, Checkbox, Chip } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { ThemeContext } from '../../utils/themeContext';
 import { useAuth } from '../../utils/context';
-import { categories } from '../../utils/constants';
+import { categories, filters } from '../../utils/constants';
 import { updateActivityCompleted, addStepToTimeline } from "../../store/actions/jobs";
 import MobileHeader from '../Mobile Header';
 import './activitiesTab.sass';
@@ -30,6 +30,11 @@ const useStlyes = makeStyles(() => ({
             fontWeight: 'bold'
         }
     },
+    completed: {
+        '&&': {
+            textDecoration: 'line-through'
+        }
+    },
     chip: {
         '&&': {
             color: 'white',
@@ -43,14 +48,35 @@ const ActivitiesTab = ({ displayName, toggleDrawer }) => {
     const { user } = useAuth();
     const { theme } = useContext(ThemeContext);
     const [activities, setActivities] = useState([]);
+    const [filterType, setFilterType] = useState('all');
     const jobs = useSelector(state => state.jobs);
     const matches = useMediaQuery('(max-width: 960px)');
     const location = useLocation();
     const dispatch = useDispatch();
     const classes = useStlyes();
 
-    const handleCompletedChange = async (title, activityIndex, isCompleted, jobID, status) => {
+    const filterActivities = (item) => {
+        var category = '';
+        switch (filterType) {
+            case 'interviews':
+                category = categories[item.category].category;
+                return category.includes('interview');
+            case 'offers':
+                category = categories[item.category].category;
+                return category.includes('offer');
+            case 'tests':
+                category = categories[item.category].category;
+                return category.includes('test');
+            case 'completed':
+                return item.completed;
+            default:
+                return item;
+        }
+    }
+
+    const handleCompletedChange = async (title, isCompleted, jobID, activityID, status) => {
         const job = jobs[status].items.find((item) => item.id === jobID);
+        const activityIndex = job.activites.findIndex((item) => item.id === activityID);
         const jobRef = doc(db, "jobs", job.id);
         try {
             var updatedJob = {};
@@ -93,7 +119,6 @@ const ActivitiesTab = ({ displayName, toggleDrawer }) => {
                 }
             }
             dispatch(updateActivityCompleted(job.status, index, activityIndex, isCompleted));
-            // setJob(updatedJob);
         }
         catch (error) {
             console.log(error.message);
@@ -146,70 +171,85 @@ const ActivitiesTab = ({ displayName, toggleDrawer }) => {
                     />
                 </div>
             }
-            <div className={`activities-table-container activities-table-container-${theme}`}>
-                <table id="activities">
-                    <tbody>
-                        {activities.map((item) => {
-                            return (
-                                item.activites.map((activity, index) => {
-                                    return (
-                                        <tr key={activity.id}>
-                                            <td style={{ width: 50 }}>
-                                                <Checkbox
-                                                    disableRipple
-                                                    checked={activity.completed}
-                                                    style={{ color: theme === 'light' ? "#1d5692" : "#ffffff" }}
-                                                    onClick={() => handleCompletedChange(activity.title, index, !activity.completed, item.jobID, item.status)}
-                                                />
-                                            </td>
-                                            <td>
-                                                <Typography className={classes.text}>{activity.title}</Typography>
-                                            </td>
-                                            <td style={{ width: 200 }}>
-                                                <Chip
-                                                    label={categories[activity.category].category}
-                                                    variant="filled"
-                                                    className={classes.chip}
-                                                    style={{ backgroundColor: categories[activity.category].color }}
-                                                />
-                                            </td>
-                                            <td>
-                                                <Typography className={classes.text}>{item.company}</Typography>
-                                            </td>
-                                            <td>
-                                                <Typography className={classes.text}>{item.title}</Typography>
-                                            </td>
-                                            <td>
-                                                {Object.keys(activity.startDate).length === 0 ?
-                                                    <Typography className={classes.text} color="textSecondary" variant="caption">
-                                                        {moment(activity.startDate).format('DD/MM/YYYY HH:mm')}
-                                                    </Typography>
-                                                    :
-                                                    <Typography className={classes.text} color="textSecondary" variant="caption">
-                                                        {moment.unix(activity.startDate.seconds).format('DD/MM/YYYY HH:mm')}
-                                                    </Typography>
-                                                }
-                                            </td>
-                                            <td>
-                                                {activity.endDate &&
-                                                    (Object.keys(activity.endDate).length === 0 ?
-                                                        <Typography className={classes.text} color="textSecondary" variant="caption">
-                                                            {moment(activity.endDate).format('DD/MM/YYYY HH:mm')}
+            <div className="main-container">
+                <ul className={`filters filters-${theme}`}>
+                    {filters.map((filter) => {
+                        return (
+                            <li
+                                key={filter}
+                                onClick={() => setFilterType(filter)}
+                                className={filterType === filter ? `filter filter-${theme} active active-${theme}` : `filter filter-${theme}`}
+                            >
+                                <Typography className={classes.text}>{filter}</Typography>
+                            </li>
+                        )
+                    })}
+                </ul>
+                <div className={`activities-table-container activities-table-container-${theme}`}>
+                    <table id="activities">
+                        <tbody>
+                            {activities.map((item) => {
+                                return (
+                                    [...item.activites].filter(filterActivities).map((activity, index) => {
+                                        return (
+                                            <tr key={activity.id}>
+                                                <td style={{ width: 50 }}>
+                                                    <Checkbox
+                                                        disableRipple
+                                                        checked={activity.completed}
+                                                        style={{ color: theme === 'light' ? "#1d5692" : "#ffffff" }}
+                                                        onClick={() => handleCompletedChange(activity.title, !activity.completed, item.jobID, activity.id, item.status)}
+                                                    />
+                                                </td>
+                                                <td>
+                                                    <Typography className={clsx(classes.text, activity.completed && classes.completed)}>{activity.title}</Typography>
+                                                </td>
+                                                <td style={{ width: 280 }}>
+                                                    <Chip
+                                                        label={categories[activity.category].category}
+                                                        variant="filled"
+                                                        className={classes.chip}
+                                                        style={{ backgroundColor: categories[activity.category].color }}
+                                                    />
+                                                </td>
+                                                <td>
+                                                    <Typography className={clsx(classes.text, activity.completed && classes.completed)}>{item.company}</Typography>
+                                                </td>
+                                                <td>
+                                                    <Typography className={clsx(classes.text, activity.completed && classes.completed)}>{item.title}</Typography>
+                                                </td>
+                                                <td>
+                                                    {Object.keys(activity.startDate).length === 0 ?
+                                                        <Typography className={clsx(classes.text, activity.completed && classes.completed)} color="textSecondary" variant="caption">
+                                                            {moment(activity.startDate).format('DD/MM/YYYY HH:mm')}
                                                         </Typography>
                                                         :
-                                                        <Typography className={classes.text} color="textSecondary" variant="caption">
-                                                            {moment.unix(activity.endDate.seconds).format('DD/MM/YYYY HH:mm')}
+                                                        <Typography className={clsx(classes.text, activity.completed && classes.completed)} color="textSecondary" variant="caption">
+                                                            {moment.unix(activity.startDate.seconds).format('DD/MM/YYYY HH:mm')}
                                                         </Typography>
-                                                    )
-                                                }
-                                            </td>
-                                        </tr>
-                                    )
-                                })
-                            )
-                        })}
-                    </tbody>
-                </table>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    {activity.endDate &&
+                                                        (Object.keys(activity.endDate).length === 0 ?
+                                                            <Typography className={clsx(classes.text, activity.completed && classes.completed)} color="textSecondary" variant="caption">
+                                                                {moment(activity.endDate).format('DD/MM/YYYY HH:mm')}
+                                                            </Typography>
+                                                            :
+                                                            <Typography className={clsx(classes.text, activity.completed && classes.completed)} color="textSecondary" variant="caption">
+                                                                {moment.unix(activity.endDate.seconds).format('DD/MM/YYYY HH:mm')}
+                                                            </Typography>
+                                                        )
+                                                    }
+                                                </td>
+                                            </tr>
+                                        )
+                                    })
+                                )
+                            })}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     )

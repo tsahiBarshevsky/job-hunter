@@ -21,57 +21,145 @@
         width: 100%
         padding: 15px 0
 
-    .activities-table-container
+    .main-container
+        display: flex
+        flex-direction: row
+        align-items: flex-start
+        justify-content: flex-start
         width: 100%
-        height: auto
-        overflow-x: auto
-        overflow-y: auto
+        height: 100%
 
-        #activities
-            border-collapse: collapse
-            width: 100%
-            margin-bottom: 20px
-            border-spacing: 0
+        @media screen and ( max-width: $sm )
+            flex-direction: column
 
-            tr
-                transition: all 0.25s ease-in-out
+        .filters
+            display: flex
+            flex-direction: column
+            align-items: center
+            justify-content: flex-start
+            margin: 0
+            padding: 0 10px 0 0
+            margin-right: 15px
+            height: 100%
+
+            @media screen and ( max-width: $sm )
+                flex-direction: row
+                flex-wrap: wrap
+                justify-content: center
+                width: 100%
+                height: fit-content
+                padding: 0
+                margin: 0 0 10px 0
+
+            .filter
+                display: flex
+                align-items: center
+                justify-content: center
+                width: 100%
+                padding: 5px 25px
+                list-style: none
+                text-align: center
+                cursor: pointer
+                margin: 5px 0
+                border-radius: 10px
+                transition: all 0.5s
+                text-transform: capitalize
+
+                @media screen and ( max-width: $sm )
+                    width: fit-content
+
+            .filter-light
+                color: black
 
                 &:hover
-                    background-color: #4143501e
+                    background-color: #043a711f
 
-            td
-                white-space: nowrap
-                padding: 5px 10px
+            .filter-dark
+                color: white
 
-            td:first-child
-                border-top-left-radius: 10px
-                border-bottom-left-radius: 10px
+                &:hover
+                    background-color: #043a7152
 
-            td:last-child
-                border-top-right-radius: 10px
-                border-bottom-right-radius: 10px
+            .filter.active
+                cursor: default
 
-    .activities-table-container::-webkit-scrollbar
-        width: 16px
+            .filter.active-light
+                color: #1355ba
+                background-color: #043a711f
 
-    .activities-table-container-light::-webkit-scrollbar-track
-        background: $background-light
+            .filter.active-dark
+                color: #98c1fa
+                background-color: #043a7152
 
-    .activities-table-container-light::-webkit-scrollbar-thumb
-        background-color: $thumb-color-light
-        border-radius: 20px
-        border: 5px solid $background-light
+        .filters-light
+            border-right: 1px solid rgba(black, 0.1)
 
-    .activities-table-container-dark::-webkit-scrollbar-track
-        background: $background-dark
+            @media screen and ( max-width: $sm )
+                border-right: none
+                border-bottom: 1px solid rgba(black, 0.1)
 
-    .activities-table-container-dark::-webkit-scrollbar-thumb
-        background-color: $thumb-color-dark
-        border-radius: 20px
-        border: 5px solid $background-dark
+        .filters-dark
+            border-right: 1px solid rgba(white, 0.1)
 
-    .activities-table-container::-webkit-scrollbar-corner
-        background-color: transparent
+            @media screen and ( max-width: $sm )
+                border-right: none
+                border-bottom: 1px solid rgba(white, 0.1)
+
+        .activities-table-container
+            width: 100%
+            height: 100%
+            max-height: calc( 100vh - 82px )
+            overflow-x: auto
+            overflow-y: auto
+
+            @media screen and ( max-width: $sm )
+                max-height: calc( 100vh - 179px )
+
+            #activities
+                border-collapse: collapse
+                width: 100%
+                margin-bottom: 20px
+                border-spacing: 0
+
+                tr
+                    transition: all 0.25s ease-in-out
+
+                    &:hover
+                        background-color: #4143501e
+
+                td
+                    white-space: nowrap
+                    padding: 5px 10px
+
+                td:first-child
+                    border-top-left-radius: 10px
+                    border-bottom-left-radius: 10px
+
+                td:last-child
+                    border-top-right-radius: 10px
+                    border-bottom-right-radius: 10px
+
+        .activities-table-container::-webkit-scrollbar
+            width: 16px
+
+        .activities-table-container-light::-webkit-scrollbar-track
+            background: $background-light
+
+        .activities-table-container-light::-webkit-scrollbar-thumb
+            background-color: $thumb-color-light
+            border-radius: 20px
+            border: 5px solid $background-light
+
+        .activities-table-container-dark::-webkit-scrollbar-track
+            background: $background-dark
+
+        .activities-table-container-dark::-webkit-scrollbar-thumb
+            background-color: $thumb-color-dark
+            border-radius: 20px
+            border: 5px solid $background-dark
+
+        .activities-table-container::-webkit-scrollbar-corner
+            background-color: transparent
 
 .activities-tab-container-light
     background-color: $background-light
