@@ -22,7 +22,8 @@ const categories = [
     { id: 8, category: 'accept offer', color: '#e65100' },
     { id: 9, category: 'decline offer', color: '#e65100' },
     { id: 10, category: 'candidacy removal', color: '#e65100' },
-    { id: 11, category: 'other', color: '#880e4f' }
+    { id: 11, category: 'apply candidacy', color: '#e65100' },
+    { id: 12, category: 'other', color: '#880e4f' }
 ];
 
 // List of activities filters

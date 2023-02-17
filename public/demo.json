@@ -1,0 +1,611 @@
+[
+  {
+    "owner": "demo-user",
+    "salary": "",
+    "created": {
+      "seconds": 1669891603,
+      "nanoseconds": 334000000
+    },
+    "id": "83d7e338-0360-4243-8323-40aba4095ea6",
+    "timeline": [
+      {
+        "date": {
+          "seconds": 1669891603,
+          "nanoseconds": 599000000
+        },
+        "action": "Job created"
+      }
+    ],
+    "title": "Fraud Analyst",
+    "url": "",
+    "activities": [
+
+    ],
+    "location": "",
+    "company": "Paypal",
+    "contacts": [
+
+    ],
+    "deadline": null,
+    "notes": [
+
+    ],
+    "status": "Applied",
+    "description": ""
+  },
+  {
+    "salary": "",
+    "notes": [
+
+    ],
+    "activities": [
+
+    ],
+    "company": "Wix",
+    "created": {
+      "seconds": 1676026247,
+      "nanoseconds": 834000000
+    },
+    "url": "",
+    "deadline": null,
+    "timeline": [
+      {
+        "action": "Job created",
+        "date": {
+          "seconds": 1676026247,
+          "nanoseconds": 281000000
+        }
+      }
+    ],
+    "id": "85bcb643-2a02-40b6-b470-7030505cf287",
+    "description": "",
+    "status": "Applied",
+    "title": "Web Designer",
+    "location": "",
+    "owner": "demo-user",
+    "contacts": [
+
+    ]
+  },
+  {
+    "id": "8e2142c6-e6ea-45a1-89ff-80dc61c47461",
+    "owner": "demo-user",
+    "status": "Applied",
+    "url": "https://jobs.eu.lever.co/mobileye/31b2394a-ca7e-44f7-8648-ffbb3089884b",
+    "title": "Backend Team Lead",
+    "timeline": [
+      {
+        "action": "Job created",
+        "date": {
+          "seconds": 1676628544,
+          "nanoseconds": 524000000
+        }
+      }
+    ],
+    "activities": [
+
+    ],
+    "deadline": null,
+    "contacts": [
+
+    ],
+    "salary": "",
+    "location": "Jerusalem, Israel",
+    "notes": [
+
+    ],
+    "description": "<h3>What your job will look like:</h3><ul><li>Leading a team of senior and junior members developing and maintaining the various activities.</li><li>Being part of architecture discussions with many stake holders in the company.</li><li>Being the contact person to all the relevant activities.</li><li>Recruiting new team members to support the growing activity.</li></ul><h3>All you need is:</h3><ul><li>The role requires exceptional technical and managerial skills.</li><li>Experience with AWS.</li><li>Experience in working with complex systems, open source tools, and managed services.</li><li>Bsc in CS, mathematics or equivalent field.</li></ul><p>Mobileye changes the way we drive, from preventing accidents to semi and fully autonomous vehicles. If you are an excellent, bright, hands-on person with a passion to make a difference come to lead the revolution!</p>",
+    "created": {
+      "seconds": 1676628544,
+      "nanoseconds": 524000000
+    },
+    "company": "Mobileye"
+  },
+  {
+    "status": "Accepted",
+    "created": {
+      "seconds": 1674725894,
+      "nanoseconds": 669000000
+    },
+    "owner": "demo-user",
+    "contacts": [
+
+    ],
+    "description": "",
+    "id": "9b2ae8fe-683a-46ba-bc11-0745af335b54",
+    "title": "Frontend Developer",
+    "notes": [
+
+    ],
+    "timeline": [
+      {
+        "date": {
+          "seconds": 1674725894,
+          "nanoseconds": 443000000
+        },
+        "action": "Job created"
+      },
+      {
+        "action": "Moved to In Progress",
+        "date": {
+          "seconds": 1677490865,
+          "nanoseconds": 167000000
+        }
+      },
+      {
+        "action": "Got an offer",
+        "date": {
+          "seconds": 1675590067,
+          "nanoseconds": 113000000
+        }
+      },
+      {
+        "action": "Activity added",
+        "date": {
+          "seconds": 1675590100,
+          "nanoseconds": 848000000
+        }
+      },
+      {
+        "action": "Activity added",
+        "date": {
+          "seconds": 1675600923,
+          "nanoseconds": 894000000
+        }
+      },
+      {
+        "action": "Accepted!",
+        "date": {
+          "seconds": 1675849330,
+          "nanoseconds": 950000000
+        }
+      },
+      {
+        "action": "Office interview  completed",
+        "date": {
+          "seconds": 1676627153,
+          "nanoseconds": 725000000
+        }
+      }
+    ],
+    "salary": "13000",
+    "deadline": null,
+    "location": "",
+    "activities": [
+      {
+        "category": 3,
+        "id": "6aebc1e8-807e-4ef7-b421-9204b775aa54",
+        "title": "Office interview ",
+        "completed": true,
+        "startDate": {
+          "seconds": 1675594800,
+          "nanoseconds": 397000000
+        },
+        "endDate": {
+          "seconds": 1675598400,
+          "nanoseconds": 793000000
+        }
+      },
+      {
+        "id": "bece98ea-8c84-495c-a311-7de885e00938",
+        "endDate": null,
+        "completed": false,
+        "title": "Accept offer",
+        "category": 8,
+        "startDate": {
+          "seconds": 1675762903,
+          "nanoseconds": 126000000
+        }
+      }
+    ],
+    "company": "Matrix",
+    "url": ""
+  },
+  {
+    "timeline": [
+      {
+        "action": "Job created",
+        "date": {
+          "seconds": 1672569846,
+          "nanoseconds": 920000000
+        }
+      },
+      {
+        "date": {
+          "seconds": 1675248253,
+          "nanoseconds": 87000000
+        },
+        "action": "Moved to Not Answered"
+      }
+    ],
+    "created": {
+      "seconds": 1672569846,
+      "nanoseconds": 503000000
+    },
+    "description": "",
+    "location": "",
+    "deadline": null,
+    "company": "Microsoft",
+    "contacts": [
+
+    ],
+    "salary": "",
+    "url": "",
+    "notes": [
+
+    ],
+    "status": "Not Answered",
+    "title": "QA Engineer",
+    "id": "9b37ad83-1c1c-49f6-a321-401a69e797c6",
+    "activities": [
+
+    ],
+    "owner": "demo-user"
+  },
+  {
+    "location": "",
+    "company": "Ebay",
+    "timeline": [
+      {
+        "action": "Job created",
+        "date": {
+          "seconds": 1673345660,
+          "nanoseconds": 438000000
+        }
+      },
+      {
+        "date": {
+          "seconds": 1673518470,
+          "nanoseconds": 259000000
+        },
+        "action": "Moved to In Progress"
+      },
+      {
+        "action": "Contact added: John Smith",
+        "date": {
+          "seconds": 1673518498,
+          "nanoseconds": 380000000
+        }
+      },
+      {
+        "date": {
+          "seconds": 1676628929,
+          "nanoseconds": 958000000
+        },
+        "action": "Activity added"
+      },
+      {
+        "date": {
+          "seconds": 1673518552,
+          "nanoseconds": 173000000
+        },
+        "action": "Activity added"
+      },
+      {
+        "action": "Interview with John Smith completed",
+        "date": {
+          "seconds": 1674123358,
+          "nanoseconds": 258000000
+        }
+      },
+      {
+        "date": {
+          "seconds": 1674393653,
+          "nanoseconds": 348000000
+        },
+        "action": "Interview with team leader completed"
+      },
+      {
+        "action": "Rejected",
+        "date": {
+          "seconds": 1674639005,
+          "nanoseconds": 659000000
+        }
+      }
+    ],
+    "description": "",
+    "title": "Product Manager",
+    "url": "",
+    "created": {
+      "seconds": 1673345660,
+      "nanoseconds": 124000000
+    },
+    "deadline": null,
+    "status": "Rejected",
+    "owner": "demo-user",
+    "contacts": [
+      {
+        "phone": "0529876532",
+        "lastName": "Smith",
+        "role": "HR Manager",
+        "linkedin": "",
+        "facebook": "",
+        "email": "",
+        "id": "5809c43d-afaa-4d24-8f16-407bef8db3e0",
+        "firstName": "John"
+      }
+    ],
+    "id": "aa2c7a78-1c31-466b-9129-47ddd6607692",
+    "notes": [
+
+    ],
+    "salary": "",
+    "activities": [
+      {
+        "completed": true,
+        "category": 3,
+        "id": "09512f4f-a77c-46f5-92da-9b153afcb93a",
+        "startDate": {
+          "seconds": 1673789400,
+          "nanoseconds": 127000000
+        },
+        "endDate": {
+          "seconds": 1673791200,
+          "nanoseconds": 366000000
+        },
+        "title": "Interview with John Smith"
+      },
+      {
+        "endDate": {
+          "seconds": 1673773200,
+          "nanoseconds": 920000000
+        },
+        "startDate": {
+          "seconds": 1674375300,
+          "nanoseconds": 615000000
+        },
+        "id": "f4b1b64b-1bcd-4516-85b6-e7261583882f",
+        "category": 4,
+        "completed": true,
+        "title": "Interview with team leader"
+      }
+    ]
+  },
+  {
+    "description": "",
+    "company": "Meta",
+    "timeline": [
+      {
+        "action": "Job created",
+        "date": {
+          "seconds": 1672392278,
+          "nanoseconds": 36000000
+        }
+      },
+      {
+        "action": "Moved to In Progress",
+        "date": {
+          "seconds": 1672737888,
+          "nanoseconds": 607000000
+        }
+      },
+      {
+        "date": {
+          "seconds": 1672737924,
+          "nanoseconds": 985000000
+        },
+        "action": "Contact added: Israel Israeli"
+      },
+      {
+        "action": "Activity added",
+        "date": {
+          "seconds": 1672737947,
+          "nanoseconds": 154000000
+        }
+      },
+      {
+        "date": {
+          "seconds": 1676626278,
+          "nanoseconds": 391000000
+        },
+        "action": "Interview with Israel Israeli completed"
+      }
+    ],
+    "contacts": [
+      {
+        "role": "Team member",
+        "id": "ce5cd976-ae4f-4d18-aac6-80e42b33066b",
+        "firstName": "Israel",
+        "lastName": "Israeli",
+        "email": "israel@gmail.com",
+        "facebook": "",
+        "phone": "0521234567",
+        "linkedin": ""
+      }
+    ],
+    "id": "bea92ff0-84b9-4bb1-b7d7-f6ea67892088",
+    "url": "",
+    "location": "",
+    "activities": [
+      {
+        "title": "Interview with Israel Israeli",
+        "id": "c516cf4e-7786-4476-be07-03d4f7b5ede1",
+        "completed": true,
+        "startDate": {
+          "seconds": 1672824635,
+          "nanoseconds": 657000000
+        },
+        "endDate": {
+          "seconds": 1672828200,
+          "nanoseconds": 597000000
+        },
+        "category": 2
+      }
+    ],
+    "notes": [
+
+    ],
+    "status": "In Progress",
+    "salary": "",
+    "deadline": null,
+    "owner": "demo-user",
+    "created": {
+      "seconds": 1672392278,
+      "nanoseconds": 731000000
+    },
+    "title": "Full Stack Developer"
+  },
+  {
+    "company": "Waze",
+    "activities": [
+      {
+        "endDate": {
+          "seconds": 1642082400,
+          "nanoseconds": 0
+        },
+        "startDate": {
+          "seconds": 1642078822,
+          "nanoseconds": 0
+        },
+        "id": "0410d603-4347-49ba-aff1-d9ff9f624541",
+        "category": 5,
+        "title": "Interview with CEO",
+        "completed": true
+      }
+    ],
+    "owner": "demo-user",
+    "description": "",
+    "deadline": {
+      "seconds": 1643493600,
+      "nanoseconds": 0
+    },
+    "timeline": [
+      {
+        "date": {
+          "seconds": 1641121212,
+          "nanoseconds": 662000000
+        },
+        "action": "Job created"
+      },
+      {
+        "date": {
+          "seconds": 1641985703,
+          "nanoseconds": 335000000
+        },
+        "action": "Moved to In Progress"
+      },
+      {
+        "date": {
+          "seconds": 1642072114,
+          "nanoseconds": 584000000
+        },
+        "action": "Activity added"
+      },
+      {
+        "date": {
+          "seconds": 1642085429,
+          "nanoseconds": 339000000
+        },
+        "action": "Interview with CEO completed"
+      },
+      {
+        "date": {
+          "seconds": 1642085700,
+          "nanoseconds": 701000000
+        },
+        "action": "Got an offer"
+      }
+    ],
+    "status": "Offered",
+    "location": "",
+    "id": "ea31454d-6532-4b02-b97f-554993e4fe77",
+    "url": "https://www.waze.com/he/live-map",
+    "contacts": [
+
+    ],
+    "created": {
+      "seconds": 1641121212,
+      "nanoseconds": 856000000
+    },
+    "title": "Mobile Frontend Developer",
+    "salary": "",
+    "notes": [
+
+    ]
+  },
+  {
+    "company": "Google",
+    "timeline": [
+      {
+        "action": "Job created",
+        "date": {
+          "seconds": 1676022458,
+          "nanoseconds": 646000000
+        }
+      }
+    ],
+    "description": "",
+    "deadline": null,
+    "owner": "demo-user",
+    "location": "",
+    "id": "f739b9f9-f567-40d6-9938-9453cba7113d",
+    "notes": [
+
+    ],
+    "title": "Backend Developer",
+    "activities": [
+
+    ],
+    "url": "",
+    "salary": "",
+    "created": {
+      "seconds": 1676022458,
+      "nanoseconds": 159000000
+    },
+    "status": "Applied",
+    "contacts": [
+
+    ]
+  },
+  {
+    "activities": [
+      {
+        "title": "Send application on Sunday",
+        "startDate": {
+          "seconds": 1676181600,
+          "nanoseconds": 185000000
+        },
+        "completed": false,
+        "id": "a919c2b2-f38a-4bf5-8507-815106bd4802",
+        "endDate": null,
+        "category": 11
+      }
+    ],
+    "salary": "",
+    "deadline": null,
+    "notes": [
+
+    ],
+    "owner": "demo-user",
+    "created": {
+      "seconds": 1676108945,
+      "nanoseconds": 217000000
+    },
+    "description": "",
+    "company": "Amazon",
+    "location": "",
+    "title": "Junior Analyst",
+    "url": "",
+    "timeline": [
+      {
+        "action": "Job created",
+        "date": {
+          "seconds": 1676108945,
+          "nanoseconds": 968000000
+        }
+      },
+      {
+        "action": "Activity added",
+        "date": {
+          "seconds": 1676627601,
+          "nanoseconds": 258000000
+        }
+      }
+    ],
+    "contacts": [
+
+    ],
+    "status": "Wishlist",
+    "id": "f87dc156-a4d7-4a30-8e0d-cecf61938951"
+  }
+]

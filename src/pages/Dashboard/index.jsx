@@ -61,7 +61,6 @@ const DashboardPage = () => {
         const q = query(jobsRef, where("owner", "==", user.uid));
         try {
             const querySnapshot = await getDocs(q);
-            // console.log(JSON.stringify(querySnapshot.docs.map((doc) => doc.data())));
             const data =
                 querySnapshot.docs
                     .sort((a, b) => { return a.data().created - b.data().created })

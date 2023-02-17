@@ -64,7 +64,7 @@ const InsertionDialog = ({ open, setOpen }) => {
             id: uuidv4(),
             location: '',
             notes: [],
-            owner: user.uid,
+            owner: user ? user.uid : "demo-user",
             salary: '',
             status: status,
             timeline: [{

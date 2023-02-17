@@ -52,7 +52,7 @@ const DemoPage = () => {
 
     useEffect(() => {
         document.title = `Job Hunter | Demo board`;
-        fetch('array.json', {
+        fetch('demo.json', {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
