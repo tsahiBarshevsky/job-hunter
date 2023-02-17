@@ -7,6 +7,7 @@ import { makeStyles } from '@mui/styles';
 import { useLocation } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
+import { FiUsers } from 'react-icons/fi';
 import { ThemeContext } from '../../utils/themeContext';
 import { useAuth } from '../../utils/context';
 import { removeContact, addStepToTimeline } from '../../store/actions/jobs';
@@ -121,23 +122,35 @@ const ContactsTab = ({ displayName, setMode, setJob, setSelectedContact, setOpen
                     />
                 </div>
             }
-            <div className="cards">
-                {contacts.map((item, index) => {
-                    return (
-                        item.contacts.map((contact) => {
-                            return (
-                                <ContactCard
-                                    key={contact.id}
-                                    contact={contact}
-                                    company={item.company}
-                                    onOpenContactDialog={() => onOpenContactDialog('editing', contact, item.jobID, item.status)}
-                                    onRemoveContact={() => onRemoveContact(contact, item.jobID, item.status)}
-                                />
-                            )
-                        })
-                    )
-                })}
-            </div>
+            {contacts.length > 0 ?
+                <div className="cards">
+                    {contacts.map((item, index) => {
+                        return (
+                            item.contacts.map((contact) => {
+                                return (
+                                    <ContactCard
+                                        key={contact.id}
+                                        contact={contact}
+                                        company={item.company}
+                                        onOpenContactDialog={() => onOpenContactDialog('editing', contact, item.jobID, item.status)}
+                                        onRemoveContact={() => onRemoveContact(contact, item.jobID, item.status)}
+                                    />
+                                )
+                            })
+                        )
+                    })}
+                </div>
+                :
+                <div className="empty-message">
+                    <FiUsers size={35} />
+                    <Typography
+                        className={classes.text}
+                        variant="h6"
+                    >
+                        You haven't added any contacts yet
+                    </Typography>
+                </div>
+            }
         </div>
     )
 }
