@@ -62,7 +62,7 @@ const Sidebar = ({ activeTab, setActiveTab, displayName }) => {
                         <Typography className={classes.logo}>Hunter</Typography>
                     </div>
                     :
-                    <Link to="/" className="logo link">
+                    <Link to="/" className={`logo link-${theme}`}>
                         <Typography className={classes.logo}>Job</Typography>
                         <Typography className={classes.logo}>Hunter</Typography>
                     </Link>
